@@ -7,7 +7,9 @@ export default function Page() {
   const { data, isLoading } = useQuery({
     queryKey: ["tenders"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:3000/api/tender/all");
+      const response = await fetch(
+        "https://tender-online-h4lh.vercel.app/api/tender/all"
+      );
       return response.json();
     },
   });

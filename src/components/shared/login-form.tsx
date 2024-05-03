@@ -47,13 +47,16 @@ const LoginForm = () => {
 
     try {
       // Make login API call
-      const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://tender-online-h4lh.vercel.app/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Login failed");
@@ -77,7 +80,7 @@ const LoginForm = () => {
               Sign in
             </h1>
             <p className="mt-2 text-sm text-gray-600 dark:text-neutral-400">
-              Don't have an account yet?{" "}
+              Dont have an account yet?{" "}
               <Link
                 className="text-blue-600 decoration-2 hover:underline font-medium dark:text-blue-500"
                 href="/"
