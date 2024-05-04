@@ -16,10 +16,10 @@ export default function Page() {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   return (
     <main className="">
-      <div className="">
-        <div className=""></div>
+      <div className="w-full max-w-6xl ">
         <ListTenders data={data} />
       </div>
     </main>

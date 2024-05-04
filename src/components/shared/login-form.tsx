@@ -83,7 +83,7 @@ const LoginForm = () => {
               Dont have an account yet?{" "}
               <Link
                 className="text-blue-600 decoration-2 hover:underline font-medium dark:text-blue-500"
-                href="/"
+                href="/signup"
               >
                 Sign up here
               </Link>

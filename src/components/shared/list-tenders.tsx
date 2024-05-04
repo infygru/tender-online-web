@@ -11,7 +11,7 @@ export const formatDateTime = (dateTime: string) => {
     hour12: true,
   });
 };
-export const truncateTitle = (title: string, nowords: number = 10) => {
+export const truncateTitle = (title: string, nowords: number = 5) => {
   const words = title.split(" ");
   if (words.length > nowords) {
     return words.slice(0, nowords).join(" ") + "...";
@@ -21,15 +21,15 @@ export const truncateTitle = (title: string, nowords: number = 10) => {
 const ListTenders = ({ data }: any) => {
   const isLoading = false;
   return (
-    <div className="overflow-x-auto pt-12">
+    <div className=" px-8 overflow-x-auto pt-12">
       <h2 className="text-xl font-bold sm:text-3xl md:text-2xl dark:text-white mb-4">
         List of Tenders
       </h2>
       {isLoading ? (
-        <div>Loading...</div>
+        <div className="py-24 px-24">Loading...</div>
       ) : (
-        <div className="shadow-md  border rounded-3xl overflow-hidden">
-          <ScrollArea className="h-[80vh]">
+        <div className="shadow-md   border rounded-3xl overflow-hidden">
+          <ScrollArea className="h-[83vh]">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
@@ -43,7 +43,7 @@ const ListTenders = ({ data }: any) => {
                     Closing Date
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Tender ID
+                    Ref No
                   </th>
                 </tr>
               </thead>
@@ -51,7 +51,10 @@ const ListTenders = ({ data }: any) => {
                 {data?.result?.map((tender: any) => (
                   <tr key={tender._id?.$oid}>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
+                      <div
+                        title={tender.refNo}
+                        className="text-sm text-gray-900"
+                      >
                         {truncateTitle(tender.title)}
                       </div>
                     </td>
@@ -66,8 +69,11 @@ const ListTenders = ({ data }: any) => {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        {tender.TenderId}
+                      <div
+                        title={tender.refNo}
+                        className="text-sm text-gray-900"
+                      >
+                        {truncateTitle(tender.refNo)}
                       </div>
                     </td>
                   </tr>

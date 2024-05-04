@@ -18,7 +18,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="max-w-[320px] w-full">
+    <div className="w-[300px]">
       <div className="py-4 h-full max-h-full rounded-3xl bg-gray-100  mt-14 ml-6 mr-6">
         <div className="px-6">
           <Image
