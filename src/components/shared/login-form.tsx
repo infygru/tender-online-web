@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
-const LoginForm = () => {
+const LoginForm = ({ setIsLogin }: any) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
@@ -81,12 +81,12 @@ const LoginForm = () => {
             </h1>
             <p className="mt-2 text-sm text-gray-600 dark:text-neutral-400">
               Dont have an account yet?{" "}
-              <Link
+              <button
                 className="text-blue-600 decoration-2 hover:underline font-medium dark:text-blue-500"
-                href="/signup"
+                onClick={() => setIsLogin(false)}
               >
                 Sign up here
-              </Link>
+              </button>
             </p>
           </div>
           <div className="mt-5">

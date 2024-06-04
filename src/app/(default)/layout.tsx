@@ -1,4 +1,5 @@
 "use client";
+import Footer from "@/components/shared/footer";
 import Sidebar from "@/components/shared/sidebar";
 import Header from "@/components/ui/header";
 import { usePathname } from "next/navigation";

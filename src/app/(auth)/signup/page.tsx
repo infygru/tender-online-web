@@ -13,8 +13,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Close } from "@radix-ui/react-dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
-const Page = () => {
+const Signup = ({ setIsLogin }: any) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<any>({
@@ -133,6 +134,7 @@ const Page = () => {
       if (!response.ok) {
         throw new Error("Registration failed");
       }
+
       const data = await response.json();
       setOtp(data);
       toast.success("otp sent successfully");
@@ -146,7 +148,7 @@ const Page = () => {
   };
 
   return (
-    <main className="flex items-center justify-center py-24">
+    <main className="flex items-center mt-6 justify-center">
       {loading && (
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="">
@@ -211,118 +213,123 @@ const Page = () => {
       )}
       <div className="w-full max-w-md">
         <div className="bg-white border border-gray-200 rounded-3xl shadow-sm">
-          <div className="p-8">
-            <h1 className="text-2xl font-bold mb-4">Register</h1>
-            <form onSubmit={handleSubmit}>
-              {/* Registration form fields */}
-              {Object.keys(formData).map((key) => (
-                <div key={key} className="mb-4">
-                  <label
-                    htmlFor={key}
-                    className="block font-semibold text-gray-700 mb-1"
-                  >
-                    {key.charAt(0).toUpperCase() + key.slice(1)}
-                  </label>
-                  <input
-                    type={key === "password" ? "password" : "text"}
-                    id={key}
-                    name={key}
-                    placeholder={`Enter ${key}`}
-                    value={formData[key]}
-                    onChange={handleChange}
-                    className={`w-full py-2 px-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 ${
-                      errors[key] && "border-red-500"
-                    }`}
-                  />
-                  {key === "email" && (
-                    <div className="">
-                      <DialogOpen
-                        button={
-                          <div
-                            onClick={handletosendemail}
-                            className="px-6 py-3 rounded-xl border text-sm font-semibold bg-gray-100 mt-2"
-                          >
-                            send otp
-                          </div>
-                        }
-                      >
-                        <div className="">
-                          <DialogHeader>
-                            <DialogTitle>
-                              Enter code sent on your email
-                            </DialogTitle>
-                            <DialogDescription>
-                              {formData.email}
-                            </DialogDescription>
-                          </DialogHeader>
-                          <div className="grid gap-4 py-4">
-                            <div className="grid grid-cols-4 items-center gap-4">
-                              <Label htmlFor="name" className="text-right">
-                                OTP
-                              </Label>
-                              <Input
-                                onChange={(e) => setTypeOtp(e.target.value)}
-                                placeholder="Enter OTP"
-                                type="text"
-                                id="otp"
-                                className="col-span-3"
-                                onKeyDown={(e) => {
-                                  if (e.key === "Enter") {
-                                    handletootpverify();
-                                  }
-                                }}
-                              />
+          <ScrollArea className="h-[70vh] min-h-auto w-full">
+            <div className="p-8">
+              <h1 className="text-2xl text-center font-bold mb-4">Register</h1>
+              <form onSubmit={handleSubmit}>
+                {/* Registration form fields */}
+                {Object.keys(formData).map((key) => (
+                  <div key={key} className="mb-4">
+                    <label
+                      htmlFor={key}
+                      className="block font-semibold text-gray-700 mb-1"
+                    >
+                      {key.charAt(0).toUpperCase() + key.slice(1)}
+                    </label>
+                    <input
+                      type={key === "password" ? "password" : "text"}
+                      id={key}
+                      name={key}
+                      placeholder={`Enter ${key}`}
+                      value={formData[key]}
+                      onChange={handleChange}
+                      className={`w-full py-2 px-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 ${
+                        errors[key] && "border-red-500"
+                      }`}
+                    />
+                    {key === "email" && formData[key] && (
+                      <div className="w-max">
+                        <DialogOpen
+                          button={
+                            <div className="flex items-end justify-end">
+                              <button
+                                onClick={handletosendemail}
+                                className="px-6 py-3 w-max rounded-xl border text-sm font-semibold bg-gray-100 mt-2"
+                              >
+                                send otp
+                              </button>
                             </div>
-                          </div>
-                          <div className="flex items-center justify-between w-full">
-                            <p className="mt-3 text-sm text-gray-500">
-                              Haven’t received the OTP
-                            </p>
-                            <div onClick={handletosendemail}>
-                              <span className="text-base cursor-pointer text-red-500 underline">
-                                Resend
-                              </span>
+                          }
+                        >
+                          <div className="">
+                            <DialogHeader>
+                              <DialogTitle>
+                                Enter code sent on your email
+                              </DialogTitle>
+                              <DialogDescription>
+                                {formData.email}
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="grid gap-4 py-4">
+                              <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="name" className="text-right">
+                                  OTP
+                                </Label>
+                                <Input
+                                  onChange={(e) => setTypeOtp(e.target.value)}
+                                  placeholder="Enter OTP"
+                                  type="text"
+                                  id="otp"
+                                  className="col-span-3"
+                                  onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                      handletootpverify();
+                                    }
+                                  }}
+                                />
+                              </div>
                             </div>
+                            <div className="flex items-center justify-between w-full">
+                              <p className="mt-3 text-sm text-gray-500">
+                                Haven’t received the OTP
+                              </p>
+                              <div onClick={handletosendemail}>
+                                <span className="text-base cursor-pointer text-red-500 underline">
+                                  Resend
+                                </span>
+                              </div>
+                            </div>
+                            <DialogFooter>
+                              <Close
+                                className="px-6 py-3 rounded-2xl border text-sm font-semibold bg-gray-100 mt-2"
+                                onClick={handletootpverify}
+                              >
+                                Save changes
+                              </Close>
+                            </DialogFooter>
                           </div>
-                          <DialogFooter>
-                            <Close
-                              className="px-6 py-3 rounded-2xl border text-sm font-semibold bg-gray-100 mt-2"
-                              onClick={handletootpverify}
-                            >
-                              Save changes
-                            </Close>
-                          </DialogFooter>
-                        </div>
-                      </DialogOpen>
-                    </div>
-                  )}
-                  {errors[key] && (
-                    <p className="text-sm text-red-500">{errors[key]}</p>
-                  )}
-                </div>
-              ))}
-              {/* General error message */}
-              {errors.general && (
-                <p className="text-sm text-red-500 mb-4">{errors.general}</p>
-              )}
-              <button
-                type="submit"
-                className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-              >
-                Register
-              </button>
-            </form>
-            <div className="text-sm flex items-center gap-2 mt-4">
-              Already have an account?{" "}
-              <Link href="/login">
-                <div className="text-blue-500 hover:underline">Login</div>
-              </Link>
+                        </DialogOpen>
+                      </div>
+                    )}
+                    {errors[key] && (
+                      <p className="text-sm text-red-500">{errors[key]}</p>
+                    )}
+                  </div>
+                ))}
+                {/* General error message */}
+                {errors.general && (
+                  <p className="text-sm text-red-500 mb-4">{errors.general}</p>
+                )}
+                <button
+                  type="submit"
+                  className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                >
+                  Register
+                </button>
+              </form>
+              <div className="text-sm flex items-center gap-2 mt-4">
+                Already have an account? {/* <Link href="/login"> */}
+                <button onClick={() => setIsLogin(true)}>
+                  <div className="text-blue-500 hover:underline">Login</div>
+                </button>
+                {/* </Link> */}
+              </div>
             </div>
-          </div>
+          </ScrollArea>
         </div>
       </div>
     </main>
   );
 };
 
-export default Page;
+export default Signup;

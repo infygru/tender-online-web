@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Footer from "@/components/shared/footer";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,6 +22,7 @@ export default function RootLayout({
           {children}
         </QueryClientProvider>
         <Toaster richColors />
+        <Footer />
       </body>
     </html>
   );

@@ -1,7 +1,12 @@
-import LoginForm from "@/components/shared/login-form";
+"use client";
 import Header from "@/components/ui/header";
+import Signup from "../(auth)/signup/page";
+import { useEffect, useState } from "react";
+import LoginForm from "@/components/shared/login-form";
 
 export default function Home() {
+  const [islogin, setIsLogin] = useState<boolean>(false);
+
   return (
     <main className="flex min-h-screen items-center justify-between p-2 lg:p-24">
       <Header />
@@ -166,7 +171,11 @@ export default function Home() {
               {/* End Review */}
             </div>
             {/* End Col */}
-            <LoginForm />
+            {islogin ? (
+              <LoginForm setIsLogin={setIsLogin} />
+            ) : (
+              <Signup setIsLogin={setIsLogin} />
+            )}
             {/* End Col */}
           </div>
           {/* End Grid */}
