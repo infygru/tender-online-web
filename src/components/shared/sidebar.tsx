@@ -14,7 +14,7 @@ interface SidebarItem {
 const Sidebar: React.FC = () => {
   const router = useRouter();
   const pathName = usePathname();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
   const [activeQueries, setActiveQueries] = useState<Record<string, string>>(
     {}
@@ -34,23 +34,24 @@ const Sidebar: React.FC = () => {
       queryValue: "location",
     },
     {
-      title:"Department",
+      title: "Department",
       path: "/tenders",
       queryKey: "department",
       queryValue: "department",
-    }
+    },
   ];
 
-  useEffect(() => {
-    const params: Record<string, string> = {};
-    searchParams.forEach((value, key) => {
-      params[key] = value;
-    });
-    setActiveQueries(params);
-  }, [searchParams]);
+  // useEffect(() => {
+  //   const params: Record<string, string> = {};
+  //   searchParams.forEach((value, key) => {
+  //     params[key] = value;
+  //   });
+  //   setActiveQueries(params);
+  // }, [searchParams]);
 
   const handleClick = (item: SidebarItem) => {
-    const currentParams = new URLSearchParams(searchParams.toString());
+    // const currentParams = new URLSearchParams(searchParams.toString());
+    const currentParams = new URLSearchParams();
     if (currentParams.get(item.queryKey) === item.queryValue) {
       currentParams.delete(item.queryKey);
     } else {
