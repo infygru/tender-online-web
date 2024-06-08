@@ -1,5 +1,6 @@
 import React from "react";
 import { ScrollArea } from "../ui/scroll-area";
+
 export const formatDateTime = (dateTime: string) => {
   const date = new Date(dateTime);
   return date.toLocaleString(undefined, {
@@ -11,6 +12,7 @@ export const formatDateTime = (dateTime: string) => {
     hour12: true,
   });
 };
+
 export const truncateTitle = (title: string, nowords: number = 5) => {
   const words = title.split(" ");
   if (words.length > nowords) {
@@ -18,18 +20,16 @@ export const truncateTitle = (title: string, nowords: number = 5) => {
   }
   return title;
 };
+
 const ListTenders = ({ data }: any) => {
   const isLoading = false;
   return (
-    <div className=" px-8 overflow-x-auto pt-12">
-      <h2 className="text-xl font-bold sm:text-3xl md:text-2xl dark:text-white mb-4">
-        List of Tenders
-      </h2>
+    <div className=" px-8 overflow-x-auto">
       {isLoading ? (
         <div className="py-24 px-24">Loading...</div>
       ) : (
         <div className="shadow-md   border rounded-3xl overflow-hidden">
-          <ScrollArea className="h-[83vh]">
+          <ScrollArea className="h-[80vh]">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import LoginForm from "@/components/shared/login-form";
 
 export default function Home() {
-  const [islogin, setIsLogin] = useState<boolean>(false);
+  const [islogin, setIsLogin] = useState<boolean>(true);
 
   return (
     <main className="flex min-h-screen items-center justify-between p-2 lg:p-24">

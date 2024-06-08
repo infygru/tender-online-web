@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
+import Loading from "../ui/loading";
 
 const LoginForm = ({ setIsLogin }: any) => {
   const router = useRouter();
@@ -10,6 +11,8 @@ const LoginForm = ({ setIsLogin }: any) => {
     email: "",
     password: "",
   });
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [errors, setErrors] = useState({
     email: "",
@@ -24,7 +27,7 @@ const LoginForm = ({ setIsLogin }: any) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
+    setIsLoading(true);
     // Validation
     let formIsValid = true;
     const { email, password } = formData;
@@ -69,7 +72,10 @@ const LoginForm = ({ setIsLogin }: any) => {
       console.error("Login failed:", error);
       setErrors({ ...errors, general: "Login failed. Please try again." });
     }
+    setIsLoading(false);
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="mt-7">
