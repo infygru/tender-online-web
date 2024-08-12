@@ -1,4 +1,5 @@
 import React from "react";
+import { SelectState } from "./selectState";
 
 const TenderHeader = () => {
   const [isClicked, setIsClicked] = React.useState(false);
@@ -8,22 +9,37 @@ const TenderHeader = () => {
   };
 
   return (
-    <div className="flex items-center justify-between px-8 py-6">
+    <div className="flex items-center w-full px-8 py-6">
       <div className="">
-        <div className="text-2xl font-bold text-gray-800">Tenders</div>
-        <div className="text-sm text-gray-500">
-          Find the best tenders for your business
-        </div>
+        <img src="/logo.png" className="w-10/12" alt="logo" />
       </div>
-      <div className="">
-        <button
-          className={`px-4 py-2 rounded-xl text-sm font-semibold border ${
-            isClicked ? "bg-blue-500 text-white" : ""
-          }`}
-          onClick={handleClick}
-        >
-          For You
-        </button>
+      <div className="flex items-center gap-3 w-full">
+        <div className="bg-[#171717] py-2 w-full  px-4 flex items-center justify-between gap-6 rounded-full">
+          <div className="flex items-center gap-3">
+            <div className="">
+              <SelectState />
+            </div>
+            <div className="">
+              <h1 className="text-white text-center text-base not-italic font-medium leading-[25px]">
+                Showing 156 Tenders in Tamilnadu{" "}
+              </h1>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="">
+              <button className="border-4 border-yellow-400 bg-[#EEE] font-semibold rounded-full px-4 py-2">
+                For you
+              </button>
+            </div>
+            <div className="">
+              <img
+                className="w-10 h-10 rounded-full"
+                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                alt="Rounded avatar"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

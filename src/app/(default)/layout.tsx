@@ -11,8 +11,8 @@ export default function RootLayout({
 }>) {
   const pathName = usePathname();
   return (
-    <div className="flex">
-      {pathName === "/tenders" && <Sidebar />}
+    <div className="">
+      {/* {pathName === "/tenders" && <Sidebar />} */}
       <div className="">{children}</div>
     </div>
   );

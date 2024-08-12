@@ -1,10 +1,11 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import ListTenders from "@/components/shared/list-tenders";
 import TenderHeader from "@/components/shared/tender-header";
 import WelcomeModal from "@/components/shared/welcome-model";
 import Loading from "@/components/ui/loading";
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import { DataTableTender } from "@/components/table/tender-table";
 
 export default function Page() {
   const [showWelcome, setShowWelcome] = useState(false);
@@ -12,9 +13,7 @@ export default function Page() {
   const { data, isLoading } = useQuery({
     queryKey: ["tenders"],
     queryFn: async () => {
-      const response = await fetch(
-        "https://tender-online-h4lh.vercel.app/api/tender/all"
-      );
+      const response = await fetch("http://localhost:3000/api/tender/all");
       return response.json();
     },
   });
@@ -31,13 +30,14 @@ export default function Page() {
   }
 
   return (
-    <main className="">
+    <main className="w-full px-4">
       {showWelcome && (
         <WelcomeModal onClose={() => setShowWelcome(false)} clientId="hi" />
       )}
       <TenderHeader />
-      <div className="w-full max-w-6xl">
-        <ListTenders data={data} />
+      <div className="w-full ">
+        {/* <ListTenders data={data} /> */}
+        <DataTableTender data={data.result} />
       </div>
     </main>
   );

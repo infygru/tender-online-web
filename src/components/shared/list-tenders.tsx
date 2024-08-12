@@ -14,9 +14,9 @@ export const formatDateTime = (dateTime: string) => {
 };
 
 export const truncateTitle = (title: string, nowords: number = 5) => {
-  const words = title.split(" ");
-  if (words.length > nowords) {
-    return words.slice(0, nowords).join(" ") + "...";
+  const words = title?.split(" ");
+  if (words?.length > nowords) {
+    return words?.slice(0, nowords).join(" ") + "...";
   }
   return title;
 };
@@ -43,7 +43,13 @@ const ListTenders = ({ data }: any) => {
                     Closing Date
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Ref No
+                    District
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Department
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Bid Opening Date
                   </th>
                 </tr>
               </thead>
@@ -55,17 +61,17 @@ const ListTenders = ({ data }: any) => {
                         title={tender.refNo}
                         className="text-sm text-gray-900"
                       >
-                        {truncateTitle(tender.title)}
+                        {truncateTitle(tender.tenderName)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">
-                        {formatDateTime(tender.openingDate)}
+                        {formatDateTime(tender.epublishedDate)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">
-                        {formatDateTime(tender.closeingDate)}
+                        {formatDateTime(tender.bidSubmissionDate)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -73,7 +79,23 @@ const ListTenders = ({ data }: any) => {
                         title={tender.refNo}
                         className="text-sm text-gray-900"
                       >
-                        {truncateTitle(tender.refNo)}
+                        {truncateTitle(tender.district)}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div
+                        title={tender.refNo}
+                        className="text-sm text-gray-900"
+                      >
+                        {truncateTitle(tender.department)}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div
+                        title={tender.refNo}
+                        className="text-sm text-gray-900"
+                      >
+                        {truncateTitle(tender.bidOpeningDate)}
                       </div>
                     </td>
                   </tr>
