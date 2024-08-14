@@ -37,7 +37,7 @@ export default function Page() {
       <TenderHeader />
       <div className="w-full ">
         {/* <ListTenders data={data} /> */}
-        <DataTableTender data={data.result} />
+        <DataTableTender  />
       </div>
     </main>
   );

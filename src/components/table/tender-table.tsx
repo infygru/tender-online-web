@@ -34,6 +34,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../ui/loading";
 
 // Define the type for the tender data
 export type Tender = {
@@ -191,19 +193,51 @@ export const columns: ColumnDef<Tender>[] = [
   },
 ];
 
-export function DataTableTender({ data }: { data: Tender[] }) {
+export function DataTableTender() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  console.log(data, "data");
+
+  const [district, setDistrict] = React.useState<string>("");
+  const [tenderValue, setTenderValue] = React.useState<string>("");
+  const [department, setDepartment] = React.useState<string>("");
+  const [status, setStatus] = React.useState<string>("");
+  const [search, setSearch] = React.useState<string>("");
+  const {
+    data: tenders,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["tenders"],
+    queryFn: async () => {
+      const queryParams = new URLSearchParams({
+        district,
+        tenderValue,
+        department,
+        status,
+        search,
+      });
+
+      const response = await fetch(
+        `http://localhost:3000/api/tender/all?${queryParams.toString()}`
+      );
+      return response.json();
+    },
+  });
+  const data = tenders?.result;
+
+  React.useEffect(() => {
+    refetch();
+  }, [district, tenderValue, department, status, search]);
 
   const table = useReactTable({
-    data,
-    columns,
+    data: data || [],
+    columns: columns || [],
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -220,8 +254,61 @@ export function DataTableTender({ data }: { data: Tender[] }) {
     },
   });
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  // Define the type for dropdown options
+  type DropdownOption = {
+    value: string;
+    label: string;
+  };
+
+  // Define a mapping between labels and their corresponding data arrays
+  const dropdownData: Record<string, DropdownOption[]> = {
+    District: [
+      { value: "bangalore", label: "Bangalore" },
+      { value: "mangalore", label: "Mangalore" },
+      { value: "mysore", label: "Mysore" },
+      { value: "cuddalore", label: "Cuddalore" },
+    ],
+    "Tender Value": [
+      { value: "1", label: "1" },
+      { value: "2", label: "2" },
+      { value: "3", label: "3" },
+    ],
+    Department: [
+      { value: "PWD", label: "PWD" },
+      { value: "Water Supply", label: "Water Supply" },
+      { value: "Electricity", label: "Electricity" },
+    ],
+    Status: [
+      { value: "Active", label: "Active" },
+      { value: "Inactive", label: "Inactive" },
+    ],
+  };
+  const handleDropdownChange = (label: string, value: string) => {
+    switch (label) {
+      case "District":
+        setDistrict(value);
+        break;
+      case "Tender Value":
+        setTenderValue(value);
+        break;
+      case "Department":
+        setDepartment(value);
+        break;
+      case "Status":
+        setStatus(value);
+        break;
+      default:
+        break;
+    }
+  };
+  // Function to render the dropdown menu dynamically
   const renderDropdownMenu = (label: string) => {
-    const column = table.getColumn(label.toLowerCase());
+    const options = dropdownData[label] || [];
+
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -230,21 +317,25 @@ export function DataTableTender({ data }: { data: Tender[] }) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          {/* {column?.getFilterOptions().map((option) => (
-            <DropdownMenuCheckboxItem
+          {options.map((option) => (
+            <DropdownMenuItem
+              onSelect={() => handleDropdownChange(label, option.value)}
               key={option.value}
-              className="capitalize"
-              checked={column.getIsOptionVisible(option.value)}
-              onCheckedChange={(value: boolean) =>
-                column.toggleOptionVisibility(option.value, value)
-              }
             >
               {option.label}
-            </DropdownMenuCheckboxItem>
-          ))} */}
+            </DropdownMenuItem>
+          ))}
         </DropdownMenuContent>
       </DropdownMenu>
     );
+  };
+  const dropdownLabels = ["District", "Tender Value", "Department", "Status"];
+  const clearFilters = () => {
+    setDistrict("");
+    setTenderValue("");
+    setDepartment("");
+    setStatus("");
+    setSearch("");
   };
 
   return (
@@ -255,15 +346,22 @@ export function DataTableTender({ data }: { data: Tender[] }) {
           value={
             (table.getColumn("tenderName")?.getFilterValue() as string) ?? ""
           }
-          onChange={(event) =>
-            table.getColumn("tenderName")?.setFilterValue(event.target.value)
-          }
+          onChange={(event) => {
+            setSearch(event.target.value);
+          }}
           className="max-w-sm"
         />
         <div className="flex items-center gap-2">
-          {["District", "Tender Value", "Department", "Status"].map((label) =>
-            renderDropdownMenu(label)
+          {dropdownLabels.map((label) => renderDropdownMenu(label))}
+          {(district || tenderValue || department || status) && (
+            <button
+              onClick={clearFilters}
+              className="bg-[#1C1A1A] px-4 py-2.5 rounded-md text-white text-xs"
+            >
+              Clear
+            </button>
           )}
+
           <div className="mx-2">
             <button className="bg-[#1C1A1A] px-4 py-2.5 rounded-md text-white text-xs">
               Request For Documents
@@ -290,8 +388,8 @@ export function DataTableTender({ data }: { data: Tender[] }) {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+            {table?.getRowModel().rows?.length ? (
+              table?.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}

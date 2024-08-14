@@ -2,6 +2,7 @@
 
 import LoginForm from "@/components/shared/login-form";
 import Header from "@/components/ui/header";
+import Link from "next/link";
 import React from "react";
 interface SectionData {
   title: string;
@@ -34,14 +35,15 @@ export default function Home() {
       <Header />
       <div className="flex h-screen">
         {/* Left Pane */}
-        <div className="hidden lg:flex items-center justify-center flex-1 bg-white text-black">
-          <div className=" text-center relative">
+        <div className="hidden lg:flex h-screen relative w-full items-center justify-center flex-1 bg-white text-black">
+          <div className=" text-center  w-full relative">
+            <div className="fill-black bg-black opacity-50 absolute inset-0"></div>
             <img
-              src="https://images.unsplash.com/photo-1529653762956-b0a27278529c?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              className="object-cover w-full h-screen"
+              src="/login.png"
+              className="object-cover  w-full h-screen"
               alt=""
             />
-            <div className="absolute top-[20%] px-24">
+            <div className="absolute top-[20%] h-full px-24">
               <h1 className="text-white text-[32px] not-italic font-semibold leading-[51px] uppercase">
                 Join The Line Up Of Bidders For Government Tenders
               </h1>
@@ -94,6 +96,11 @@ export default function Home() {
                     )}
                   </>
                 ))}
+              </div>
+              <div className="flex text-gray-100 items-center z-50 gap-12 fixed bottom-10 text-xs">
+                <Link href={"/"}>Terms & Conditions </Link>
+                <Link href={"/"}>Privacy Policy </Link>
+                <Link href={"/"}>Cookie Policy </Link>
               </div>
             </div>
           </div>
