@@ -80,7 +80,7 @@ const Signup = ({ setIsLogin }: any) => {
     try {
       // Make registration API call
       const response = await fetch(
-        "http://localhost:3000/api/auth/create/account",
+        "https://tender-online-h4lh.vercel.app/api/auth/create/account",
         {
           method: "POST",
           headers: {
@@ -120,13 +120,16 @@ const Signup = ({ setIsLogin }: any) => {
   const handletosendemail = async () => {
     try {
       // Make registration API call
-      const response = await fetch("http://localhost:3000/api/auth/otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: formData.email }),
-      });
+      const response = await fetch(
+        "https://tender-online-h4lh.vercel.app/api/auth/otp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: formData.email }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Registration failed");
