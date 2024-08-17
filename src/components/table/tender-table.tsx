@@ -178,14 +178,14 @@ export const columns: ColumnDef<Tender>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
+            {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
+            {/* <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(tender._id)}
             >
               Copy tender ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View tender details</DropdownMenuItem>
+            <DropdownMenuItem>View tender details</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -202,6 +202,10 @@ export function DataTableTender() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  console.log(rowSelection, "rowSelection");
+  const isAnyRowSelected = Object.values(rowSelection).some(
+    (selected) => selected
+  );
 
   const [district, setDistrict] = React.useState<string>("");
   const [tenderValue, setTenderValue] = React.useState<string>("");
@@ -363,9 +367,11 @@ export function DataTableTender() {
           )}
 
           <div className="mx-2">
-            <button className="bg-[#1C1A1A] px-4 py-2.5 rounded-md text-white text-xs">
-              Request For Documents
-            </button>
+            {isAnyRowSelected && (
+              <button className="bg-[#1C1A1A] px-4 py-2.5 rounded-md text-white text-xs">
+                Request For Documents
+              </button>
+            )}
           </div>
         </div>
       </div>

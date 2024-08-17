@@ -22,11 +22,11 @@ const Signup = ({ setIsLogin }: any) => {
     name: "",
     phone: "",
     email: "",
-    msmeNo: "",
-    gstNo: "",
-    username: "",
+    // msmeNo: "",
+    // gstNo: "",
+    // username: "",
     password: "",
-    subscriptionPackage: "",
+    // subscriptionPackage: "",
   });
 
   const [otp, setOtp] = useState<any>("");
@@ -35,11 +35,11 @@ const Signup = ({ setIsLogin }: any) => {
     name: "",
     phone: "",
     email: "",
-    msmeNo: "",
-    gstNo: "",
-    username: "",
+    // msmeNo: "",
+    // gstNo: "",
+    // username: "",
     password: "",
-    subscriptionPackage: "",
+    // subscriptionPackage: "",
     general: "",
   });
 
@@ -148,7 +148,7 @@ const Signup = ({ setIsLogin }: any) => {
   };
 
   return (
-    <main className="flex items-center mt-6 justify-center">
+    <main className="flex w-full items-center mt-6 justify-center">
       {loading && (
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="">
@@ -211,7 +211,7 @@ const Signup = ({ setIsLogin }: any) => {
           </div>
         </div>
       )}
-      <div className="w-full max-w-md">
+      <div className="w-[60%]">
         <div className="bg-white border border-gray-200 rounded-3xl shadow-sm">
           <ScrollArea className="h-[70vh] min-h-auto w-full">
             <div className="p-8">

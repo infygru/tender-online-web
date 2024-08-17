@@ -7,7 +7,7 @@ const Header = () => {
         <div className="border  bg-white rounded-xl px-6 py-3  w-full">
           <div className="flex justify-between">
             <div className="text-2xl font-bold">
-              <img src="/logo.png" className="h-12" alt="" />
+              <img src="/logo.png" className="h-14" alt="" />
             </div>
             <div className="flex space-x-4">
               <div className="flex items-center gap-2">

@@ -4,6 +4,7 @@ import LoginForm from "@/components/shared/login-form";
 import Header from "@/components/ui/header";
 import Link from "next/link";
 import React from "react";
+import Signup from "../(auth)/signup/page";
 interface SectionData {
   title: string;
   description: string;
@@ -17,13 +18,13 @@ const sections: SectionData[] = [
     hasBorder: true,
   },
   {
-    title: "The People",
-    description: "Bringing the Quality of Life",
+    title: "The Government",
+    description: "Ideal Selection Of Bidders",
     hasBorder: true,
   },
   {
-    title: "The People",
-    description: "Bringing the Quality of Life",
+    title: "The Business",
+    description: "Scale New Heights in Your Business",
     hasBorder: false,
   },
 ];
@@ -43,7 +44,7 @@ export default function Home() {
               className="object-cover  w-full h-screen"
               alt=""
             />
-            <div className="absolute top-[20%] h-full px-24">
+            <div className="absolute  top-[23%]  px-24">
               <h1 className="text-white text-[32px] not-italic font-semibold leading-[51px] uppercase">
                 Join The Line Up Of Bidders For Government Tenders
               </h1>
@@ -64,10 +65,10 @@ export default function Home() {
                       key={index}
                       className={section.hasBorder ? " w-full " : " w-full"}
                     >
-                      <h2 className="px-6 py-4 text-white text-sm">
+                      <h2 className="px-6 py-4 text-white font-bold text-sm">
                         {section.title}
                       </h2>
-                      <p className="text-white text-[10px] font-normal">
+                      <p className="text-white px-10 font-istok-web text-[10px] font-normal">
                         {section.description}
                       </p>
                     </div>
@@ -97,7 +98,7 @@ export default function Home() {
                   </>
                 ))}
               </div>
-              <div className="flex text-gray-100 items-center z-50 gap-12 fixed bottom-10 text-xs">
+              <div className="flex text-gray-100 items-center pt-44 text-center justify-center z-50 gap-12  mt-auto  text-xs">
                 <Link href={"/"}>Terms & Conditions </Link>
                 <Link href={"/"}>Privacy Policy </Link>
                 <Link href={"/"}>Cookie Policy </Link>
@@ -107,7 +108,11 @@ export default function Home() {
         </div>
         {/* Right Pane */}
         <div className="w-full  lg:w-1/2 flex items-center justify-center">
-          <LoginForm setIsLogin={setIsLogin} />
+          {isLogin ? (
+            <LoginForm setIsLogin={setIsLogin} />
+          ) : (
+            <Signup setIsLogin={setIsLogin} />
+          )}
         </div>
       </div>
     </main>

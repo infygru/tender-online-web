@@ -1,5 +1,6 @@
 import React from "react";
 import { SelectState } from "./selectState";
+import { useQuery } from "@tanstack/react-query";
 
 const TenderHeader = () => {
   const [isClicked, setIsClicked] = React.useState(false);
@@ -7,7 +8,15 @@ const TenderHeader = () => {
   const handleClick = () => {
     setIsClicked(!isClicked);
   };
-
+  const { data, isLoading } = useQuery({
+    queryKey: ["tenders"],
+    queryFn: async () => {
+      const response = await fetch(
+        "https://tender-online-h4lh.vercel.app/api/tender/all"
+      );
+      return response.json();
+    },
+  });
   return (
     <div className="flex items-center w-full px-8 py-6">
       <div className="">
@@ -21,7 +30,7 @@ const TenderHeader = () => {
             </div>
             <div className="">
               <h1 className="text-white text-center text-base not-italic font-medium leading-[25px]">
-                Showing 156 Tenders in Tamilnadu{" "}
+                Showing {data?.result?.length} Tenders in Tamilnadu{" "}
               </h1>
             </div>
           </div>
