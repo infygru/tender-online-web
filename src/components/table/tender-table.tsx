@@ -36,6 +36,7 @@ import {
 } from "@/components/ui/table";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../ui/loading";
+import { ScrollArea } from "../ui/scroll-area";
 
 // Define the type for the tender data
 export type Tender = {
@@ -262,35 +263,103 @@ export function DataTableTender() {
     return <Loading />;
   }
 
-  // Define the type for dropdown options
-  type DropdownOption = {
-    value: string;
-    label: string;
-  };
+  const districts = [
+    "Ariyalur",
+    "Chengalpattu",
+    "Chennai",
+    "Coimbatore",
+    "Cuddalore",
+    "Dharmapuri",
+    "Dindigul",
+    "Erode",
+    "Kallakurichi",
+    "Kancheepuram",
+    "Kanniyakumari",
+    "Karur",
+    "Krishnagiri",
+    "Madurai",
+    "Mayiladuthurai",
+    "Nagapattinam",
+    "Namakkal",
+    "Nilgiris",
+    "Perambalur",
+    "Pudukkottai",
+    "Ramanathapuram",
+    "Ranipet",
+    "Salem",
+    "Sivaganga",
+    "Tenkasi",
+    "Thanjavur",
+    "Theni",
+    "Thoothukudi",
+    "Tiruchirappalli",
+    "Tirunelveli",
+    "Tirupattur",
+    "Tiruppur",
+    "Tiruvallur",
+    "Tiruvannamalai",
+    "Tiruvarur",
+    "Vellore",
+    "Viluppuram",
+    "Virudhunagar",
+  ];
 
-  // Define a mapping between labels and their corresponding data arrays
-  const dropdownData: Record<string, DropdownOption[]> = {
-    District: [
-      { value: "bangalore", label: "Bangalore" },
-      { value: "mangalore", label: "Mangalore" },
-      { value: "mysore", label: "Mysore" },
-      { value: "cuddalore", label: "Cuddalore" },
-    ],
+  const departments = [
+    "Agriculture Department",
+    "Animal Husbandry Department",
+    "BC, MBC & Minorities Welfare Department",
+    "Commercial Taxes and Registration Department",
+    "Co-operation, Food and Consumer Protection Department",
+    "Energy Department",
+    "Environment and Forests Department",
+    "Finance Department",
+    "Handlooms, Handicrafts, Textiles and Khadi Department",
+    "Health and Family Welfare Department",
+    "Higher Education Department",
+    "Highways and Minor Ports Department",
+    "Home, Prohibition and Excise Department",
+    "Housing and Urban Development Department",
+    "Industries Department",
+    "Information Technology Department",
+    "Labour Welfare and Skill Development Department",
+    "Law Department",
+    "Municipal Administration and Water Supply Department",
+    "Planning, Development and Special Initiatives Department",
+    "Public Department",
+    "Public Works Department",
+    "Revenue and Disaster Management Department",
+    "Rural Development and Panchayat Raj Department",
+    "School Education Department",
+    "Social Welfare and Women Empowerment Department",
+    "Tamil Development and Information Department",
+    "Tourism, Culture and Religious Endowments Department",
+    "Transport Department",
+    "Youth Welfare and Sports Development Department",
+  ];
+
+  const dropdownData: Record<string, any[]> = {
+    District: districts.map((district) => ({
+      value: district.toLowerCase().replace(/\s+/g, ""),
+      label: district,
+    })),
     "Tender Value": [
       { value: "1", label: "1" },
       { value: "2", label: "2" },
       { value: "3", label: "3" },
     ],
-    Department: [
-      { value: "PWD", label: "PWD" },
-      { value: "Water Supply", label: "Water Supply" },
-      { value: "Electricity", label: "Electricity" },
-    ],
+    Department: departments.map((department) => ({
+      value: department
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        .replace(/[^a-z0-9]/g, ""),
+      label: department,
+    })),
     Status: [
       { value: "Active", label: "Active" },
       { value: "Inactive", label: "Inactive" },
     ],
   };
+
   const handleDropdownChange = (label: string, value: string) => {
     switch (label) {
       case "District":
@@ -321,14 +390,16 @@ export function DataTableTender() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          {options.map((option) => (
-            <DropdownMenuItem
-              onSelect={() => handleDropdownChange(label, option.value)}
-              key={option.value}
-            >
-              {option.label}
-            </DropdownMenuItem>
-          ))}
+          <ScrollArea className="h-60">
+            {options.map((option) => (
+              <DropdownMenuItem
+                onSelect={() => handleDropdownChange(label, option.value)}
+                key={option.value}
+              >
+                {option.label}
+              </DropdownMenuItem>
+            ))}
+          </ScrollArea>
         </DropdownMenuContent>
       </DropdownMenu>
     );
@@ -376,52 +447,54 @@ export function DataTableTender() {
         </div>
       </div>
       <div className="">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table?.getRowModel().rows?.length ? (
-              table?.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
+        <ScrollArea className="">
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
                   ))}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table?.getRowModel().rows?.length ? (
+                table?.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </ScrollArea>
       </div>
       <div className="flex px-4 items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">

@@ -30,7 +30,7 @@ const sections: SectionData[] = [
 ];
 
 export default function Home() {
-  const [isLogin, setIsLogin] = React.useState(false);
+  const [isLogin, setIsLogin] = React.useState(true);
   return (
     <main className="relative">
       <Header />
@@ -44,17 +44,17 @@ export default function Home() {
               className="object-cover  w-full h-screen"
               alt=""
             />
-            <div className="absolute  top-[23%]  px-24">
-              <h1 className="text-white text-[32px] not-italic font-semibold leading-[51px] uppercase">
+            <div className="absolute  top-[23%] px-24">
+              <h1 className="text-white text-start w-full text-[32px] not-italic font-semibold leading-[51px] uppercase">
                 Join The Line Up Of Bidders For Government Tenders
               </h1>
 
-              <div className="flex pl-12 pt-8 gap-8">
+              <div className="flex pl-0 pt-8 gap-8">
                 <button className="px-6 py-1 rounded-md bg-gray-100 ">
                   About us
                 </button>
                 <button className="px-6 py-1 rounded-md bg-gray-100 ">
-                  pricing
+                  Pricing
                 </button>
               </div>
 

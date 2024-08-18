@@ -327,6 +327,9 @@ const Signup = ({ setIsLogin }: any) => {
             </div>
           </ScrollArea>
         </div>
+        <div className="flex items-end pt-6 w-full justify-end">
+          <p>© TenderOnline 2024</p>
+        </div>
       </div>
     </main>
   );

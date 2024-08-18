@@ -212,7 +212,7 @@ const LoginForm = ({ setIsLogin }: any) => {
           </div>
         </div>
       </div>
-      <div className="flex items-end pt-4 w-full justify-end">
+      <div className="flex items-end pt-6 w-full justify-end">
         <p>© TenderOnline 2024</p>
       </div>
     </div>
