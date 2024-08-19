@@ -107,7 +107,7 @@ export default function Home() {
           </div>
         </div>
         {/* Right Pane */}
-        <div className="w-full  lg:w-1/2 flex items-center justify-center">
+        <div className="w-full lg:w-1/2 flex items-start lg:items-center justify-center lg:justify-center">
           {isLogin ? (
             <LoginForm setIsLogin={setIsLogin} />
           ) : (
