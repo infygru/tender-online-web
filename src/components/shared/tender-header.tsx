@@ -18,29 +18,29 @@ const TenderHeader = () => {
     },
   });
   return (
-    <div className="flex items-center w-full px-8 py-6">
+    <div className="flex items-center w-full px-1 lg:px-8 py-2 lg:py-6">
       <div className="">
-        <img src="/logo.png" className="w-10/12" alt="logo" />
+        <img src="/logo.png" className=" w-44 lg:w-10/12" alt="logo" />
       </div>
       <div className="flex items-center gap-3 w-full">
-        <div className="bg-[#171717] py-2 w-full  px-4 flex items-center justify-between gap-6 rounded-full">
+        <div className="lg:bg-[#171717] bg-white py-2 w-full  px-0 lg:px-4 flex items-center justify-between gap-6 rounded-full">
           <div className="flex items-center gap-3">
-            <div className="">
+            <div className="lg:pl-0 pl-8">
               <SelectState />
             </div>
-            <div className="">
+            <div className="hidden lg:block">
               <h1 className="text-white text-center text-base not-italic font-medium leading-[25px]">
                 Showing {data?.result?.length} Tenders in Tamilnadu{" "}
               </h1>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="">
-              <button className="border-4 border-yellow-400 bg-[#EEE] font-semibold rounded-full px-4 py-2">
+          <div className="lg:flex  hidden items-center gap-3">
+            <div className="flex">
+              <button className="border-4 flex text-xs lg:text-sm border-yellow-400 bg-[#EEE] font-semibold rounded-full px-4 py-2">
                 For you
               </button>
             </div>
-            <div className="">
+            <div className="lg:block hidden">
               <img
                 className="w-10 h-10 rounded-full"
                 src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
