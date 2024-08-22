@@ -213,19 +213,19 @@ const Signup = ({ setIsLogin }: any) => {
       )}
       <div className="w-[60%]">
         <div className="bg-white border border-gray-200 rounded-3xl shadow-sm">
-          <ScrollArea className="h-[70vh] min-h-auto w-full">
+          <ScrollArea className="h-[58vh] min-h-auto w-full">
             <div className="p-8">
               <h1 className="text-2xl text-center font-bold mb-4">Register</h1>
               <form onSubmit={handleSubmit}>
                 {/* Registration form fields */}
                 {Object.keys(formData).map((key) => (
                   <div key={key} className="mb-4">
-                    <label
+                    {/* <label
                       htmlFor={key}
                       className="block font-semibold text-gray-700 mb-1"
                     >
                       {key.charAt(0).toUpperCase() + key.slice(1)}
-                    </label>
+                    </label> */}
                     <input
                       type={key === "password" ? "password" : "text"}
                       id={key}
@@ -317,7 +317,7 @@ const Signup = ({ setIsLogin }: any) => {
                   Register
                 </button>
               </form>
-              <div className="text-sm flex items-center gap-2 mt-4">
+              <div className="text-sm text-center w-full flex items-center gap-2 mt-4">
                 Already have an account? {/* <Link href="/login"> */}
                 <button onClick={() => setIsLogin(true)}>
                   <div className="text-blue-500 hover:underline">Login</div>

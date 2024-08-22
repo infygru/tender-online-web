@@ -171,7 +171,7 @@ const LoginForm = ({ setIsLogin }: any) => {
             </div>
             <button
               type="button"
-              className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+              className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg  border-gray-200 bg-gray-100/50 text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
             >
               <svg
                 className="w-4 h-auto"
@@ -199,7 +199,7 @@ const LoginForm = ({ setIsLogin }: any) => {
               </svg>
               Sign in with Google
             </button>
-            <p className="mt-2 text-sm text-gray-600 dark:text-neutral-400">
+            <p className="mt-2 text-center text-sm text-gray-600 dark:text-neutral-400">
               Dont have an account yet?{" "}
               <button
                 className="text-blue-600 decoration-2 hover:underline font-medium dark:text-blue-500"
