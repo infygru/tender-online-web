@@ -34,7 +34,7 @@ const TenderHeader = () => {
               </h1>
             </div>
           </div>
-          <div className="lg:flex  hidden items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3">
             <div className="flex">
               <button className="border-4 flex text-xs lg:text-sm border-yellow-400 bg-[#EEE] font-semibold rounded-full px-4 py-2">
                 For you

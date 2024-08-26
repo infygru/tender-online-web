@@ -37,6 +37,17 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../ui/loading";
 import { ScrollArea } from "../ui/scroll-area";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import TenderDetailsDialog from "../shared/TenderDetailsDialog";
 
 // Define the type for the tender data
 export type Tender = {
@@ -55,7 +66,7 @@ export const columns: ColumnDef<Tender>[] = [
     id: "select",
     header: ({ table }) => (
       <Checkbox
-        className=" rounded"
+        className="rounded"
         checked={
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && "indeterminate")
@@ -66,7 +77,7 @@ export const columns: ColumnDef<Tender>[] = [
     ),
     cell: ({ row }) => (
       <Checkbox
-        className=" rounded"
+        className="rounded"
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
@@ -83,17 +94,20 @@ export const columns: ColumnDef<Tender>[] = [
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Tender Name
+        Tender Title
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="flex items-center gap-3 ">
+      <div
+        title={row.getValue("tenderName")}
+        className="flex items-center min-w-60 gap-3"
+      >
         <div className="flex flex-col">
           <span className="font-bold text-gray-900">
             {row.getValue("department")}
           </span>
-          <span className="text-xs line-clamp-2 font-normal text-gray-500">
+          <span className="text-xs line-clamp-3 font-normal text-gray-500">
             {row.getValue("tenderName")}
           </span>
         </div>
@@ -112,11 +126,16 @@ export const columns: ColumnDef<Tender>[] = [
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        published Date
+        Published Date
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{row.getValue("epublishedDate")}</div>,
+    // Reduce the column width by applying a custom class
+    cell: ({ row }) => (
+      <div className="text-xs text-center w-44">
+        {row.getValue("epublishedDate")}
+      </div>
+    ),
   },
   {
     accessorKey: "bidSubmissionDate",
@@ -126,11 +145,16 @@ export const columns: ColumnDef<Tender>[] = [
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Bid Submission Date End date
+        Bid Submission Date
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{row.getValue("bidSubmissionDate")}</div>,
+    // Reduce the column width by applying a custom class
+    cell: ({ row }) => (
+      <div className="text-xs text-center w-44">
+        {row.getValue("bidSubmissionDate")}
+      </div>
+    ),
   },
   {
     accessorKey: "bidOpeningDate",
@@ -144,7 +168,12 @@ export const columns: ColumnDef<Tender>[] = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{row.getValue("bidOpeningDate")}</div>,
+    // Reduce the column width by applying a custom class
+    cell: ({ row }) => (
+      <div className="text-xs text-center w-44">
+        {row.getValue("bidOpeningDate")}
+      </div>
+    ),
   },
   {
     accessorKey: "refNo",
@@ -153,44 +182,43 @@ export const columns: ColumnDef<Tender>[] = [
         Reference No
       </Button>
     ),
-
-    cell: ({ row }) => <div>{row.getValue("refNo")}</div>,
+    // Increase the column width by applying a custom class
+    cell: ({ row }) => (
+      <div className="text-sm w-32 text-center">{row.getValue("refNo")}</div>
+    ),
   },
   {
     accessorKey: "tenderValue",
     header: ({ column }) => (
-      <Button className="text-xs text-gray-500" variant="ghost">
+      <Button className="text-xs text-center text-gray-500" variant="ghost">
         Tender Value (₹)
       </Button>
     ),
+    cell: ({ row }) => <div>{row.getValue("tenderValue")}</div>,
   },
   {
-    id: "actions",
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        className="rounded"
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        className="rounded"
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
     enableHiding: false,
-    cell: ({ row }) => {
-      const tender = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
-            {/* <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(tender._id)}
-            >
-              Copy tender ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View tender details</DropdownMenuItem> */}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
   },
 ];
 
@@ -207,10 +235,13 @@ export function DataTableTender() {
   const isAnyRowSelected = Object.values(rowSelection).some(
     (selected) => selected
   );
-
+  const [selectedTenderValues, setTenderValues] = React.useState<string[]>([]);
   const [district, setDistrict] = React.useState<string>("");
   const [tenderValue, setTenderValue] = React.useState<string>("");
   const [department, setDepartment] = React.useState<string>("");
+  const [selectedRowData, setSelectedRowData] = React.useState<Tender | null>(
+    null
+  );
   const [status, setStatus] = React.useState<string>("");
   const [search, setSearch] = React.useState<string>("");
   const {
@@ -337,15 +368,16 @@ export function DataTableTender() {
     "Youth Welfare and Sports Development Department",
   ];
 
-  const dropdownData: Record<string, any[]> = {
+  const dropdownData: any = {
     District: districts.map((district) => ({
       value: district.toLowerCase().replace(/\s+/g, ""),
       label: district,
     })),
     "Tender Value": [
-      { value: "1", label: "1" },
-      { value: "2", label: "2" },
-      { value: "3", label: "3" },
+      { value: "1", label: "Less than ₹10L" },
+      { value: "2", label: "₹10L - ₹1Cr" },
+      { value: "3", label: "₹1Cr - ₹100Cr" },
+      { value: "4", label: "More than ₹100Cr" },
     ],
     Department: departments.map((department) => ({
       value: department
@@ -365,9 +397,6 @@ export function DataTableTender() {
       case "District":
         setDistrict(value);
         break;
-      case "Tender Value":
-        setTenderValue(value);
-        break;
       case "Department":
         setDepartment(value);
         break;
@@ -378,6 +407,34 @@ export function DataTableTender() {
         break;
     }
   };
+  const handleCheckboxChange = (value: string) => {
+    setTenderValues((prev) =>
+      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+    );
+  };
+  const handleRowClick = (rowData: Tender) => {
+    setSelectedRowData(rowData); // Set the clicked row data to state
+  };
+  // Function to render the checkbox group for "Tender Value"
+  const renderTenderValueCheckboxes = () => {
+    return (
+      <div className="flex  space-y-2 flex-col px-2 py-2">
+        {dropdownData["Tender Value"].map((option: any) => (
+          <div key={option.value} className="">
+            <label className="flex items-center gap-2">
+              <Checkbox
+                className="rounded"
+                checked={selectedTenderValues.includes(option.value)}
+                onCheckedChange={() => handleCheckboxChange(option.value)}
+              />
+              <p className="text-xs font-semibold">{option.label}</p>
+            </label>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   // Function to render the dropdown menu dynamically
   const renderDropdownMenu = (label: string) => {
     const options = dropdownData[label] || [];
@@ -390,20 +447,27 @@ export function DataTableTender() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <ScrollArea className="h-60">
-            {options.map((option) => (
-              <DropdownMenuItem
-                onSelect={() => handleDropdownChange(label, option.value)}
-                key={option.value}
-              >
-                {option.label}
-              </DropdownMenuItem>
-            ))}
+          <ScrollArea className="max-h-60">
+            {label === "Tender Value" ? (
+              renderTenderValueCheckboxes()
+            ) : (
+              <>
+                {options?.map((option: any) => (
+                  <DropdownMenuItem
+                    onSelect={() => handleDropdownChange(label, option.value)}
+                    key={option.value}
+                  >
+                    {option.label}
+                  </DropdownMenuItem>
+                ))}
+              </>
+            )}
           </ScrollArea>
         </DropdownMenuContent>
       </DropdownMenu>
     );
   };
+
   const dropdownLabels = ["District", "Tender Value", "Department", "Status"];
   const clearFilters = () => {
     setDistrict("");
@@ -469,6 +533,7 @@ export function DataTableTender() {
               {table?.getRowModel().rows?.length ? (
                 table?.getRowModel().rows.map((row) => (
                   <TableRow
+                    onClick={() => handleRowClick(row.original)}
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
                   >
@@ -495,6 +560,10 @@ export function DataTableTender() {
             </TableBody>
           </Table>
         </ScrollArea>
+        <TenderDetailsDialog
+          selectedRowData={selectedRowData}
+          setSelectedRowData={setSelectedRowData}
+        />
       </div>
       <div className="flex px-4 items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">

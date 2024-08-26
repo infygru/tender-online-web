@@ -65,10 +65,10 @@ export default function Home() {
                       key={index}
                       className={section.hasBorder ? " w-full " : " w-full"}
                     >
-                      <h2 className="px-6 py-4 text-white font-bold text-sm">
+                      <h2 className="px-6 py-4 text-white font-bold xl:text-lg text-sm">
                         {section.title}
                       </h2>
-                      <p className="text-white px-10 font-istok-web text-[10px] font-normal">
+                      <p className="text-white px-10 font-istok-web xl:text-sm text-[10px] font-normal">
                         {section.description}
                       </p>
                     </div>

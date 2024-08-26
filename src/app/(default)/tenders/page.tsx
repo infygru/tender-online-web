@@ -6,6 +6,7 @@ import WelcomeModal from "@/components/shared/welcome-model";
 import Loading from "@/components/ui/loading";
 import { useQuery } from "@tanstack/react-query";
 import { DataTableTender } from "@/components/table/tender-table";
+import AdsImage from "@/components/shared/ads-image";
 
 export default function Page() {
   const [showWelcome, setShowWelcome] = useState(false);
@@ -39,6 +40,7 @@ export default function Page() {
       <TenderHeader />
       <div className="w-full ">
         <DataTableTender />
+        <AdsImage />
       </div>
     </main>
   );
