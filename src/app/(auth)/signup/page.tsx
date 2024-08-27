@@ -78,6 +78,10 @@ const Signup = ({ setIsLogin }: any) => {
     }
     setLoading(true);
     try {
+      const finaldata = {
+        ...formData,
+        subscriptionPackage: "user",
+      };
       // Make registration API call
       const response = await fetch(
         "https://tender-online-h4lh.vercel.app/api/auth/create/account",
@@ -86,7 +90,7 @@ const Signup = ({ setIsLogin }: any) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(finaldata),
         }
       );
 
