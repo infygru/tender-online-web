@@ -16,6 +16,7 @@ const AdsImage = () => {
         (res) => res.json()
       ),
   });
+
   return (
     <div className="pt-6 px-16 pb-8">
       <Carousel className="w-full">
