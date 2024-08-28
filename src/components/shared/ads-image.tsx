@@ -25,8 +25,8 @@ const AdsImage = () => {
     <div className="pt-6 px-16 pb-8">
       <Carousel className="w-full">
         <CarouselContent>
-          {ads?.map((ads: any) => (
-            <CarouselItem className="basis-1/2">
+          {ads?.map((ads: any, index: number) => (
+            <CarouselItem key={index} className="basis-1/2">
               <div className="h-64 w-full">
                 <img
                   src={ads.imageUrl}
