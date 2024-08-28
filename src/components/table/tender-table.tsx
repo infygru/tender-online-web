@@ -48,7 +48,15 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import TenderDetailsDialog from "../shared/TenderDetailsDialog";
+export const formatDate = (isoDateString: string): string => {
+  const date = new Date(isoDateString);
 
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+  const day = date.getDate().toString().padStart(2, "0");
+
+  return `${year}/${month}/${day}`;
+};
 // Define the type for the tender data
 export type Tender = {
   _id: string;
@@ -133,7 +141,7 @@ export const columns: ColumnDef<Tender>[] = [
     // Reduce the column width by applying a custom class
     cell: ({ row }) => (
       <div className="text-xs text-center w-44">
-        {row.getValue("epublishedDate")}
+        {formatDate(row.getValue("epublishedDate"))}
       </div>
     ),
   },
@@ -152,7 +160,7 @@ export const columns: ColumnDef<Tender>[] = [
     // Reduce the column width by applying a custom class
     cell: ({ row }) => (
       <div className="text-xs text-center w-44">
-        {row.getValue("bidSubmissionDate")}
+        {formatDate(row.getValue("bidSubmissionDate"))}
       </div>
     ),
   },
@@ -171,7 +179,7 @@ export const columns: ColumnDef<Tender>[] = [
     // Reduce the column width by applying a custom class
     cell: ({ row }) => (
       <div className="text-xs text-center w-44">
-        {row.getValue("bidOpeningDate")}
+        {formatDate(row.getValue("bidOpeningDate"))}
       </div>
     ),
   },
@@ -533,12 +541,20 @@ export function DataTableTender() {
               {table?.getRowModel().rows?.length ? (
                 table?.getRowModel().rows.map((row) => (
                   <TableRow
-                    onClick={() => handleRowClick(row.original)}
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell
+                        className="cursor-pointer"
+                        onClick={() => {
+                          // skip
+                          if (cell.column.columnDef.id !== "select") {
+                            handleRowClick(row.original);
+                          }
+                        }}
+                        key={cell.id}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

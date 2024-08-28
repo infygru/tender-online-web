@@ -11,6 +11,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { formatDate } from "../table/tender-table";
 
 export interface TenderDocument {
   tenderName: string;
@@ -293,7 +294,8 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
                 </svg>
 
                 <h4>
-                  Sub Department <span>{selectedRowData?.subDepartment}</span>
+                  Sub Department{" "}
+                  <span>{formatDate(selectedRowData?.subDepartment)}</span>
                 </h4>
               </div>
             </div>
@@ -317,19 +319,19 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
             <div className="px-4 border-r w-full text-center py-3 space-y-2">
               <p className="text-xs font-medium">Published Date </p>
               <h1 className="font-semibold text-sm">
-                {selectedRowData?.epublishedDate}
+                {formatDate(selectedRowData?.epublishedDate)}
               </h1>
             </div>
             <div className="px-4 border-r text-center w-full py-3 space-y-2">
               <p className="text-xs font-medium">Bid Submission Date : </p>
               <h1 className="font-semibold text-sm">
-                {selectedRowData?.bidSubmissionDate}
+                {formatDate(selectedRowData?.bidSubmissionDate)}
               </h1>
             </div>
             <div className="px-4 text-center w-full py-3 space-y-2">
               <p className="text-xs font-medium">Bid Opening Date :</p>
               <h1 className="font-semibold text-sm">
-                {selectedRowData?.bidOpeningDate}
+                {formatDate(selectedRowData?.bidOpeningDate)}
               </h1>
             </div>
           </div>
