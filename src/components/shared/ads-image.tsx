@@ -9,12 +9,7 @@ import {
 } from "@/components/ui/carousel";
 
 const AdsImage = () => {
-  const {
-    data: ads,
-    isLoading,
-    error,
-    refetch,
-  } = useQuery<any>({
+  const { data: ads } = useQuery<any>({
     queryKey: ["Ads"],
     queryFn: () =>
       fetch(`https://tender-online-h4lh.vercel.app/api/ads/images`).then(
