@@ -10,8 +10,6 @@ import AdsImage from "@/components/shared/ads-image";
 import MobileTenderList from "@/components/shared/mobile-tenders";
 
 export default function Page() {
-  const [showWelcome, setShowWelcome] = useState(false);
-
   const { data, isLoading } = useQuery({
     queryKey: ["tenders"],
     queryFn: async () => {
@@ -22,13 +20,6 @@ export default function Page() {
     },
   });
 
-  useEffect(() => {
-    const path = localStorage.getItem("path");
-    if (!path) {
-      setShowWelcome(true);
-    }
-  }, [data]);
-
   if (isLoading) {
     return <Loading />;
   }
@@ -37,9 +28,6 @@ export default function Page() {
 
   return (
     <main className="w-full px-2 lg:px-4">
-      {showWelcome && (
-        <WelcomeModal onClose={() => setShowWelcome(false)} clientId="hi" />
-      )}
       <TenderHeader />
       <div className="w-full ">
         {!isMobile ? <DataTableTender /> : <MobileTenderList />}
