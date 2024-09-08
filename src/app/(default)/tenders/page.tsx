@@ -10,19 +10,17 @@ import AdsImage from "@/components/shared/ads-image";
 import MobileTenderList from "@/components/shared/mobile-tenders";
 
 export default function Page() {
-  const { data, isLoading } = useQuery({
-    queryKey: ["tenders"],
+  const [search, setSearch] = useState("");
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: ["tenders", search],
     queryFn: async () => {
       const response = await fetch(
-        "https://tender-online-h4lh.vercel.app/api/tender/all"
+        "https://tender-online-h4lh.vercel.app/api/tender/all" +
+          `?search=${search}`
       );
       return response.json();
     },
   });
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   const isMobile = window.innerWidth < 768;
 
@@ -30,7 +28,11 @@ export default function Page() {
     <main className="w-full px-2 lg:px-4">
       <TenderHeader />
       <div className="w-full ">
-        {!isMobile ? <DataTableTender /> : <MobileTenderList />}
+        {!isMobile ? (
+          <DataTableTender setSearch={setSearch} search={search} />
+        ) : (
+          <MobileTenderList />
+        )}
         <AdsImage />
       </div>
     </main>
