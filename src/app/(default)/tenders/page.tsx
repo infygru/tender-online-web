@@ -21,8 +21,22 @@ export default function Page() {
       return response.json();
     },
   });
+  const [isMobile, setIsMobile] = useState<any>(false);
+  useEffect(() => {
+    // Only run this code on the client-side
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
 
-  const isMobile = window.innerWidth < 768;
+    // Set initial value
+    handleResize();
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <main className="w-full px-2 lg:px-4">
