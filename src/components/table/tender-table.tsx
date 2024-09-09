@@ -85,6 +85,38 @@ export type Tender = {
   active: boolean;
 };
 
+export function formatIndianRupeePrice(amount: number): string {
+  if (amount === undefined) {
+    return "refer document";
+  }
+
+  // Convert the number to a string
+  let amountStr = amount.toString();
+
+  // Split the string into integer and decimal parts (if any)
+  let [integerPart, decimalPart] = amountStr.split(".");
+
+  // Regular expression to format the first part with Indian numbering system
+  let lastThreeDigits = integerPart.slice(-3); // Extract last three digits
+  let otherDigits = integerPart.slice(0, -3); // Extract the rest
+
+  // Format the rest of the digits with commas every two digits
+  if (otherDigits !== "") {
+    otherDigits = otherDigits.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+  }
+
+  // Combine both parts
+  let formattedPrice = otherDigits + (otherDigits ? "," : "") + lastThreeDigits;
+
+  // Add the decimal part if it exists
+  if (decimalPart) {
+    formattedPrice += "." + decimalPart;
+  }
+
+  // Add the Rupee symbol at the beginning
+  return `₹${formattedPrice}`;
+}
+
 export const columns: ColumnDef<Tender>[] = [
   {
     id: "select",
@@ -237,7 +269,9 @@ export const columns: ColumnDef<Tender>[] = [
       </Button>
     ),
     cell: ({ row }) => (
-      <div title="Tender Value (₹)">{row.getValue("tenderValue")}</div>
+      <div title="Tender Value (₹)">
+        {formatIndianRupeePrice(row.getValue("tenderValue"))}
+      </div>
     ),
   },
   {
@@ -256,7 +290,7 @@ export const columns: ColumnDef<Tender>[] = [
     ),
     cell: ({ row }) => (
       <Checkbox
-        className="rounded"
+        className="rounded mr-2"
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
@@ -340,7 +374,7 @@ export function DataTableTender({ setSearch, search }: any) {
       }
 
       const response = await fetch(
-        `https://tender-online-h4lh.vercel.app/api/tender/all?${queryParams.toString()}`
+        `http://localhost:3000/api/tender/all?${queryParams.toString()}`
       );
       return response.json();
     },

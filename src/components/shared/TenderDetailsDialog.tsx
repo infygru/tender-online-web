@@ -11,7 +11,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { formatDate } from "../table/tender-table";
+import { formatDate, formatIndianRupeePrice } from "../table/tender-table";
 
 export interface TenderDocument {
   tenderName: string;
@@ -356,7 +356,7 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
               Tender Value
             </h1>
             <h3 className="text-[#2E2E2E] font-medium text-xs lg:text-base">
-              ₹ {selectedRowData?.tenderValue}
+              {formatIndianRupeePrice(selectedRowData?.tenderValue)}
             </h3>
           </div>
           <div className="flex justify-center pt-6 items-center w-full">

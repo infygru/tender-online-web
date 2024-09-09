@@ -17,10 +17,11 @@ const TenderHeader = () => {
       return response.json();
     },
   });
+  
   return (
     <div className="flex items-center w-full px-1 lg:px-8 py-2 lg:py-6">
       <div className="">
-        <img src="/logo.png" className=" w-44 lg:w-10/12" alt="logo" />
+        <img src="/logo.png" className=" w-44 lg:w-[96%]" alt="logo" />
       </div>
       <div className="flex items-center gap-3 w-full">
         <div className="lg:bg-[#171717] bg-white py-2 w-full  px-0 lg:px-4 flex items-center justify-between gap-6 rounded-full">
@@ -35,10 +36,19 @@ const TenderHeader = () => {
             </div>
           </div>
           <div className="hidden lg:flex items-center gap-3">
-            <div className="flex">
-              <button className="border-4 flex text-xs lg:text-sm border-yellow-400 bg-[#EEE] font-semibold rounded-full px-4 py-2">
-                For you
-              </button>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center gap-2">
+                <img src="/whatsapp.png" alt="" className="w-8 h-8" />
+                <h1 className="font-bold hidden lg:block text-white text-sm">
+                  91761 33695
+                </h1>
+              </div>
+              <div className="flex items-center gap-2">
+                <img src="/gmail.png" alt="" className="w-8 h-8" />
+                <h1 className="font-bold hidden lg:block text-white text-sm">
+                  sales@tenderonline.co.in
+                </h1>
+              </div>
             </div>
             <div className="lg:block hidden">
               <img
