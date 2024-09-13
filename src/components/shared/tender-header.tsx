@@ -17,7 +17,7 @@ const TenderHeader = () => {
       return response.json();
     },
   });
-  
+
   return (
     <div className="flex items-center w-full px-1 lg:px-8 py-2 lg:py-6">
       <div className="">
@@ -49,13 +49,6 @@ const TenderHeader = () => {
                   sales@tenderonline.co.in
                 </h1>
               </div>
-            </div>
-            <div className="lg:block hidden">
-              <img
-                className="w-10 h-10 rounded-full"
-                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                alt="Rounded avatar"
-              />
             </div>
           </div>
         </div>
