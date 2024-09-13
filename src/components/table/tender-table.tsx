@@ -374,7 +374,7 @@ export function DataTableTender({ setSearch, search }: any) {
       }
 
       const response = await fetch(
-        `http://localhost:3000/api/tender/all?${queryParams.toString()}`
+        `https://tender-online-h4lh.vercel.app/api/tender/all?${queryParams.toString()}`
       );
       return response.json();
     },
