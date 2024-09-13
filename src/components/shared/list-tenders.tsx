@@ -3,14 +3,12 @@ import { ScrollArea } from "../ui/scroll-area";
 
 export const formatDateTime = (dateTime: string) => {
   const date = new Date(dateTime);
-  return date.toLocaleString(undefined, {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
+
+  const day = date.getDate(); // Get the day of the month
+  const month = date.toLocaleString(undefined, { month: "short" }); // Get the abbreviated month
+  const year = date.getFullYear().toString().slice(-2); // Extract the last two digits of the year
+
+  return `${day}/${month}/${year}`; // Format: "01/Jan/24"
 };
 
 export const truncateTitle = (title: string, nowords: number = 5) => {

@@ -52,7 +52,7 @@ import TenderDetailsDialog from "../shared/TenderDetailsDialog";
 export const formatDate = (isoDateString: string): string => {
   const date = new Date(isoDateString);
 
-  const year = date.getFullYear();
+  const year = date.getFullYear().toString().slice(-2); // Get the last two digits of the year
   const monthNames = [
     "Jan",
     "Feb",
@@ -68,7 +68,7 @@ export const formatDate = (isoDateString: string): string => {
     "Dec",
   ];
   const month = monthNames[date.getMonth()]; // Get the month abbreviation
-  const day = date.getDate().toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0"); // Ensure day is two digits
 
   return `${day}/${month}/${year}`;
 };
