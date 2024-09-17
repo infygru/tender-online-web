@@ -304,8 +304,7 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
                 </svg>
 
                 <h4 className="lg:text-sm text-[10px]">
-                  Sub Department{" "}
-                  <span>{formatDate(selectedRowData?.subDepartment)}</span>
+                  Sub Department <span>{selectedRowData?.subDepartment}</span>
                 </h4>
               </div>
             </div>

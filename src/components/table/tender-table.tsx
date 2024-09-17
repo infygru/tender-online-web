@@ -308,6 +308,8 @@ export function DataTableTender({ setSearch, search }: any) {
     []
   );
 
+  const [isfilterOpen, setIsFilterOpen] = React.useState(true);
+
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
@@ -376,6 +378,7 @@ export function DataTableTender({ setSearch, search }: any) {
       const response = await fetch(
         `https://tender-online-h4lh.vercel.app/api/tender/all?${queryParams.toString()}`
       );
+      setIsFilterOpen(false);
       return response.json();
     },
   });

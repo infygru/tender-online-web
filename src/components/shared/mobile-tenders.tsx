@@ -276,7 +276,7 @@ const MobileTenderList: React.FC = () => {
         >
           <div className="flex items-center text-[#4B0082] text-[10px] justify-between">
             <p>Opening Date: {formatDate(tender.bidOpeningDate)}</p>
-            <p>Closeing Date: {formatDate(tender.bidSubmissionDate)}</p>
+            <p>Closing Date: {formatDate(tender.bidSubmissionDate)}</p>
           </div>
           <div className="flex items-center justify-between">
             <div className="bg-[#F8DD4E] text-[#500187] px-0.5 py-0.5 rounded font-semibold text-[10px]">

@@ -18,16 +18,16 @@ const AdsImage = () => {
   });
 
   return (
-    <div className="pt-6 px-16 pb-8">
+    <div className="pt-6 px-8 lg:px-16 pb-8">
       <Carousel className="w-full">
         <CarouselContent>
           {ads?.map((ads: any, index: number) => (
-            <CarouselItem key={index} className="basis-1/2">
-              <div className="h-64 w-full">
+            <CarouselItem key={index} className="lg:basis-1/2 basis-full">
+              <div className="lg:h-64 h-28 w-full">
                 <img
                   src={ads.imageUrl}
                   alt=""
-                  className="h-52 object-cover w-full rounded-3xl"
+                  className="lg:h-52 h-28 object-cover w-full rounded-3xl"
                 />
               </div>
             </CarouselItem>
