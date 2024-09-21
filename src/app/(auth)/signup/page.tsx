@@ -84,7 +84,7 @@ const Signup = ({ setIsLogin }: any) => {
       };
       // Make registration API call
       const response = await fetch(
-        "https://tender-online-h4lh.vercel.app/api/auth/create/account",
+        "https://api.tenderonline.in/api/auth/create/account",
         {
           method: "POST",
           headers: {
@@ -125,7 +125,7 @@ const Signup = ({ setIsLogin }: any) => {
     try {
       // Make registration API call
       const response = await fetch(
-        "https://tender-online-h4lh.vercel.app/api/auth/otp",
+        "https://api.tenderonline.in/api/auth/otp",
         {
           method: "POST",
           headers: {

@@ -88,7 +88,7 @@ const MobileTenderList: React.FC = () => {
       });
 
       const response = await fetch(
-        `https://tender-online-h4lh.vercel.app/api/tender/all?${queryParams.toString()}`
+        `https://api.tenderonline.in/api/tender/all?${queryParams.toString()}`
       );
       return response.json();
     },

@@ -14,7 +14,7 @@ pnpm dev
 bun dev
 ```
 
-Open [https://tender-online-h4lh.vercel.app](https://tender-online-h4lh.vercel.app) with your browser to see the result.
+Open [https://api.tenderonline.in](https://api.tenderonline.in) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

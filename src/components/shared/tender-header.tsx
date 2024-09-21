@@ -12,7 +12,7 @@ const TenderHeader = () => {
     queryKey: ["tenders"],
     queryFn: async () => {
       const response = await fetch(
-        "https://tender-online-h4lh.vercel.app/api/tender/all"
+        "https://api.tenderonline.in/api/tender/all"
       );
       return response.json();
     },
