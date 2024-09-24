@@ -64,7 +64,10 @@ const LoginForm = ({ setIsLogin }: any) => {
       if (!response.ok) {
         throw new Error("Login failed");
       }
+
+      const data: any = response.json();
       toast.success("Login successful");
+      sessionStorage.setItem("authToken", data.token);
       router.push("/tenders");
       // Handle successful login
       // Redirect or update state as needed
