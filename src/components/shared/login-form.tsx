@@ -50,16 +50,13 @@ const LoginForm = ({ setIsLogin }: any) => {
 
     try {
       // Make login API call
-      const response = await fetch(
-        "https://api.tenderonline.in/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch("http://localhost:8080/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (!response.ok) {
         throw new Error("Login failed");

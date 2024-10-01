@@ -323,6 +323,9 @@ export function DataTableTender({ setSearch, search }: any) {
   const [selectedRowData, setSelectedRowData] = React.useState<Tender | null>(
     null
   );
+  const [industry, setIndustry] = React.useState<string>("");
+  const [subIndustry, setSubIndustry] = React.useState<string>("");
+  const [classification, setClassification] = React.useState<string>("");
   const [selectedDistricts, setSelectedDistricts] = React.useState<any>([]);
   const [selectedDepartments, setSelectedDepartments] = React.useState<any>([]);
   const [selectedStatus, setSelectedStatus] = React.useState<any>([]);
@@ -503,9 +506,52 @@ export function DataTableTender({ setSearch, search }: any) {
         .replace(/[^a-z0-9]/g, ""),
       label: department,
     })),
-    Status: [
-      { value: "Active", label: "Active" },
-      { value: "Inactive", label: "Inactive" },
+    Industry: [
+      { value: "1", label: "Agriculture" },
+      { value: "2", label: "Automobile" },
+      { value: "3", label: "Banking" },
+      { value: "4", label: "Construction" },
+      { value: "5", label: "Education" },
+      { value: "6", label: "Energy" },
+      { value: "7", label: "Entertainment" },
+      { value: "8", label: "Food & Beverage" },
+      { value: "9", label: "Healthcare" },
+      { value: "10", label: "Hospitality" },
+      { value: "11", label: "Information Technology" },
+      { value: "12", label: "Manufacturing" },
+      { value: "13", label: "Media" },
+      { value: "14", label: "Real Estate" },
+      { value: "15", label: "Retail" },
+      { value: "16", label: "Telecommunication" },
+      { value: "17", label: "Transportation" },
+      { value: "18", label: "Travel" },
+    ],
+
+    SubIndustry: [
+      { value: "1", label: "Agriculture" },
+      { value: "2", label: "Automobile" },
+      { value: "3", label: "Banking" },
+      { value: "4", label: "Construction" },
+      { value: "5", label: "Education" },
+      { value: "6", label: "Energy" },
+      { value: "7", label: "Entertainment" },
+      { value: "8", label: "Food & Beverage" },
+      { value: "9", label: "Healthcare" },
+      { value: "10", label: "Hospitality" },
+      { value: "11", label: "Information Technology" },
+      { value: "12", label: "Manufacturing" },
+      { value: "13", label: "Media" },
+      { value: "14", label: "Real Estate" },
+      { value: "15", label: "Retail" },
+      { value: "16", label: "Telecommunication" },
+      { value: "17", label: "Transportation" },
+      { value: "18", label: "Travel" },
+    ],
+    Classification: [
+      { value: "1", label: "Open" },
+      { value: "2", label: "Limited" },
+      { value: "3", label: "Global" },
+      { value: "4", label: "National" },
     ],
   };
 
@@ -521,8 +567,14 @@ export function DataTableTender({ setSearch, search }: any) {
       case "Department":
         setSelectedDepartments(value);
         break;
-      case "Status":
-        setSelectedStatus(value);
+      case "Industry":
+        setIndustry(value);
+        break;
+      case "SubIndustry":
+        setSubIndustry(value);
+        break;
+      case "Classification":
+        setClassification(value);
         break;
       case "Tender Value":
         setSelectedTenderValues(value);
@@ -536,7 +588,7 @@ export function DataTableTender({ setSearch, search }: any) {
     const options = dropdownData[label] || [];
 
     return (
-      <div className="mb-4">
+      <div className="mb-4 w-32">
         <label className="block text-sm font-medium text-gray-700">
           {label}
         </label>
@@ -549,10 +601,14 @@ export function DataTableTender({ setSearch, search }: any) {
                 return selectedDistricts;
               case "Department":
                 return selectedDepartments;
-              case "Status":
-                return selectedStatus;
               case "Tender Value":
                 return selectedTenderValues;
+              case "Industry":
+                return industry;
+              case "SubIndustry":
+                return subIndustry;
+              case "Classification":
+                return classification;
               default:
                 return [];
             }
@@ -564,13 +620,27 @@ export function DataTableTender({ setSearch, search }: any) {
       </div>
     );
   };
-  const dropdownLabels = ["District", "Tender Value", "Department", "Status"];
+  const dropdownLabels = [
+    "District",
+    "Tender Value",
+    "Department",
+    "Industry",
+    "SubIndustry",
+    "Classification",
+  ];
   const clearFilters = () => {
     setDistrict("");
     setTenderValue("");
     setDepartment("");
     setStatus("");
     setSearch("");
+    setSelectedDistricts([]);
+    setSelectedTenderValues([]);
+    setSelectedDepartments([]);
+    setSelectedStatus([]);
+    setIndustry("");
+    setSubIndustry("");
+    setClassification("");
   };
 
   return (

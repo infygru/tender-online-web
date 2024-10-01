@@ -84,7 +84,7 @@ const Signup = ({ setIsLogin }: any) => {
       };
       // Make registration API call
       const response = await fetch(
-        "https://api.tenderonline.in/api/auth/create/account",
+        "http://localhost:8080/api/auth/create/account",
         {
           method: "POST",
           headers: {
@@ -124,16 +124,13 @@ const Signup = ({ setIsLogin }: any) => {
   const handletosendemail = async () => {
     try {
       // Make registration API call
-      const response = await fetch(
-        "https://api.tenderonline.in/api/auth/otp",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email: formData.email }),
-        }
-      );
+      const response = await fetch("http://localhost:8080/api/auth/otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: formData.email }),
+      });
 
       if (!response.ok) {
         throw new Error("Registration failed");

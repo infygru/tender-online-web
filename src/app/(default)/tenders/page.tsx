@@ -15,7 +15,7 @@ export default function Page() {
     queryKey: ["tenders", search],
     queryFn: async () => {
       const response = await fetch(
-        "https://api.tenderonline.in/api/tender/all" + `?search=${search}`
+        "http://localhost:8080/api/tender/all" + `?search=${search}`
       );
       return response.json();
     },
