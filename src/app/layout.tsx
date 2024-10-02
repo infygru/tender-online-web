@@ -5,7 +5,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
-
+import { PrimeReactProvider } from "primereact/api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Footer from "@/components/shared/footer";
 import { useRouter } from "next/navigation";
@@ -33,7 +33,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <QueryClientProvider client={queryClient}>
-          {children}
+          <PrimeReactProvider>{children}</PrimeReactProvider>
         </QueryClientProvider>
         <Toaster richColors />
         <Footer />

@@ -13,13 +13,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
+import axios from "axios";
+import { Calendar } from "primereact/calendar";
 
+import "primereact/resources/themes/lara-light-cyan/theme.css";
 import Select from "react-select";
 import { ArrowUpDown, CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -321,15 +318,18 @@ export function DataTableTender({ setSearch, search }: any) {
   const [selectedRowData, setSelectedRowData] = React.useState<Tender | null>(
     null
   );
-  const [industry, setIndustry] = React.useState<string>("");
-  const [subIndustry, setSubIndustry] = React.useState<string>("");
-  const [classification, setClassification] = React.useState<string>("");
+  const [industry, setIndustry] = React.useState<any>("");
+  const [subIndustry, setSubIndustry] = React.useState<any>("");
+  const [classification, setClassification] = React.useState<any>("");
   const [selectedDistricts, setSelectedDistricts] = React.useState<any>([]);
   const [selectedDepartments, setSelectedDepartments] = React.useState<any>([]);
   const [selectedStatus, setSelectedStatus] = React.useState<any>([]);
   const [selectedTenderValues, setSelectedTenderValues] = React.useState<any>(
     []
   );
+
+  const [filterIndustry, setFilterIndustry] = React.useState<any>([]);
+  const [filterSubIndustry, setFilterSubIndustry] = React.useState<any>([]);
 
   const [status, setStatus] = React.useState<string>("");
   const [endDate, setEndDate] = React.useState<any | null>(null);
@@ -340,17 +340,7 @@ export function DataTableTender({ setSearch, search }: any) {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: [
-      "tenders",
-      selectedDistricts,
-      selectedDepartments,
-      selectedTenderValues,
-      selectedStatus,
-      search,
-      industry,
-      subIndustry,
-      classification,
-    ],
+    queryKey: ["tenders"],
     queryFn: async () => {
       const queryParams = new URLSearchParams();
 
@@ -365,8 +355,8 @@ export function DataTableTender({ setSearch, search }: any) {
       appendMultiSelect("department", selectedDepartments);
       appendMultiSelect("tenderValue", selectedTenderValues);
       appendMultiSelect("status", selectedStatus);
-      appendMultiSelect("industry", industry ? [industry] : []);
-      appendMultiSelect("subIndustry", subIndustry ? [subIndustry] : []);
+      appendMultiSelect("industry", industry);
+      appendMultiSelect("subIndustry", subIndustry);
       appendMultiSelect(
         "classification",
         classification ? [classification] : []
@@ -383,7 +373,21 @@ export function DataTableTender({ setSearch, search }: any) {
 
   React.useEffect(() => {
     refetch();
-  }, [district, tenderValue, department, status, search]);
+  }, [
+    district,
+    tenderValue,
+    department,
+    status,
+    search,
+    selectedDistricts,
+    selectedDepartments,
+    selectedTenderValues,
+    selectedStatus,
+    industry,
+    subIndustry,
+    classification,
+    endDate,
+  ]);
 
   const table = useReactTable({
     data: data || [],
@@ -404,9 +408,9 @@ export function DataTableTender({ setSearch, search }: any) {
     },
   });
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
 
   const districts = [
     "Ariyalur",
@@ -482,6 +486,27 @@ export function DataTableTender({ setSearch, search }: any) {
     "Youth Welfare and Sports Development Department",
   ];
 
+  const fetchIndustry = async () => {
+    const response = await axios.get(
+      "https://api.tenderonline.in/api/tender/industries"
+    );
+    setFilterIndustry(response.data.industries);
+    return response.data.industries;
+  };
+
+  const fetchSubIndustry = async () => {
+    const response = await axios.get(
+      "https://api.tenderonline.in/api/tender/sub-industries"
+    );
+    setFilterSubIndustry(response.data.subIndustries);
+    return response.data.subIndustries;
+  };
+
+  React.useEffect(() => {
+    fetchIndustry();
+    fetchSubIndustry();
+  }, []);
+
   const dropdownData: any = {
     District: districts.map((district) => ({
       value: district.toLowerCase().replace(/\s+/g, ""),
@@ -500,52 +525,12 @@ export function DataTableTender({ setSearch, search }: any) {
         .replace(/[^a-z0-9]/g, ""),
       label: department,
     })),
-    Industry: [
-      { value: "1", label: "Agriculture" },
-      { value: "2", label: "Automobile" },
-      { value: "3", label: "Banking" },
-      { value: "4", label: "Construction" },
-      { value: "5", label: "Education" },
-      { value: "6", label: "Energy" },
-      { value: "7", label: "Entertainment" },
-      { value: "8", label: "Food & Beverage" },
-      { value: "9", label: "Healthcare" },
-      { value: "10", label: "Hospitality" },
-      { value: "11", label: "Information Technology" },
-      { value: "12", label: "Manufacturing" },
-      { value: "13", label: "Media" },
-      { value: "14", label: "Real Estate" },
-      { value: "15", label: "Retail" },
-      { value: "16", label: "Telecommunication" },
-      { value: "17", label: "Transportation" },
-      { value: "18", label: "Travel" },
-    ],
-
-    SubIndustry: [
-      { value: "1", label: "Agriculture" },
-      { value: "2", label: "Automobile" },
-      { value: "3", label: "Banking" },
-      { value: "4", label: "Construction" },
-      { value: "5", label: "Education" },
-      { value: "6", label: "Energy" },
-      { value: "7", label: "Entertainment" },
-      { value: "8", label: "Food & Beverage" },
-      { value: "9", label: "Healthcare" },
-      { value: "10", label: "Hospitality" },
-      { value: "11", label: "Information Technology" },
-      { value: "12", label: "Manufacturing" },
-      { value: "13", label: "Media" },
-      { value: "14", label: "Real Estate" },
-      { value: "15", label: "Retail" },
-      { value: "16", label: "Telecommunication" },
-      { value: "17", label: "Transportation" },
-      { value: "18", label: "Travel" },
-    ],
+    Industry: filterIndustry,
+    SubIndustry: filterSubIndustry,
     Classification: [
-      { value: "1", label: "Open" },
-      { value: "2", label: "Limited" },
-      { value: "3", label: "Global" },
-      { value: "4", label: "National" },
+      { value: "Good", label: "Goods" },
+      { value: "service", label: "Service" },
+      { value: "work", label: "Works" },
     ],
   };
 
@@ -650,30 +635,12 @@ export function DataTableTender({ setSearch, search }: any) {
         />
         <div className="flex items-center gap-2">
           {dropdownLabels.map((label) => renderMultiSelect(label))}
-          <div className="">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-[180px] justify-start text-left font-normal",
-                    !endDate && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {endDate ? formatDate(endDate) : "End Date"}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-full bg-white p-0">
-                <Calendar
-                  initialFocus
-                  fromDate={new Date()}
-                  className="w-full z-50 relative"
-                  selected={endDate}
-                  onSelect={setEndDate}
-                />
-              </PopoverContent>
-            </Popover>
+          <div className="border py-2 px-2 rounded-xl">
+            <Calendar
+              value={endDate}
+              onChange={(e) => setEndDate(e.value)}
+              showIcon
+            />
           </div>
           {(district || tenderValue || department || status) && (
             <button

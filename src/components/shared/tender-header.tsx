@@ -1,6 +1,7 @@
 import React from "react";
 import { SelectState } from "./selectState";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 
 const TenderHeader = () => {
   const [isClicked, setIsClicked] = React.useState(false);
@@ -37,18 +38,25 @@ const TenderHeader = () => {
           </div>
           <div className="hidden lg:flex items-center gap-3">
             <div className="flex items-center space-x-4">
-              <div className="flex items-center gap-2">
-                <img src="/whatsapp.png" alt="" className="w-8 h-8" />
+              <Link
+                href="https://wa.me/9176133695"
+                className="flex items-center gap-2"
+              >
+                <img src="/whatsapp.png" alt="WhatsApp" className="w-8 h-8" />
                 <h1 className="font-bold hidden lg:block text-white text-sm">
                   91761 33695
                 </h1>
-              </div>
-              <div className="flex items-center gap-2">
-                <img src="/gmail.png" alt="" className="w-8 h-8" />
+              </Link>
+
+              <Link
+                href="mailto:sales@tenderonline.co.in"
+                className="flex items-center gap-2"
+              >
+                <img src="/gmail.png" alt="Gmail" className="w-8 h-8" />
                 <h1 className="font-bold hidden lg:block text-white text-sm">
                   sales@tenderonline.co.in
                 </h1>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
