@@ -11,7 +11,9 @@ const TenderHeader = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["tenders"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:8080/api/tender/all");
+      const response = await fetch(
+        "https://api.tenderonline.in/api/tender/all"
+      );
       return response.json();
     },
   });

@@ -13,19 +13,17 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+
 import Select from "react-select";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -38,17 +36,8 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../ui/loading";
 import { ScrollArea } from "../ui/scroll-area";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import TenderDetailsDialog from "../shared/TenderDetailsDialog";
+import { cn } from "@/lib/utils";
 export const formatDate = (isoDateString: string): string => {
   const date = new Date(isoDateString);
 
@@ -301,6 +290,15 @@ export const columns: ColumnDef<Tender>[] = [
     enableHiding: false,
   },
 ];
+const fetchTenders = async (queryParams: URLSearchParams): Promise<any> => {
+  const response = await fetch(
+    `https://api.tenderonline.in/api/tender/all?${queryParams.toString()}`
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch tenders");
+  }
+  return response.json();
+};
 
 export function DataTableTender({ setSearch, search }: any) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -334,6 +332,9 @@ export function DataTableTender({ setSearch, search }: any) {
   );
 
   const [status, setStatus] = React.useState<string>("");
+  const [endDate, setEndDate] = React.useState<any | null>(null);
+  console.log(endDate, "endDate");
+
   const {
     data: tenders,
     isLoading,
@@ -343,46 +344,39 @@ export function DataTableTender({ setSearch, search }: any) {
       "tenders",
       selectedDistricts,
       selectedDepartments,
-      selectedStatus,
       selectedTenderValues,
+      selectedStatus,
       search,
+      industry,
+      subIndustry,
+      classification,
     ],
     queryFn: async () => {
       const queryParams = new URLSearchParams();
 
-      if (selectedDistricts.length) {
-        queryParams.append(
-          "district",
-          selectedDistricts.map((d: any) => d.value).join(",")
-        );
-      }
-      if (selectedTenderValues.length) {
-        queryParams.append(
-          "tenderValue",
-          selectedTenderValues.map((v: any) => v.value).join(",")
-        );
-      }
-      if (selectedDepartments.length) {
-        queryParams.append(
-          "department",
-          selectedDepartments.map((d: any) => d.value).join(",")
-        );
-      }
-      if (selectedStatus.length) {
-        queryParams.append(
-          "status",
-          selectedStatus.map((s: any) => s.value).join(",")
-        );
-      }
+      // Helper to append multi-select values
+      const appendMultiSelect = (key: string, values: any[]) => {
+        if (values.length) {
+          queryParams.append(key, values.map((item) => item.value).join(","));
+        }
+      };
+
+      appendMultiSelect("district", selectedDistricts);
+      appendMultiSelect("department", selectedDepartments);
+      appendMultiSelect("tenderValue", selectedTenderValues);
+      appendMultiSelect("status", selectedStatus);
+      appendMultiSelect("industry", industry ? [industry] : []);
+      appendMultiSelect("subIndustry", subIndustry ? [subIndustry] : []);
+      appendMultiSelect(
+        "classification",
+        classification ? [classification] : []
+      );
+
       if (search) {
         queryParams.append("search", search);
       }
 
-      const response = await fetch(
-        `https://api.tenderonline.in/api/tender/all?${queryParams.toString()}`
-      );
-      setIsFilterOpen(false);
-      return response.json();
+      return fetchTenders(queryParams);
     },
   });
   const data = tenders?.result;
@@ -656,6 +650,31 @@ export function DataTableTender({ setSearch, search }: any) {
         />
         <div className="flex items-center gap-2">
           {dropdownLabels.map((label) => renderMultiSelect(label))}
+          <div className="">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-[180px] justify-start text-left font-normal",
+                    !endDate && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {endDate ? formatDate(endDate) : "End Date"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-full bg-white p-0">
+                <Calendar
+                  initialFocus
+                  fromDate={new Date()}
+                  className="w-full z-50 relative"
+                  selected={endDate}
+                  onSelect={setEndDate}
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
           {(district || tenderValue || department || status) && (
             <button
               onClick={clearFilters}

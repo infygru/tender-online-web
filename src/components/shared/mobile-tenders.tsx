@@ -88,7 +88,7 @@ const MobileTenderList: React.FC = () => {
       });
 
       const response = await fetch(
-        `http://localhost:8080/api/tender/all?${queryParams.toString()}`
+        `https://api.tenderonline.in/api/tender/all?${queryParams.toString()}`
       );
       return response.json();
     },

@@ -12,7 +12,9 @@ const AdsImage = () => {
   const { data: ads } = useQuery<any>({
     queryKey: ["Ads"],
     queryFn: () =>
-      fetch(`http://localhost:8080/api/ads/images`).then((res) => res.json()),
+      fetch(`https://api.tenderonline.in/api/ads/images`).then((res) =>
+        res.json()
+      ),
   });
 
   return (

@@ -1,9 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ListTenders from "@/components/shared/list-tenders";
 import TenderHeader from "@/components/shared/tender-header";
-import WelcomeModal from "@/components/shared/welcome-model";
-import Loading from "@/components/ui/loading";
 import { useQuery } from "@tanstack/react-query";
 import { DataTableTender } from "@/components/table/tender-table";
 import AdsImage from "@/components/shared/ads-image";
@@ -15,7 +12,7 @@ export default function Page() {
     queryKey: ["tenders", search],
     queryFn: async () => {
       const response = await fetch(
-        "http://localhost:8080/api/tender/all" + `?search=${search}`
+        "https://api.tenderonline.in/api/tender/all" + `?search=${search}`
       );
       return response.json();
     },
