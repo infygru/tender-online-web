@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/dialog";
 import { Close } from "@radix-ui/react-dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import axios from "axios";
+import { MultiSelect } from "@mantine/core";
 
 const Signup = ({ setIsLogin }: any) => {
   const router = useRouter();
@@ -22,11 +24,10 @@ const Signup = ({ setIsLogin }: any) => {
     name: "",
     phone: "",
     email: "",
-    // msmeNo: "",
-    // gstNo: "",
-    // username: "",
+    companyName: "",
+
     password: "",
-    // subscriptionPackage: "",
+    confirmPassword: "",
   });
 
   const [otp, setOtp] = useState<any>("");
@@ -35,13 +36,14 @@ const Signup = ({ setIsLogin }: any) => {
     name: "",
     phone: "",
     email: "",
-    // msmeNo: "",
-    // gstNo: "",
-    // username: "",
+    companyName: "",
+
     password: "",
-    // subscriptionPackage: "",
-    general: "",
+    confirmPassword: "",
   });
+
+  const [industry, setIndustry] = React.useState<any>("");
+  const [classification, setClassification] = React.useState<any>("");
 
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -81,6 +83,8 @@ const Signup = ({ setIsLogin }: any) => {
       const finaldata = {
         ...formData,
         subscriptionPackage: "user",
+        industry,
+        classification,
       };
       // Make registration API call
       const response = await fetch(
@@ -147,7 +151,86 @@ const Signup = ({ setIsLogin }: any) => {
       });
     }
   };
+  const [filterIndustry, setFilterIndustry] = React.useState<any>([]);
+  const fetchIndustry = async () => {
+    const response = await axios.get(
+      "https://api.tenderonline.in/api/tender/industries"
+    );
+    setFilterIndustry(response.data.industries);
+    return response.data.industries;
+  };
 
+  useEffect(() => {
+    fetchIndustry();
+  }, []);
+
+  const dropdownData: any = {
+    Industry: filterIndustry,
+
+    Classification: [
+      { value: "Good", label: "Goods" },
+      { value: "service", label: "Service" },
+      { value: "work", label: "Works" },
+    ],
+  };
+  const removeDuplicates = (options: { value: string; label: string }[]) => {
+    const uniqueOptions = new Map();
+    options.forEach((option) => {
+      if (!uniqueOptions.has(option.value)) {
+        uniqueOptions.set(option.value, option);
+      }
+    });
+    return Array.from(uniqueOptions.values());
+  };
+  const handleMultiSelectChange = (label: string, value: any) => {
+    console.log(value, "selected");
+
+    switch (label) {
+      case "Industry":
+        setIndustry(value);
+        break;
+      case "Classification":
+        setClassification(value);
+        break;
+      default:
+        break;
+    }
+  };
+  const renderMultiSelect = (label: string) => {
+    // Map dropdown data to Mantine format and remove duplicates
+    const options =
+      dropdownData[label]?.map((option: any) => ({
+        value: option.value, // Ensure that value is unique
+        label: option.label, // Adjust according to your data structure
+      })) || [];
+
+    // Remove duplicate options based on 'value'
+    const uniqueOptions = removeDuplicates(options);
+
+    const getSelectedValues = (label: string) => {
+      switch (label) {
+        case "Industry":
+          return Array.isArray(industry) ? industry : [];
+        case "Classification":
+          return Array.isArray(classification) ? classification : [];
+        default:
+          return [];
+      }
+    };
+
+    return (
+      <div className="mb-4 w-full">
+        <MultiSelect
+          placeholder={`Pick ${label}`}
+          data={uniqueOptions} // Use the filtered unique options
+          value={getSelectedValues(label)} // Ensure value is an array
+          onChange={(selected) => handleMultiSelectChange(label, selected)}
+          className="basic-multi-select"
+        />
+      </div>
+    );
+  };
+  const dropdownLabels = ["Industry", "Classification"];
   return (
     <main className="flex w-full items-center mt-6 justify-center">
       {loading && (
@@ -214,7 +297,7 @@ const Signup = ({ setIsLogin }: any) => {
       )}
       <div className="w-[60%]">
         <div className="bg-white border border-gray-200 rounded-3xl shadow-sm">
-          <ScrollArea className="h-[58vh] min-h-auto w-full">
+          <ScrollArea className="lg:h-[58vh] xl:h-[64vh] h-[58vh] min-h-auto w-full">
             <div className="p-8">
               <h1 className="text-2xl text-center font-bold mb-4">Register</h1>
               <form onSubmit={handleSubmit}>
@@ -231,7 +314,7 @@ const Signup = ({ setIsLogin }: any) => {
                       type={key === "password" ? "password" : "text"}
                       id={key}
                       name={key}
-                      placeholder={`Enter ${key}`}
+                      placeholder={`Enter your ${key}`}
                       value={formData[key]}
                       onChange={handleChange}
                       className={`w-full py-2 px-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 ${
@@ -311,6 +394,7 @@ const Signup = ({ setIsLogin }: any) => {
                 {errors.general && (
                   <p className="text-sm text-red-500 mb-4">{errors.general}</p>
                 )}
+                {dropdownLabels.map((label) => renderMultiSelect(label))}
                 <button
                   type="submit"
                   className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600"
@@ -318,6 +402,7 @@ const Signup = ({ setIsLogin }: any) => {
                   Register
                 </button>
               </form>
+
               <div className="text-sm text-center w-full flex items-center gap-2 mt-4">
                 Already have an account? {/* <Link href="/login"> */}
                 <button onClick={() => setIsLogin(true)}>

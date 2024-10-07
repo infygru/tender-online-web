@@ -25,9 +25,10 @@ const LoginForm = ({ setIsLogin }: any) => {
     setErrors({ ...errors, [e.target.name]: "" });
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+
     // Validation
     let formIsValid = true;
     const { email, password } = formData;
@@ -45,6 +46,7 @@ const LoginForm = ({ setIsLogin }: any) => {
 
     if (!formIsValid) {
       setErrors(newErrors);
+      setIsLoading(false); // Don't forget to set loading to false if validation fails
       return;
     }
 
@@ -65,17 +67,21 @@ const LoginForm = ({ setIsLogin }: any) => {
         throw new Error("Login failed");
       }
 
-      const data: any = response.json();
+      // Await the JSON response
+      const data = await response.json(); // <-- Await here
       toast.success("Login successful");
+      console.log(data.token, "data.token");
+
       sessionStorage.setItem("authToken", data.token);
-      router.push("/tenders");
-      // Handle successful login
+
       // Redirect or update state as needed
+      router.push("/tenders");
     } catch (error) {
       console.error("Login failed:", error);
       setErrors({ ...errors, general: "Login failed. Please try again." });
+    } finally {
+      setIsLoading(false); // Ensure loading state is reset after try/catch
     }
-    setIsLoading(false);
   };
 
   if (isLoading) return <Loading />;

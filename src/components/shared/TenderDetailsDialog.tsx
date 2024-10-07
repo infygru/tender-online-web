@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { formatDate, formatIndianRupeePrice } from "../table/tender-table";
+import { toast } from "sonner";
 
 export interface TenderDocument {
   tenderName: string;
@@ -33,6 +34,38 @@ export interface TenderDocument {
 }
 
 const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
+  const handleToSendTender = async (tenderId: string) => {
+    const url = "https://api.tenderonline.in/api/tender/tender-mapping"; // Adjust the URL as needed
+
+    const data = {
+      tenderId,
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create tender mapping");
+      }
+
+      const result = await response.json();
+      toast.success(
+        "Tender documents request sended successfully. we will reach out soon to you."
+      );
+      setSelectedRowData(null);
+      console.log("Tender mapping created successfully:", result);
+    } catch (error) {
+      console.error("Error sending tender mapping:", error);
+    }
+  };
+
   return (
     <Dialog
       open={!!selectedRowData}
@@ -111,6 +144,9 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
               <h3 className="py-6 text-center font-medium text-xs lg:text-lg">
                 {selectedRowData?.tenderName}
               </h3>
+              <p className="text-xs text-center">
+                {selectedRowData?.WorkDescription}
+              </p>
             </div>
             <div className="space-y-3 py-2">
               <div className="flex items-center gap-4">
@@ -350,16 +386,29 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
               </h1>
             </div>
           </div>
-          <div className="bg-[#EDEDED] border-[#EDEDED] border flex items-center justify-center py-3 flex-col space-y-2 rounded-3xl w-full">
-            <h1 className="text-[#4B4B4B] font-semibold text-xs lg:text-xl">
-              Tender Value
-            </h1>
-            <h3 className="text-[#2E2E2E] font-medium text-xs lg:text-base">
-              {formatIndianRupeePrice(selectedRowData?.tenderValue)}
-            </h3>
+          <div className="bg-[#EDEDED]  border-[#EDEDED] border flex items-center gap-4 justify-center py-3 rounded-3xl w-full">
+            <div className="flex items-center flex-col">
+              <h1 className="text-[#4B4B4B] font-semibold text-xs lg:text-xl">
+                Tender Value
+              </h1>
+              <h3 className="text-[#2E2E2E] font-medium text-xs lg:text-base">
+                {formatIndianRupeePrice(selectedRowData?.tenderValue)}
+              </h3>
+            </div>
+            <div className="flex items-center flex-col">
+              <h1 className="text-[#4B4B4B] font-semibold text-xs lg:text-xl">
+                EMD Amount
+              </h1>
+              <h3 className="text-[#2E2E2E] font-medium text-xs lg:text-base">
+                {formatIndianRupeePrice(selectedRowData?.EMDAmountin)}
+              </h3>
+            </div>
           </div>
           <div className="flex justify-center pt-6 items-center w-full">
-            <button className="bg-[#1C1A1A] px-4 py-2.5 rounded-md text-white text-xs">
+            <button
+              onClick={() => handleToSendTender(selectedRowData._id)}
+              className="bg-[#1C1A1A] px-4 py-2.5 rounded-md text-white text-xs"
+            >
               Request For Documents
             </button>
           </div>

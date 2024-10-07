@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { DataTableTender } from "@/components/table/tender-table";
 import AdsImage from "@/components/shared/ads-image";
 import MobileTenderList from "@/components/shared/mobile-tenders";
+import { DatePickerWithRange } from "@/components/shared/multi-select-demo";
 
 export default function Page() {
   const [search, setSearch] = useState("");
@@ -12,12 +13,14 @@ export default function Page() {
     queryKey: ["tenders", search],
     queryFn: async () => {
       const response = await fetch(
-        "https://api.tenderonline.in/api/tender/all" + `?search=${search}`
+        "http://localhost:8080/api/tender/all" + `?search=${search}`
       );
       return response.json();
     },
   });
+
   const [isMobile, setIsMobile] = useState<any>(false);
+
   useEffect(() => {
     // Only run this code on the client-side
     const handleResize = () => {
@@ -43,6 +46,7 @@ export default function Page() {
         ) : (
           <MobileTenderList />
         )}
+
         <AdsImage />
       </div>
     </main>

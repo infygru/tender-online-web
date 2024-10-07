@@ -14,10 +14,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import axios from "axios";
-import { Calendar } from "primereact/calendar";
-
+import { MultiSelect } from "@mantine/core";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
-import Select from "react-select";
 import { ArrowUpDown, CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -31,10 +29,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useQuery } from "@tanstack/react-query";
-import Loading from "../ui/loading";
 import { ScrollArea } from "../ui/scroll-area";
 import TenderDetailsDialog from "../shared/TenderDetailsDialog";
-import { cn } from "@/lib/utils";
+import { DatePickerWithRange } from "../shared/multi-select-demo";
+import { DateRange } from "@matharumanpreet00/react-daterange-picker";
+import { useParams } from "next/navigation";
+import { toast } from "sonner";
 export const formatDate = (isoDateString: string): string => {
   const date = new Date(isoDateString);
 
@@ -71,11 +71,22 @@ export type Tender = {
   active: boolean;
 };
 
-export function formatIndianRupeePrice(amount: number): string {
+export function formatIndianRupeePrice(amount: any): string {
   if (amount === undefined) {
     return "refer document";
   }
 
+  if (Number.isNaN(amount)) {
+    return "Refer the document";
+  }
+
+  if (amount === 0) {
+    return "Refer the document";
+  }
+
+  if (amount === "NaN") {
+    return "Refer the document";
+  }
   // Convert the number to a string
   let amountStr = amount.toString();
 
@@ -230,6 +241,7 @@ export const columns: ColumnDef<Tender>[] = [
     accessorKey: "refNo",
     header: ({ column }) => (
       <Button
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         className="text-xs text-gray-500"
         variant="ghost"
         title="Reference No"
@@ -247,11 +259,13 @@ export const columns: ColumnDef<Tender>[] = [
     accessorKey: "tenderValue",
     header: ({ column }) => (
       <Button
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         className="text-xs text-center text-gray-500"
         variant="ghost"
         title="Tender Value (₹)"
       >
         Tender Value (₹)
+        <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
     cell: ({ row }) => (
@@ -289,15 +303,27 @@ export const columns: ColumnDef<Tender>[] = [
 ];
 const fetchTenders = async (queryParams: URLSearchParams): Promise<any> => {
   const response = await fetch(
-    `https://api.tenderonline.in/api/tender/all?${queryParams.toString()}`
+    `http://localhost:8080/api/tender/all?${queryParams.toString()}`
   );
   if (!response.ok) {
-    throw new Error("Failed to fetch tenders");
+    toast.error("Failed to fetch tenders");
   }
   return response.json();
 };
 
 export function DataTableTender({ setSearch, search }: any) {
+  const [foryou, setForYou] = React.useState<any | null>(null);
+
+  React.useEffect(() => {
+    // Check if window is defined (client-side only)
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const foryouValue = params.get("foryou");
+      setForYou(foryouValue);
+      console.log(foryouValue, "foryou");
+    }
+  }, []);
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -327,13 +353,14 @@ export function DataTableTender({ setSearch, search }: any) {
   const [selectedTenderValues, setSelectedTenderValues] = React.useState<any>(
     []
   );
-
   const [filterIndustry, setFilterIndustry] = React.useState<any>([]);
   const [filterSubIndustry, setFilterSubIndustry] = React.useState<any>([]);
 
   const [status, setStatus] = React.useState<string>("");
   const [endDate, setEndDate] = React.useState<any | null>(null);
   console.log(endDate, "endDate");
+
+  const [dateRange, setDateRange] = React.useState<DateRange | null>(null);
 
   const {
     data: tenders,
@@ -344,10 +371,17 @@ export function DataTableTender({ setSearch, search }: any) {
     queryFn: async () => {
       const queryParams = new URLSearchParams();
 
-      // Helper to append multi-select values
+      // Helper to append multi-select values dynamically
       const appendMultiSelect = (key: string, values: any[]) => {
         if (values.length) {
-          queryParams.append(key, values.map((item) => item.value).join(","));
+          const isObjectWithValue =
+            values[0] && typeof values[0] === "object" && "value" in values[0];
+
+          const valueString = isObjectWithValue
+            ? values.map((item) => item.value).join(",")
+            : values.join(",");
+
+          queryParams.append(key, valueString);
         }
       };
 
@@ -362,13 +396,64 @@ export function DataTableTender({ setSearch, search }: any) {
         classification ? [classification] : []
       );
 
+      // Append global search
       if (search) {
         queryParams.append("search", search);
+      }
+
+      // Append date range filter
+      if (dateRange && dateRange.startDate && dateRange.endDate) {
+        queryParams.append("startDate", dateRange.startDate.toISOString());
+        queryParams.append("endDate", dateRange.endDate.toISOString());
       }
 
       return fetchTenders(queryParams);
     },
   });
+  const [user, setUser] = React.useState<any | null>(null);
+
+  // Function to get the auth token from sessionStorage
+  const getAuthToken = () => sessionStorage.getItem("authToken");
+
+  // Fetch user details dynamically
+  const fetchUserDetails = async (
+    url: string = "http://localhost:8080/api/auth/me"
+  ): Promise<any | null> => {
+    try {
+      const token = getAuthToken();
+      if (!token) throw new Error("No auth token found");
+
+      const response = await axios.get<any>(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setUser(response.data); // Store user details in state
+      return response.data; // Return the fetched user data
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+      return null; // Return null if an error occurs
+    }
+  };
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      if (foryou === "true" || foryou === true) {
+        const userDetails = await fetchUserDetails(); // Await the user details
+        console.log(userDetails, "userDetails");
+
+        if (userDetails) {
+          setIndustry(userDetails.industry || []); // Set industry and classification
+          setClassification(userDetails.classification || []);
+        }
+        refetch(); // Call refetch after setting the state
+      }
+    };
+
+    fetchData(); // Call the inner async function
+  }, [foryou]); // Add 'foryou' as a dependency to re-fetch if it changes
+
   const data = tenders?.result;
 
   React.useEffect(() => {
@@ -386,7 +471,8 @@ export function DataTableTender({ setSearch, search }: any) {
     industry,
     subIndustry,
     classification,
-    endDate,
+    dateRange,
+    user,
   ]);
 
   const table = useReactTable({
@@ -488,7 +574,7 @@ export function DataTableTender({ setSearch, search }: any) {
 
   const fetchIndustry = async () => {
     const response = await axios.get(
-      "https://api.tenderonline.in/api/tender/industries"
+      "http://localhost:8080/api/tender/industries"
     );
     setFilterIndustry(response.data.industries);
     return response.data.industries;
@@ -496,7 +582,7 @@ export function DataTableTender({ setSearch, search }: any) {
 
   const fetchSubIndustry = async () => {
     const response = await axios.get(
-      "https://api.tenderonline.in/api/tender/sub-industries"
+      "http://localhost:8080/api/tender/sub-industries"
     );
     setFilterSubIndustry(response.data.subIndustries);
     return response.data.subIndustries;
@@ -539,6 +625,8 @@ export function DataTableTender({ setSearch, search }: any) {
   };
 
   const handleMultiSelectChange = (label: string, value: any) => {
+    console.log(value, "selected");
+
     switch (label) {
       case "District":
         setSelectedDistricts(value);
@@ -563,48 +651,106 @@ export function DataTableTender({ setSearch, search }: any) {
     }
   };
   // Function to render the dropdown menu dynamically
+  // const renderMultiSelect = (label: string) => {
+  //   const options = dropdownData[label] || [];
+
+  //   return (
+  //     <div className="mb-4 w-32">
+  //       <label className="block text-sm font-medium text-gray-700">
+  //         {label}
+  //       </label>
+  //       <Select
+  //         isMulti
+  //         options={options}
+  //         value={(() => {
+  //           switch (label) {
+  //             case "District":
+  //               return selectedDistricts;
+  //             case "Department":
+  //               return selectedDepartments;
+  //             case "Tender Value":
+  //               return selectedTenderValues;
+  //             case "Industry":
+  //               return industry;
+  //             case "SubIndustry":
+  //               return subIndustry;
+  //             case "Classification":
+  //               return classification;
+  //             default:
+  //               return [];
+  //           }
+  //         })()}
+  //         onChange={(selected) => handleMultiSelectChange(label, selected)}
+  //         className="basic-multi-select"
+  //         classNamePrefix="select"
+  //       />
+  //     </div>
+  //   );
+  // };
+
+  // Utility function to remove duplicate options
+  const removeDuplicates = (options: { value: string; label: string }[]) => {
+    const uniqueOptions = new Map();
+    options.forEach((option) => {
+      if (!uniqueOptions.has(option.value)) {
+        uniqueOptions.set(option.value, option);
+      }
+    });
+    return Array.from(uniqueOptions.values());
+  };
+
   const renderMultiSelect = (label: string) => {
-    const options = dropdownData[label] || [];
+    // Map dropdown data to Mantine format and remove duplicates
+    const options =
+      dropdownData[label]?.map((option: any) => ({
+        value: option.value, // Ensure that value is unique
+        label: option.label, // Adjust according to your data structure
+      })) || [];
+
+    // Remove duplicate options based on 'value'
+    const uniqueOptions = removeDuplicates(options);
+
+    const getSelectedValues = (label: string) => {
+      switch (label) {
+        case "District":
+          return Array.isArray(selectedDistricts) ? selectedDistricts : [];
+        case "Department":
+          return Array.isArray(selectedDepartments) ? selectedDepartments : [];
+        case "Tender Value":
+          return Array.isArray(selectedTenderValues)
+            ? selectedTenderValues
+            : [];
+        case "Industry":
+          return Array.isArray(industry) ? industry : [];
+        case "SubIndustry":
+          return Array.isArray(subIndustry) ? subIndustry : [];
+        case "Classification":
+          return Array.isArray(classification) ? classification : [];
+        default:
+          return [];
+      }
+    };
 
     return (
-      <div className="mb-4 w-32">
-        <label className="block text-sm font-medium text-gray-700">
-          {label}
-        </label>
-        <Select
-          isMulti
-          options={options}
-          value={(() => {
-            switch (label) {
-              case "District":
-                return selectedDistricts;
-              case "Department":
-                return selectedDepartments;
-              case "Tender Value":
-                return selectedTenderValues;
-              case "Industry":
-                return industry;
-              case "SubIndustry":
-                return subIndustry;
-              case "Classification":
-                return classification;
-              default:
-                return [];
-            }
-          })()}
+      <div className="mb-4 w-44">
+        <MultiSelect
+          label={label}
+          placeholder={`Pick ${label}`}
+          data={uniqueOptions} // Use the filtered unique options
+          value={getSelectedValues(label)} // Ensure value is an array
           onChange={(selected) => handleMultiSelectChange(label, selected)}
           className="basic-multi-select"
-          classNamePrefix="select"
         />
       </div>
     );
   };
+
   const dropdownLabels = [
     "District",
     "Tender Value",
-    "Department",
+    // "Department",
     "Industry",
-    "SubIndustry",
+    // "SubIndustry",
     "Classification",
   ];
   const clearFilters = () => {
@@ -635,11 +781,10 @@ export function DataTableTender({ setSearch, search }: any) {
         />
         <div className="flex items-center gap-2">
           {dropdownLabels.map((label) => renderMultiSelect(label))}
-          <div className="border py-2 px-2 rounded-xl">
-            <Calendar
-              value={endDate}
-              onChange={(e) => setEndDate(e.value)}
-              showIcon
+          <div className="">
+            <DatePickerWithRange
+              setDateRange={setDateRange}
+              dateRange={dateRange}
             />
           </div>
           {(district || tenderValue || department || status) && (
