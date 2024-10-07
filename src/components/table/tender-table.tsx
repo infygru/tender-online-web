@@ -303,7 +303,7 @@ export const columns: ColumnDef<Tender>[] = [
 ];
 const fetchTenders = async (queryParams: URLSearchParams): Promise<any> => {
   const response = await fetch(
-    `http://localhost:8080/api/tender/all?${queryParams.toString()}`
+    `https://api.tenderonline.in/api/tender/all?${queryParams.toString()}`
   );
   if (!response.ok) {
     toast.error("Failed to fetch tenders");
@@ -417,7 +417,7 @@ export function DataTableTender({ setSearch, search }: any) {
 
   // Fetch user details dynamically
   const fetchUserDetails = async (
-    url: string = "http://localhost:8080/api/auth/me"
+    url: string = "https://api.tenderonline.in/api/auth/me"
   ): Promise<any | null> => {
     try {
       const token = getAuthToken();
@@ -574,7 +574,7 @@ export function DataTableTender({ setSearch, search }: any) {
 
   const fetchIndustry = async () => {
     const response = await axios.get(
-      "http://localhost:8080/api/tender/industries"
+      "https://api.tenderonline.in/api/tender/industries"
     );
     setFilterIndustry(response.data.industries);
     return response.data.industries;
@@ -582,7 +582,7 @@ export function DataTableTender({ setSearch, search }: any) {
 
   const fetchSubIndustry = async () => {
     const response = await axios.get(
-      "http://localhost:8080/api/tender/sub-industries"
+      "https://api.tenderonline.in/api/tender/sub-industries"
     );
     setFilterSubIndustry(response.data.subIndustries);
     return response.data.subIndustries;
