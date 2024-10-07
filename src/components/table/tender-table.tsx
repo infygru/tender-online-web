@@ -303,7 +303,7 @@ export const columns: ColumnDef<Tender>[] = [
 ];
 const fetchTenders = async (queryParams: URLSearchParams): Promise<any> => {
   const response = await fetch(
-    `https://api.tenderonline.in/api/tender/all?${queryParams.toString()}`
+    `https://tender-online-h4lh.vercel.app/api/tender/all?${queryParams.toString()}`
   );
   if (!response.ok) {
     toast.error("Failed to fetch tenders");
@@ -417,7 +417,7 @@ export function DataTableTender({ setSearch, search }: any) {
 
   // Fetch user details dynamically
   const fetchUserDetails = async (
-    url: string = "https://api.tenderonline.in/api/auth/me"
+    url: string = "https://tender-online-h4lh.vercel.app/api/auth/me"
   ): Promise<any | null> => {
     try {
       const token = getAuthToken();
@@ -574,7 +574,7 @@ export function DataTableTender({ setSearch, search }: any) {
 
   const fetchIndustry = async () => {
     const response = await axios.get(
-      "https://api.tenderonline.in/api/tender/industries"
+      "https://tender-online-h4lh.vercel.app/api/tender/industries"
     );
     setFilterIndustry(response.data.industries);
     return response.data.industries;
@@ -582,7 +582,7 @@ export function DataTableTender({ setSearch, search }: any) {
 
   const fetchSubIndustry = async () => {
     const response = await axios.get(
-      "https://api.tenderonline.in/api/tender/sub-industries"
+      "https://tender-online-h4lh.vercel.app/api/tender/sub-industries"
     );
     setFilterSubIndustry(response.data.subIndustries);
     return response.data.subIndustries;

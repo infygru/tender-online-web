@@ -12,8 +12,8 @@ const AdsImage = () => {
   const { data: ads } = useQuery<any>({
     queryKey: ["Ads"],
     queryFn: () =>
-      fetch(`https://api.tenderonline.in/api/ads/images`).then((res) =>
-        res.json()
+      fetch(`https://tender-online-h4lh.vercel.app/api/ads/images`).then(
+        (res) => res.json()
       ),
   });
 

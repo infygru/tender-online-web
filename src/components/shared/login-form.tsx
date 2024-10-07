@@ -53,7 +53,7 @@ const LoginForm = ({ setIsLogin }: any) => {
     try {
       // Make login API call
       const response = await fetch(
-        "https://api.tenderonline.in/api/auth/login",
+        "https://tender-online-h4lh.vercel.app/api/auth/login",
         {
           method: "POST",
           headers: {

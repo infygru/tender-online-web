@@ -88,7 +88,7 @@ const Signup = ({ setIsLogin }: any) => {
       };
       // Make registration API call
       const response = await fetch(
-        "https://api.tenderonline.in/api/auth/create/account",
+        "https://tender-online-h4lh.vercel.app/api/auth/create/account",
         {
           method: "POST",
           headers: {
@@ -128,13 +128,16 @@ const Signup = ({ setIsLogin }: any) => {
   const handletosendemail = async () => {
     try {
       // Make registration API call
-      const response = await fetch("https://api.tenderonline.in/api/auth/otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: formData.email }),
-      });
+      const response = await fetch(
+        "https://tender-online-h4lh.vercel.app/api/auth/otp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: formData.email }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Registration failed");
@@ -154,7 +157,7 @@ const Signup = ({ setIsLogin }: any) => {
   const [filterIndustry, setFilterIndustry] = React.useState<any>([]);
   const fetchIndustry = async () => {
     const response = await axios.get(
-      "https://api.tenderonline.in/api/tender/industries"
+      "https://tender-online-h4lh.vercel.app/api/tender/industries"
     );
     setFilterIndustry(response.data.industries);
     return response.data.industries;
