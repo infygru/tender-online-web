@@ -56,7 +56,15 @@ export const formatDate = (isoDateString: string): string => {
   const month = monthNames[date.getMonth()]; // Get the month abbreviation
   const day = date.getDate().toString().padStart(2, "0"); // Ensure day is two digits
 
-  return `${day}/${month}/${year}`;
+  // Extract and format time in 12-hour format
+  let hours = date.getHours();
+  const minutes = date.getMinutes().toString().padStart(2, "0"); // Ensure minutes are two digits
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12; // Convert to 12-hour format, with 12 being the fallback for 0
+
+  return `${day}/${month}/${year} ${hours
+    .toString()
+    .padStart(2, "0")}:${minutes} ${ampm}`;
 };
 
 // Define the type for the tender data
@@ -72,46 +80,33 @@ export type Tender = {
 };
 
 export function formatIndianRupeePrice(amount: any): string {
-  if (amount === undefined) {
-    return "refer document";
-  }
-
-  if (Number.isNaN(amount)) {
+  if (
+    amount === undefined ||
+    amount === null ||
+    amount === 0 ||
+    Number.isNaN(amount)
+  ) {
     return "Refer the document";
   }
 
-  if (amount === 0) {
+  const numAmount = Number(amount);
+  if (Number.isNaN(numAmount)) {
     return "Refer the document";
   }
 
-  if (amount === "NaN") {
-    return "Refer the document";
-  }
-  // Convert the number to a string
-  let amountStr = amount.toString();
+  // Helper to format the number as per Indian units
+  const formatWithUnits = (value: number): string => {
+    if (value >= 1e7) {
+      // 1 Crore and above
+      return `${(value / 1e7).toFixed(1)} Crore`;
+    } else if (value >= 1e5) {
+      // 1 Lakh and above
+      return `${(value / 1e5).toFixed(1)} Lakh`;
+    }
+    return value.toLocaleString("en-IN"); // Below 1 Lakh, use the standard comma format
+  };
 
-  // Split the string into integer and decimal parts (if any)
-  let [integerPart, decimalPart] = amountStr.split(".");
-
-  // Regular expression to format the first part with Indian numbering system
-  let lastThreeDigits = integerPart.slice(-3); // Extract last three digits
-  let otherDigits = integerPart.slice(0, -3); // Extract the rest
-
-  // Format the rest of the digits with commas every two digits
-  if (otherDigits !== "") {
-    otherDigits = otherDigits.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
-  }
-
-  // Combine both parts
-  let formattedPrice = otherDigits + (otherDigits ? "," : "") + lastThreeDigits;
-
-  // Add the decimal part if it exists
-  if (decimalPart) {
-    formattedPrice += "." + decimalPart;
-  }
-
-  // Add the Rupee symbol at the beginning
-  return `₹${formattedPrice}`;
+  return `₹${formatWithUnits(numAmount)}`;
 }
 
 export const columns: ColumnDef<Tender>[] = [

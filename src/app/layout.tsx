@@ -25,15 +25,24 @@ export default function RootLayout({
   const navigate = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   useEffect(() => {
-    // Check if the user is logged in by verifying if the authToken exists
     const token = sessionStorage.getItem("authToken");
+
+    // List of routes that do not require authentication
+    const skipAuthRoutes = ["/support", "/about-us", "/pricing"];
+
+    // Check if the current path is in the list of routes to skip authentication
+    if (skipAuthRoutes.includes(location.pathname)) {
+      return;
+    }
+
+    // If the token exists, set user as logged in, otherwise redirect
     if (token) {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
-      navigate.push("/"); // Redirect to login if not authenticated
+      navigate.push("/"); // Redirect to login page
     }
-  }, [navigate]);
+  }, [navigate, location]);
   return (
     <html lang="en">
       <Head>

@@ -38,7 +38,12 @@ const TenderHeader = () => {
           </div>
           <div className="hidden lg:flex items-center gap-3">
             <div className="">
-              <Link href={"/tenders?foryou=true"}>for You</Link>
+              <Link
+                href={"/tenders?foryou=true"}
+                className="border-2 text-white px-4 py-2 rounded-xl capitalize"
+              >
+                for You
+              </Link>
             </div>
             <div className="flex items-center space-x-4">
               <Link

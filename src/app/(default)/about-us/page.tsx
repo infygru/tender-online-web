@@ -1,11 +1,13 @@
+import Header from "@/components/ui/header";
 import Link from "next/link";
 import React from "react";
 
 const page = () => {
   return (
     <div>
+      <Header />
       {/* Hero */}
-      <div className="max-w-[85rem] pt-5 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
         {/* Grid */}
         <div className="grid md:grid-cols-2 gap-4 md:gap-8 xl:gap-20 md:items-center">
           <div>
@@ -54,7 +56,7 @@ const page = () => {
           {/* End Col */}
           <div className="relative ms-4">
             <img
-              className="w-full h-[600px] rounded-md"
+              className="w-full lg:h-[600px] h-[400px] rounded-md"
               src="/aboutus.png"
               alt="Hero Image"
             />
@@ -561,7 +563,7 @@ const page = () => {
         </div>
       </div>
       <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="isolate flex gap-5 items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+        <div className="isolate flex lg:flex-row flex-col gap-5 items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
           <div className="flex-1">
             <div className="mx-auto  text-start">
               <h2 className="text-xl font-bold tracking-tight text-gray-900 sm:text-4xl">

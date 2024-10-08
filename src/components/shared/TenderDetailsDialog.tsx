@@ -145,7 +145,7 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
               <h3 className="py-6 text-center font-medium text-xs lg:text-lg">
                 {selectedRowData?.tenderName}
               </h3>
-              <p className="text-xs text-center">
+              <p className="text-sm text-center">
                 {selectedRowData?.WorkDescription}
               </p>
             </div>
@@ -387,21 +387,21 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
               </h1>
             </div>
           </div>
-          <div className="bg-[#EDEDED]  border-[#EDEDED] border flex items-center gap-4 justify-center py-3 rounded-3xl w-full">
-            <div className="flex items-center flex-col">
-              <h1 className="text-[#4B4B4B] font-semibold text-xs lg:text-xl">
-                Tender Value
-              </h1>
-              <h3 className="text-[#2E2E2E] font-medium text-xs lg:text-base">
-                {formatIndianRupeePrice(selectedRowData?.tenderValue)}
-              </h3>
-            </div>
+          <div className="bg-[#EDEDED]  border-[#EDEDED] border flex items-center gap-4 justify-between px-1 lg:px-24 py-3 rounded-3xl w-full">
             <div className="flex items-center flex-col">
               <h1 className="text-[#4B4B4B] font-semibold text-xs lg:text-xl">
                 EMD Amount
               </h1>
               <h3 className="text-[#2E2E2E] font-medium text-xs lg:text-base">
                 {formatIndianRupeePrice(selectedRowData?.EMDAmountin)}
+              </h3>
+            </div>
+            <div className="flex items-center flex-col">
+              <h1 className="text-[#4B4B4B] font-semibold text-xs lg:text-xl">
+                Tender Value
+              </h1>
+              <h3 className="text-[#2E2E2E] font-medium text-xs lg:text-base">
+                {formatIndianRupeePrice(selectedRowData?.tenderValue)}
               </h3>
             </div>
           </div>

@@ -1,12 +1,13 @@
 import Footer from "@/components/shared/footer";
 import Header from "@/components/ui/header";
+import Link from "next/link";
 import React from "react";
 
 const page = () => {
   return (
     <main>
       <Header />
-      <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl px-4 sm:px-6 py-12 md:py-20 lg:px-8 mx-auto">
           <div className="mb-5 sm:mb-10 text-center">
             <h2 className="text-2xl font-bold lg:text-3xl lg:leading-tight dark:text-white">
@@ -17,19 +18,19 @@ const page = () => {
             </p>
           </div>
           {/* Buttons */}
-          <div className="grid gap-3 justify-center w-full sm:inline-flex">
-            <a
-              className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-              href="../docs/index.html"
+          <div className="gap-3 justify-center w-full flex">
+            <Link
+              className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white "
+              href="/"
             >
               Get started
-            </a>
-            <a
-              className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border   text-black  hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-              href="../docs/index.html"
+            </Link>
+            <Link
+              className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border   text-black "
+              href="/contact"
             >
               Contact Sales
-            </a>
+            </Link>
 
             <input
               type="hidden"
@@ -70,7 +71,7 @@ const page = () => {
           </h2>
         </div>
       </section>
-      <section className="px-44  py-6">
+      <section className="lg:px-44 px-6 py-6">
         <div className="border rounded-xl ">
           <div className="text-center py-6">
             <h2 className="text-2xl font-bold lg:text-3xl lg:leading-tight text-[#1075FF]">
@@ -79,7 +80,7 @@ const page = () => {
             <p className="mt-3 text-gray-500 dark:text-neutral-400">
               Tender Information updated everyday in tender online website
             </p>
-            <div className="w-full flex text-center gap-6 justify-center items-center">
+            <div className="w-full flex-wrap flex text-center gap-6 justify-center items-center">
               <div className="h-full  space-y-2 w-max bg-white lg:mt-px lg:py-5 px-8 dark:bg-neutral-900">
                 <span className="mt-7 flex flex-col font-bold text-2xl text-[#1075FF] dark:text-neutral-200">
                   ₹400
@@ -105,7 +106,7 @@ const page = () => {
           </div>
         </div>
       </section>
-      <section className="text-center">
+      <section className="text-center lg:px-0 px-4">
         <p className="mt-3 text-gray-500 dark:text-neutral-400">
           Exclusive Tender Processing Service
         </p>
@@ -137,7 +138,7 @@ const page = () => {
               </span>
             </li>
 
-            <div className="flex items-center gap-6">
+            <div className="flex flex-wrap items-center gap-6">
               <li className="flex gap-x-3">
                 <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-500">
                   <svg
@@ -257,8 +258,8 @@ const page = () => {
           </p>
         </div>
         <div className="px-6 py-3 rounded-3xl">
-          <div className="grid border  grid-cols-4">
-            <div className="flex flex-col border-r h-full text-center">
+          <div className="grid border grid-cols-1  lg:grid-cols-4">
+            <div className="flex flex-col lg:py-0 py-8 border-r lg:border-t-0 border-t h-full text-center">
               <div className="bg-white flex items-center justify-center pt-8 pb-5 px-8 dark:bg-neutral-900">
                 <svg
                   width="60"
@@ -412,7 +413,7 @@ const page = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col border-r h-full text-center">
+            <div className="flex flex-col   border-r py-8 lg:border-t-0 border-t h-full text-center">
               <div className="bg-white flex items-center justify-center pt-8 pb-5 px-8 dark:bg-neutral-900">
                 <svg
                   width="74"
@@ -619,7 +620,7 @@ const page = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col border-r h-full text-center">
+            <div className="flex flex-col  border-r py-8 lg:border-t-0 border-t h-full text-center">
               <div className="bg-white flex items-center justify-center pt-8 pb-5 px-8 dark:bg-neutral-900">
                 <svg
                   width="58"
@@ -887,7 +888,7 @@ const page = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col border-r h-full text-center">
+            <div className="flex flex-col border-r py-8 lg:border-t-0 border-t h-full text-center">
               <div className="bg-white flex items-center justify-center pt-8 pb-5 px-8 dark:bg-neutral-900">
                 <svg
                   width="56"
@@ -1026,7 +1027,6 @@ const page = () => {
           <img src="/pricing-banner.png" alt="" />
         </div>
       </section>
-      <Footer />
     </main>
   );
 };

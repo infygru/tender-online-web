@@ -80,11 +80,19 @@ export function SelectState() {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>{selectConfig.label}</SelectLabel>
-          {selectConfig.options.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
-              {option.label}
-            </SelectItem>
-          ))}
+          {selectConfig.options.map((option) => {
+            const isTamilNadu = option.value === "tamil-nadu"; // Check if the current option is Tamil Nadu
+
+            return (
+              <SelectItem
+                className={isTamilNadu ? "stroke-current" : "line-through"} // Apply strikethrough class for other states
+                key={option.value}
+                value={option.value}
+              >
+                {option.label}
+              </SelectItem>
+            );
+          })}
         </SelectGroup>
       </SelectContent>
     </Select>

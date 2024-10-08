@@ -7,6 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Link from "next/link";
 
 const AdsImage = () => {
   const { data: ads } = useQuery<any>({
@@ -23,13 +24,13 @@ const AdsImage = () => {
         <CarouselContent>
           {ads?.map((ads: any, index: number) => (
             <CarouselItem key={index} className="lg:basis-1/2 basis-full">
-              <div className="lg:h-64 h-28 w-full">
+              <Link href={"/pricing"} className="lg:h-64 h-28 w-full">
                 <img
                   src={ads.imageUrl}
                   alt=""
                   className="lg:h-52 h-28 object-cover w-full rounded-3xl"
                 />
-              </div>
+              </Link>
             </CarouselItem>
           ))}
         </CarouselContent>
