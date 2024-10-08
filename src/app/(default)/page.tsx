@@ -73,7 +73,6 @@ export default function Home() {
                       </p>
                     </div>
                     {section.hasBorder && (
-                      // <hr className="border-t rotate-90 w-24 h-0" />
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="10"
@@ -107,7 +106,7 @@ export default function Home() {
           </div>
         </div>
         {/* Right Pane */}
-        <div className="w-full lg:w-1/2 flex items-start lg:items-center justify-center lg:justify-center">
+        <div className="w-full lg:w-[40%] flex items-start lg:items-center justify-center lg:justify-center">
           {isLogin ? (
             <LoginForm setIsLogin={setIsLogin} />
           ) : (

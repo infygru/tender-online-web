@@ -5,6 +5,20 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../ui/loading";
 import { PopoverMobileFilter } from "./moblie-filter";
 import Select from "react-select";
+import { toast } from "sonner";
+import { MultiSelect } from "@mantine/core";
+import axios from "axios";
+
+const fetchTenders = async (queryParams: URLSearchParams): Promise<any> => {
+  const response = await fetch(
+    `https://tender-online-h4lh.vercel.app/api/tender/all?${queryParams.toString()}`
+  );
+  if (!response.ok) {
+    toast.error("Failed to fetch tenders");
+  }
+  return response.json();
+};
+
 export function formatCurrency(value: any): string {
   const crore = 1_00_00_000; // 1 crore = 10 million
   const lakh = 1_00_000; // 1 lakh = 100 thousand
@@ -67,7 +81,9 @@ const MobileTenderList: React.FC = () => {
   const [selectedStatus, setSelectedStatus] = React.useState<any>([]);
 
   const [status, setStatus] = React.useState<string>("");
-
+  const [industry, setIndustry] = React.useState<any>("");
+  const [subIndustry, setSubIndustry] = React.useState<any>("");
+  const [classification, setClassification] = React.useState<any>("");
   const [selectedRowData, setSelectedRowData] = useState<Tender | null>(null);
   const [district, setDistrict] = useState<string>("");
   const [tenderValue, setTenderValue] = useState<string>("");
@@ -75,35 +91,108 @@ const MobileTenderList: React.FC = () => {
   const [selectedTenderValues, setSelectedTenderValues] = React.useState<any>(
     []
   );
+
+  const [filterIndustry, setFilterIndustry] = React.useState<any>([]);
+  const [filterSubIndustry, setFilterSubIndustry] = React.useState<any>([]);
+
+  const [endDate, setEndDate] = React.useState<any | null>(null);
+  console.log(endDate, "endDate");
+  const [dateRange, setDateRange] = React.useState<any | null>(null);
+
   const [search, setSearch] = useState<string>("");
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["tenders"],
     queryFn: async () => {
-      const queryParams = new URLSearchParams({
-        district,
-        tenderValue,
-        department,
-        status,
-        search,
-      });
+      const queryParams = new URLSearchParams();
 
-      const response = await fetch(
-        `https://tender-online-h4lh.vercel.app/api/tender/all?${queryParams.toString()}`
+      // Helper to append multi-select values dynamically
+      const appendMultiSelect = (key: string, values: any[]) => {
+        if (values.length) {
+          const isObjectWithValue =
+            values[0] && typeof values[0] === "object" && "value" in values[0];
+
+          const valueString = isObjectWithValue
+            ? values.map((item) => item.value).join(",")
+            : values.join(",");
+
+          queryParams.append(key, valueString);
+        }
+      };
+
+      appendMultiSelect("district", selectedDistricts);
+      appendMultiSelect("department", selectedDepartments);
+      appendMultiSelect("tenderValue", selectedTenderValues);
+      appendMultiSelect("status", selectedStatus);
+      appendMultiSelect("industry", industry);
+      appendMultiSelect("subIndustry", subIndustry);
+      appendMultiSelect(
+        "classification",
+        classification ? [classification] : []
       );
-      return response.json();
+
+      // Append global search
+      if (search) {
+        queryParams.append("search", search);
+      }
+
+      // Append date range filter
+      if (dateRange && dateRange.startDate && dateRange.endDate) {
+        queryParams.append("startDate", dateRange.startDate.toISOString());
+        queryParams.append("endDate", dateRange.endDate.toISOString());
+      }
+
+      return fetchTenders(queryParams);
     },
   });
-  useEffect(() => {
+
+  React.useEffect(() => {
     refetch();
-  }, [district, tenderValue, department, status, search]);
+  }, [
+    district,
+    tenderValue,
+    status,
+    search,
+    selectedDistricts,
+    selectedDepartments,
+    selectedTenderValues,
+    selectedStatus,
+    industry,
+    subIndustry,
+    classification,
+    dateRange,
+  ]);
+
+  const fetchIndustry = async () => {
+    const response = await axios.get(
+      "https://tender-online-h4lh.vercel.app/api/tender/industries"
+    );
+    setFilterIndustry(response.data.industries);
+    return response.data.industries;
+  };
+
+  const fetchSubIndustry = async () => {
+    const response = await axios.get(
+      "https://tender-online-h4lh.vercel.app/api/tender/sub-industries"
+    );
+    setFilterSubIndustry(response.data.subIndustries);
+    return response.data.subIndustries;
+  };
+
+  React.useEffect(() => {
+    fetchIndustry();
+    fetchSubIndustry();
+  }, []);
+
   if (isLoading) {
     return <Loading />;
   }
+
   const tenders = data?.result;
 
   const handleRowClick = (rowData: any) => {
     setSelectedRowData(rowData); // Set the clicked row data to state
   };
+
   const districts = [
     "Ariyalur",
     "Chengalpattu",
@@ -196,13 +285,18 @@ const MobileTenderList: React.FC = () => {
         .replace(/[^a-z0-9]/g, ""),
       label: department,
     })),
-    Status: [
-      { value: "Active", label: "Active" },
-      { value: "Inactive", label: "Inactive" },
+    Industry: filterIndustry,
+    SubIndustry: filterSubIndustry,
+    Classification: [
+      { value: "Good", label: "Goods" },
+      { value: "service", label: "Service" },
+      { value: "work", label: "Works" },
     ],
   };
 
   const handleMultiSelectChange = (label: string, value: any) => {
+    console.log(value, "selected");
+
     switch (label) {
       case "District":
         setSelectedDistricts(value);
@@ -210,8 +304,14 @@ const MobileTenderList: React.FC = () => {
       case "Department":
         setSelectedDepartments(value);
         break;
-      case "Status":
-        setSelectedStatus(value);
+      case "Industry":
+        setIndustry(value);
+        break;
+      case "SubIndustry":
+        setSubIndustry(value);
+        break;
+      case "Classification":
+        setClassification(value);
         break;
       case "Tender Value":
         setSelectedTenderValues(value);
@@ -222,33 +322,56 @@ const MobileTenderList: React.FC = () => {
   };
   // Function to render the dropdown menu dynamically
   const renderMultiSelect = (label: string) => {
-    const options = dropdownData[label] || [];
+    // Map dropdown data to Mantine format and remove duplicates
+    const options =
+      dropdownData[label]?.map((option: any) => ({
+        value: option.value, // Ensure that value is unique
+        label: option.label, // Adjust according to your data structure
+      })) || [];
+    // Utility function to remove duplicate options
+    const removeDuplicates = (options: { value: string; label: string }[]) => {
+      const uniqueOptions = new Map();
+      options.forEach((option) => {
+        if (!uniqueOptions.has(option.value)) {
+          uniqueOptions.set(option.value, option);
+        }
+      });
+      return Array.from(uniqueOptions.values());
+    };
+
+    // Remove duplicate options based on 'value'
+    const uniqueOptions = removeDuplicates(options);
+
+    const getSelectedValues = (label: string) => {
+      switch (label) {
+        case "District":
+          return Array.isArray(selectedDistricts) ? selectedDistricts : [];
+        case "Department":
+          return Array.isArray(selectedDepartments) ? selectedDepartments : [];
+        case "Tender Value":
+          return Array.isArray(selectedTenderValues)
+            ? selectedTenderValues
+            : [];
+        case "Industry":
+          return Array.isArray(industry) ? industry : [];
+        case "SubIndustry":
+          return Array.isArray(subIndustry) ? subIndustry : [];
+        case "Classification":
+          return Array.isArray(classification) ? classification : [];
+        default:
+          return [];
+      }
+    };
 
     return (
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">
-          {label}
-        </label>
-        <Select
-          isMulti
-          options={options}
-          value={(() => {
-            switch (label) {
-              case "District":
-                return selectedDistricts;
-              case "Department":
-                return selectedDepartments;
-              case "Status":
-                return selectedStatus;
-              case "Tender Value":
-                return selectedTenderValues;
-              default:
-                return [];
-            }
-          })()}
-          onChange={(selected) => handleMultiSelectChange(label, selected)}
+      <div className="mb-4 w-full">
+        <MultiSelect
+          label={label}
+          placeholder={`Pick ${label}`}
+          data={uniqueOptions} // Use the filtered unique options
+          value={getSelectedValues(label)} // Ensure value is an array
+          onChange={(selected: any) => handleMultiSelectChange(label, selected)}
           className="basic-multi-select"
-          classNamePrefix="select"
         />
       </div>
     );

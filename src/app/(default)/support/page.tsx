@@ -47,7 +47,10 @@ const ContactPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const queryClient = useQueryClient();
   const postTodo = async (data: FormValues) => {
-    await axios.post("http://localhost:8080/api/tender/contact", data);
+    await axios.post(
+      "https://tender-online-h4lh.vercel.app/api/tender/contact",
+      data
+    );
   };
   const router = useRouter();
   // Mutations
@@ -58,6 +61,9 @@ const ContactPage: React.FC = () => {
       queryClient.invalidateQueries({ queryKey: ["todos"] });
       toast.success("Message sent successfully");
       router.push("/");
+    },
+    onError: () => {
+      toast.error("An error occurred. Please try again later.");
     },
   });
 
@@ -91,7 +97,7 @@ const ContactPage: React.FC = () => {
 
   return (
     <main>
-      <div className="relative min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="relative min-h-screen  bg-gray-100 dark:bg-gray-900">
         <section className="bg-white dark:bg-gray-900">
           <div className="container px-6 py-12 mx-auto">
             <div>

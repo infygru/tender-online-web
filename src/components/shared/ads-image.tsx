@@ -24,7 +24,11 @@ const AdsImage = () => {
         <CarouselContent>
           {ads?.map((ads: any, index: number) => (
             <CarouselItem key={index} className="lg:basis-1/2 basis-full">
-              <Link href={"/pricing"} className="lg:h-64 h-28 w-full">
+              <Link
+                target="_black"
+                href={"/pricing"}
+                className="lg:h-64 h-28 w-full"
+              >
                 <img
                   src={ads.imageUrl}
                   alt=""

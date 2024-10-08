@@ -235,7 +235,7 @@ const Signup = ({ setIsLogin }: any) => {
   };
   const dropdownLabels = ["Industry", "Classification"];
   return (
-    <main className="flex w-full items-center mt-6 justify-center">
+    <main className="flex pt-36 w-full items-center mt-6 justify-center">
       {loading && (
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="">
@@ -300,7 +300,7 @@ const Signup = ({ setIsLogin }: any) => {
       )}
       <div className="w-[60%]">
         <div className="bg-white border border-gray-200 rounded-3xl shadow-sm">
-          <ScrollArea className="lg:h-[58vh] xl:h-[64vh] h-[58vh] min-h-auto w-full">
+          <ScrollArea className="lg:h-[58vh] xl:h-[82vh] h-[58vh] min-h-auto w-full">
             <div className="p-8">
               <h1 className="text-2xl text-center font-bold mb-4">Register</h1>
               <form onSubmit={handleSubmit}>

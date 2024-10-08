@@ -42,7 +42,8 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "xlsx": "^0.18.5",
-    "yarn": "^1.22.22"
+    "yarn": "^1.22.22",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "^20",

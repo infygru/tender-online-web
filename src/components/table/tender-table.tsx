@@ -645,43 +645,6 @@ export function DataTableTender({ setSearch, search }: any) {
         break;
     }
   };
-  // Function to render the dropdown menu dynamically
-  // const renderMultiSelect = (label: string) => {
-  //   const options = dropdownData[label] || [];
-
-  //   return (
-  //     <div className="mb-4 w-32">
-  //       <label className="block text-sm font-medium text-gray-700">
-  //         {label}
-  //       </label>
-  //       <Select
-  //         isMulti
-  //         options={options}
-  //         value={(() => {
-  //           switch (label) {
-  //             case "District":
-  //               return selectedDistricts;
-  //             case "Department":
-  //               return selectedDepartments;
-  //             case "Tender Value":
-  //               return selectedTenderValues;
-  //             case "Industry":
-  //               return industry;
-  //             case "SubIndustry":
-  //               return subIndustry;
-  //             case "Classification":
-  //               return classification;
-  //             default:
-  //               return [];
-  //           }
-  //         })()}
-  //         onChange={(selected) => handleMultiSelectChange(label, selected)}
-  //         className="basic-multi-select"
-  //         classNamePrefix="select"
-  //       />
-  //     </div>
-  //   );
-  // };
 
   // Utility function to remove duplicate options
   const removeDuplicates = (options: { value: string; label: string }[]) => {

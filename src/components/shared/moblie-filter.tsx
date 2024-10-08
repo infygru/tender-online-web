@@ -9,7 +9,12 @@ import {
 import { Filter } from "lucide-react";
 
 export function PopoverMobileFilter({ renderMultiSelect }: any) {
-  const dropdownLabels = ["District", "Tender Value", "Department", "Status"];
+  const dropdownLabels = [
+    "District",
+    "Tender Value",
+    "Industry",
+    "Classification",
+  ];
   return (
     <Popover>
       <PopoverTrigger asChild>
