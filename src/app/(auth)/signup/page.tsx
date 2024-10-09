@@ -298,7 +298,7 @@ const Signup = ({ setIsLogin }: any) => {
           </div>
         </div>
       )}
-      <div className="w-[60%]">
+      <div className="w-[80%]">
         <div className="bg-white border border-gray-200 rounded-3xl shadow-sm">
           <ScrollArea className="lg:h-[58vh] xl:h-[82vh] h-[58vh] min-h-auto w-full">
             <div className="p-8">

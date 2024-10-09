@@ -5,6 +5,7 @@ import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Footer from "@/components/shared/footer";
 
 interface FormValues {
   firstName: string;
@@ -212,6 +213,7 @@ const ContactPage: React.FC = () => {
           </div>
         </section>
       </div>
+      <Footer />
     </main>
   );
 };

@@ -14,6 +14,12 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import axios from "axios";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { MultiSelect } from "@mantine/core";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { ArrowUpDown, CalendarIcon } from "lucide-react";
@@ -690,15 +696,26 @@ export function DataTableTender({ setSearch, search }: any) {
     };
 
     return (
-      <div className="mb-4 w-44">
-        <MultiSelect
-          label={label}
-          placeholder={`Pick ${label}`}
-          data={uniqueOptions} // Use the filtered unique options
-          value={getSelectedValues(label)} // Ensure value is an array
-          onChange={(selected) => handleMultiSelectChange(label, selected)}
-          className="basic-multi-select"
-        />
+      <div className="mb-4 w-full">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline">{label}</Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-96 bg-white">
+            <div className="grid gap-4">
+              <MultiSelect
+                label={label}
+                placeholder={`Pick ${label}`}
+                data={uniqueOptions} // Use the filtered unique options
+                value={getSelectedValues(label)} // Ensure value is an array
+                onChange={(selected) =>
+                  handleMultiSelectChange(label, selected)
+                }
+                className="basic-multi-select"
+              />
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
     );
   };
@@ -761,6 +778,16 @@ export function DataTableTender({ setSearch, search }: any) {
               </button>
             )}
           </div>
+        </div>
+      </div>
+      <div className="flex items-center justify-center">
+        <button>Reset All</button>
+        <div className="text-black">
+          {selectedDistricts?.map((district: any) => (
+            <span key={district} className="mr-2">
+              {district}
+            </span>
+          ))}
         </div>
       </div>
       <div className="">

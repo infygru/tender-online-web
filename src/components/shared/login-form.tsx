@@ -87,7 +87,7 @@ const LoginForm = ({ setIsLogin }: any) => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="lg:mt-7 mt-44 w-[95%] lg:w-[60%]">
+    <div className="lg:mt-7 mt-44 w-[95%] lg:w-[80%]">
       <div className="bg-white border border-gray-200 rounded-3xl shadow-sm dark:bg-neutral-900 dark:border-neutral-700">
         <div className="p-4 sm:p-12">
           <div className="text-center">

@@ -1,6 +1,7 @@
 "use client";
 import BlogHero from "@/components/Blog/BlogHero";
 import BlogTrending from "@/components/Blog/blogTrending";
+import Footer from "@/components/shared/footer";
 import Header from "@/components/ui/header";
 import Loading from "@/components/ui/loading";
 import { useQuery } from "@tanstack/react-query";
@@ -35,6 +36,7 @@ export default function Page() {
         <BlogTrending title={"Trending Blogs"} blog={blog} />
         <BlogTrending title={"Related Topics"} blog={blog} />
       </div>
+      <Footer />
     </div>
   );
 }

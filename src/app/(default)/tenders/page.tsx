@@ -6,6 +6,7 @@ import { DataTableTender } from "@/components/table/tender-table";
 import AdsImage from "@/components/shared/ads-image";
 import MobileTenderList from "@/components/shared/mobile-tenders";
 import { DatePickerWithRange } from "@/components/shared/multi-select-demo";
+import Footer from "@/components/shared/footer";
 
 export default function Page() {
   const [search, setSearch] = useState("");
@@ -50,6 +51,7 @@ export default function Page() {
 
         <AdsImage />
       </div>
+      <Footer />
     </main>
   );
 }

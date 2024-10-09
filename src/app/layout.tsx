@@ -55,7 +55,6 @@ export default function RootLayout({
           </QueryClientProvider>
         </MantineProvider>
         <Toaster richColors />
-        <Footer />
       </body>
     </html>
   );

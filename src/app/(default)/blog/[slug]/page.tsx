@@ -1,4 +1,5 @@
 "use client";
+import Footer from "@/components/shared/footer";
 import Header from "@/components/ui/header";
 import Loading from "@/components/ui/loading";
 import { useQuery } from "@tanstack/react-query";
@@ -99,6 +100,7 @@ export default function Page({ params }: { params: { slug: string } }) {
           </div>
         </section>
       </div>
+      <Footer />
     </div>
   );
 }
