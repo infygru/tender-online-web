@@ -8,6 +8,7 @@ import Select from "react-select";
 import { toast } from "sonner";
 import { MultiSelect } from "@mantine/core";
 import axios from "axios";
+import { X } from "lucide-react";
 
 const fetchTenders = async (queryParams: URLSearchParams): Promise<any> => {
   const response = await fetch(
@@ -376,7 +377,25 @@ const MobileTenderList: React.FC = () => {
       </div>
     );
   };
-
+  const clearFilters = () => {
+    setDistrict("");
+    setTenderValue("");
+    setDepartment("");
+    setStatus("");
+    setSearch("");
+    setSelectedDistricts([]);
+    setSelectedTenderValues([]);
+    setSelectedDepartments([]);
+    setSelectedStatus([]);
+    setIndustry("");
+    setSubIndustry("");
+    setClassification("");
+  };
+  const removeDistrict = (districtToRemove: string, setState: any) => {
+    setState((prev: any) =>
+      prev.filter((value: any) => value !== districtToRemove)
+    );
+  };
   return (
     <div className="px-2 bg-[#F6F8F9] rounded-3xl py-4">
       <div className=" flex items-center justify-between w-full">
@@ -385,6 +404,90 @@ const MobileTenderList: React.FC = () => {
         </h2>
         <div className="">
           <PopoverMobileFilter renderMultiSelect={renderMultiSelect} />
+        </div>
+      </div>
+      <div className="flex items-center py-2  px-2">
+        {/* Conditional rendering of the Reset All button */}
+        <div className="text-black flex flex-wrap gap-1 items-center">
+          {(selectedDistricts.length > 0 ||
+            selectedTenderValues.length > 0 ||
+            industry.length > 0 ||
+            classification) && (
+            <button
+              onClick={clearFilters}
+              className="px-4 rounded-xl mr-3 border py-3 text-xs"
+            >
+              Reset All
+            </button>
+          )}
+          {selectedDistricts?.map((district: string) => (
+            <div
+              key={district}
+              className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+            >
+              {district}
+              <span className="text-[8px] font-light">district</span>
+              <button
+                onClick={() => removeDistrict(district, setSelectedDistricts)}
+                className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
+                aria-label={`Remove ${district}`}
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </div>
+          ))}
+
+          {selectedTenderValues?.map((value: string) => (
+            <div
+              key={value}
+              className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+            >
+              {value}
+              <span className="text-[8px] font-light">tender value</span>
+              <button
+                onClick={() => removeDistrict(value, setSelectedTenderValues)}
+                className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
+                aria-label={`Remove ${value}`}
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </div>
+          ))}
+
+          {industry &&
+            industry?.map((industry: string) => (
+              <div
+                key={industry}
+                className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+              >
+                {industry}
+                <span className="text-[8px] font-light">industry</span>
+                <button
+                  onClick={() => removeDistrict(industry, setIndustry)}
+                  className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
+                  aria-label={`Remove ${industry}`}
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </div>
+            ))}
+
+          {classification && (
+            <div
+              className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+              key={classification}
+            >
+              {classification}
+              <span className="text-[8px] font-light">classification</span>
+              <button
+                onClick={() => setClassification("")}
+                className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
+                aria-label={`Remove ${classification}`}
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <TenderDetailsDialog

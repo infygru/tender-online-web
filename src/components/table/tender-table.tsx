@@ -777,19 +777,19 @@ export function DataTableTender({ setSearch, search }: any) {
         </div>
       </div>
       <div className="flex items-center  px-4">
-        {/* Conditional rendering of the Reset All button */}
-        {(selectedDistricts.length > 0 ||
-          selectedTenderValues.length > 0 ||
-          industry.length > 0 ||
-          classification) && (
-          <button
-            onClick={clearFilters}
-            className="px-4 rounded-xl mr-3 border py-3 text-xs"
-          >
-            Reset All
-          </button>
-        )}
         <div className="text-black flex flex-wrap gap-1 items-center">
+          {/* Conditional rendering of the Reset All button */}
+          {(selectedDistricts.length > 0 ||
+            selectedTenderValues.length > 0 ||
+            industry.length > 0 ||
+            classification) && (
+            <button
+              onClick={clearFilters}
+              className="px-4 rounded-xl mr-3 border py-3 text-xs"
+            >
+              Reset All
+            </button>
+          )}
           {selectedDistricts?.map((district: string) => (
             <div
               key={district}
