@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/popover";
 import { MultiSelect } from "@mantine/core";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
-import { ArrowUpDown, CalendarIcon } from "lucide-react";
+import { ArrowUpDown, CalendarIcon, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -742,6 +742,11 @@ export function DataTableTender({ setSearch, search }: any) {
     setSubIndustry("");
     setClassification("");
   };
+  const removeDistrict = (districtToRemove: string, setState: any) => {
+    setState((prev: any) =>
+      prev.filter((value: any) => value !== districtToRemove)
+    );
+  };
 
   return (
     <div className="w-full border rounded-xl">
@@ -762,15 +767,6 @@ export function DataTableTender({ setSearch, search }: any) {
               dateRange={dateRange}
             />
           </div>
-          {(district || tenderValue || department || status) && (
-            <button
-              onClick={clearFilters}
-              className="bg-[#1C1A1A] px-4 py-2.5 rounded-md text-white text-xs"
-            >
-              Clear
-            </button>
-          )}
-
           <div className="mx-2">
             {isAnyRowSelected && (
               <button className="bg-[#1C1A1A] px-4 py-2.5 rounded-md text-white text-xs">
@@ -780,14 +776,88 @@ export function DataTableTender({ setSearch, search }: any) {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center">
-        <button>Reset All</button>
-        <div className="text-black">
-          {selectedDistricts?.map((district: any) => (
-            <span key={district} className="mr-2">
+      <div className="flex items-center  px-4">
+        {/* Conditional rendering of the Reset All button */}
+        {(selectedDistricts.length > 0 ||
+          selectedTenderValues.length > 0 ||
+          industry.length > 0 ||
+          classification) && (
+          <button
+            onClick={clearFilters}
+            className="px-4 rounded-xl mr-3 border py-3 text-xs"
+          >
+            Reset All
+          </button>
+        )}
+        <div className="text-black flex flex-wrap gap-1 items-center">
+          {selectedDistricts?.map((district: string) => (
+            <div
+              key={district}
+              className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+            >
               {district}
-            </span>
+              <span className="text-[8px] font-light">district</span>
+              <button
+                onClick={() => removeDistrict(district, setSelectedDistricts)}
+                className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
+                aria-label={`Remove ${district}`}
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </div>
           ))}
+
+          {selectedTenderValues?.map((value: string) => (
+            <div
+              key={value}
+              className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+            >
+              {value}
+              <span className="text-[8px] font-light">tender value</span>
+              <button
+                onClick={() => removeDistrict(value, setSelectedTenderValues)}
+                className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
+                aria-label={`Remove ${value}`}
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </div>
+          ))}
+
+          {industry &&
+            industry?.map((industry: string) => (
+              <div
+                key={industry}
+                className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+              >
+                {industry}
+                <span className="text-[8px] font-light">industry</span>
+                <button
+                  onClick={() => removeDistrict(industry, setIndustry)}
+                  className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
+                  aria-label={`Remove ${industry}`}
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </div>
+            ))}
+
+          {classification && (
+            <div
+              className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+              key={classification}
+            >
+              {classification}
+              <span className="text-[8px] font-light">classification</span>
+              <button
+                onClick={() => setClassification("")}
+                className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
+                aria-label={`Remove ${classification}`}
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className="">
