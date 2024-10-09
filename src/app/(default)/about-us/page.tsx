@@ -2,7 +2,15 @@
 import Header from "@/components/ui/header";
 import Link from "next/link";
 import React, { useState } from "react";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 const page = () => {
   return (
     <div>
@@ -23,28 +31,46 @@ const page = () => {
             </p>
             {/* Buttons */}
             <div className="mt-7  flex gap-3 items-center">
-              <Link
-                className="py-3 px-0 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-blue-600  hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                href="#"
-              >
-                <svg
-                  width="52"
-                  height="52"
-                  viewBox="0 0 52 52"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M26 47.6667C37.9662 47.6667 47.6666 37.9662 47.6666 26C47.6666 14.0338 37.9662 4.33334 26 4.33334C14.0338 4.33334 4.33331 14.0338 4.33331 26C4.33331 37.9662 14.0338 47.6667 26 47.6667Z"
-                    fill="#6183E4"
-                  />
-                  <path
-                    d="M21.6667 17.3333L34.6667 26L21.6667 34.6667V17.3333Z"
-                    fill="#F8FAFC"
-                  />
-                </svg>
-                View Demo
-              </Link>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <button className="py-3 px-0 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-blue-600 disabled:opacity-50 disabled:pointer-events-none">
+                    <svg
+                      width="52"
+                      height="52"
+                      viewBox="0 0 52 52"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M26 47.6667C37.9662 47.6667 47.6666 37.9662 47.6666 26C47.6666 14.0338 37.9662 4.33334 26 4.33334C14.0338 4.33334 4.33331 14.0338 4.33331 26C4.33331 37.9662 14.0338 47.6667 26 47.6667Z"
+                        fill="#6183E4"
+                      />
+                      <path
+                        d="M21.6667 17.3333L34.6667 26L21.6667 34.6667V17.3333Z"
+                        fill="#F8FAFC"
+                      />
+                    </svg>
+                    View Demo
+                  </button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[903px]">
+                  <div className="grid gap-4">
+                    <iframe
+                      width="853"
+                      height="480"
+                      src={`https://www.youtube.com/embed/rokGy0huYEA`}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      title="Embedded youtube"
+                    />
+                  </div>
+                  <DialogFooter>
+                    <Button type="submit">Close</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+
               <Link
                 className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-[#F7CE46] text-black shadow-sm hover:bg-[#F7CE46] focus:outline-none  disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
                 href="/support"
@@ -597,6 +623,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Footer from "@/components/shared/footer";
+import { Button } from "@/components/ui/button";
 
 interface FormValues {
   firstName: string;
