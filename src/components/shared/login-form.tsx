@@ -72,7 +72,7 @@ const LoginForm = ({ setIsLogin }: any) => {
       toast.success("Login successful");
       console.log(data.token, "data.token");
 
-      sessionStorage.setItem("authToken", data.token);
+      sessionStorage.setItem("accessToken", data.token);
 
       // Redirect or update state as needed
       router.push("/tenders");

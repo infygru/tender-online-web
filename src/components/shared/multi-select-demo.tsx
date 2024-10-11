@@ -35,14 +35,14 @@ export const DatePickerWithRange: React.FC<any> = ({
   }, [open]);
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       {/* Button to toggle the date picker */}
       <button
         ref={buttonRef} // Attach ref to the button
-        className="px-3 py-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+        className="px-3 text-sm py-2 w-max bg-blue-500 text-white rounded hover:bg-blue-600  transition"
         onClick={() => setOpen(!open)}
       >
-        {open ? "Close" : "Date"}
+        Bid - Submission Date
       </button>
 
       {/* Date Range Picker */}

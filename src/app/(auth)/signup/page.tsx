@@ -1,8 +1,6 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import Link from "next/link";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { DialogOpen } from "@/components/shared/dialog-open";
@@ -14,8 +12,11 @@ import {
 } from "@/components/ui/dialog";
 import { Close } from "@radix-ui/react-dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import Joi from "joi";
+import { Eye } from "lucide-react";
+import { EyeClosedIcon } from "@radix-ui/react-icons";
+import { Label } from "@/components/ui/label";
 import axios from "axios";
-import { MultiSelect } from "@mantine/core";
 
 const Signup = ({ setIsLogin }: any) => {
   const router = useRouter();
@@ -25,81 +26,111 @@ const Signup = ({ setIsLogin }: any) => {
     phone: "",
     email: "",
     companyName: "",
-
     password: "",
     confirmPassword: "",
   });
 
   const [otp, setOtp] = useState<any>("");
   const [typeOtp, setTypeOtp] = useState<any>("");
-  const [errors, setErrors] = useState<any>({
-    name: "",
-    phone: "",
-    email: "",
-    companyName: "",
+  const [errors, setErrors] = useState<any>({});
+  const [industry, setIndustry] = useState<any>("");
+  const [classification, setClassification] = useState<any>("");
 
-    password: "",
-    confirmPassword: "",
-  });
+  const [showPassword, setShowPassword] = useState<boolean>(false); // State for password visibility
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false); // State for confirm password visibility
 
-  const [industry, setIndustry] = React.useState<any>("");
-  const [classification, setClassification] = React.useState<any>("");
-
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: "" });
   };
 
-  const handleSubmit = async (e: any) => {
+  const validateForm = () => {
+    const schema = Joi.object({
+      name: Joi.string().trim().required().messages({
+        "string.empty": "Name is required",
+      }),
+      phone: Joi.string().trim().required().messages({
+        "string.empty": "Phone number is required",
+      }),
+      email: Joi.string()
+        .pattern(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)
+        .required()
+        .messages({
+          "string.empty": "Email is required",
+          "string.email": "Invalid email format",
+        }),
+      companyName: Joi.string().trim().required().messages({
+        "string.empty": "Company name is required",
+      }),
+      password: Joi.string()
+        .min(8)
+        .max(20)
+        .regex(/[a-zA-Z]/)
+        .regex(/[0-9]/)
+        .regex(/[!@#$%^&*]/)
+        .required()
+        .messages({
+          "string.empty": "Password is required",
+          "string.min": "Password must be at least 8 characters",
+          "string.max": "Password must be at most 20 characters",
+          "string.pattern.base":
+            "Password must contain letters, numbers, and special characters",
+        }),
+      confirmPassword: Joi.string()
+        .valid(Joi.ref("password"))
+        .required()
+        .messages({
+          "any.only": "Passwords do not match",
+          "string.empty": "Confirm password is required",
+        }),
+    });
+
+    return schema.validate(formData, { abortEarly: false });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Validation
-    let formIsValid = true;
-    const newErrors = { ...errors };
-
-    for (const key in formData) {
-      if (!formData[key].trim()) {
-        newErrors[key] = `${
-          key.charAt(0).toUpperCase() + key.slice(1)
-        } is required`;
-        formIsValid = false;
-      }
-    }
-
-    if (!formIsValid) {
+    const { error } = validateForm();
+    if (error) {
+      const newErrors: any = {};
+      error.details.forEach((err) => {
+        newErrors[err.path[0]] = err.message;
+      });
       setErrors(newErrors);
       return;
     }
+
     const realotp = otp?.result?.[0]?.otp;
-    if (realotp !== typeOtp) {
-      setErrors({
-        ...errors,
-        general: "otp is invalid",
-      });
-      return;
-    }
+    // if (realotp !== typeOtp) {
+    //   setErrors({
+    //     ...errors,
+    //     general: "OTP is invalid",
+    //   });
+    //   return;
+    // }
+
     setLoading(true);
     try {
       const finaldata = {
         ...formData,
-        subscriptionPackage: "user",
-        industry,
-        classification,
       };
-      // Make registration API call
-      const response = await fetch(
+
+      const response = await axios.post(
         "https://tender-online-h4lh.vercel.app/api/auth/create/account",
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(finaldata),
+          ...finaldata,
         }
       );
+      const data = response.data;
 
-      if (!response.ok) {
-        throw new Error("Registration failed");
+      console.log(data, "data");
+
+      if (data) {
+        sessionStorage.setItem("accessToken", data.accessToken);
+        toast.success("Registration successful");
       }
 
       toast.success("Registration successful");
@@ -113,21 +144,19 @@ const Signup = ({ setIsLogin }: any) => {
     }
     setLoading(false);
   };
+
   const handletootpverify = async () => {
     const realotp = otp?.result?.[0]?.otp;
     if (realotp !== typeOtp) {
-      toast.error("otp is invalid");
+      toast.error("OTP is invalid");
       return;
     }
 
-    toast.success("otp verified successfully");
+    toast.success("OTP verified successfully");
   };
-
-  console.log(otp, "otp");
 
   const handletosendemail = async () => {
     try {
-      // Make registration API call
       const response = await fetch(
         "https://tender-online-h4lh.vercel.app/api/auth/otp",
         {
@@ -140,110 +169,31 @@ const Signup = ({ setIsLogin }: any) => {
       );
 
       if (!response.ok) {
-        throw new Error("Registration failed");
+        throw new Error("Failed to send OTP");
       }
 
       const data = await response.json();
       setOtp(data);
-      toast.success("otp sent successfully");
+      toast.success("OTP sent successfully");
     } catch (error) {
-      console.error("Registration failed:", error);
+      console.error("Failed to send OTP:", error);
       setErrors({
         ...errors,
-        general: "Registration failed. Please try again.",
+        general: "Failed to send OTP. Please try again.",
       });
     }
   };
-  const [filterIndustry, setFilterIndustry] = React.useState<any>([]);
-  const fetchIndustry = async () => {
-    const response = await axios.get(
-      "https://tender-online-h4lh.vercel.app/api/tender/industries"
-    );
-    setFilterIndustry(response.data.industries);
-    return response.data.industries;
-  };
 
-  useEffect(() => {
-    fetchIndustry();
-  }, []);
-
-  const dropdownData: any = {
-    Industry: filterIndustry,
-
-    Classification: [
-      { value: "Good", label: "Goods" },
-      { value: "service", label: "Service" },
-      { value: "work", label: "Works" },
-    ],
-  };
-  const removeDuplicates = (options: { value: string; label: string }[]) => {
-    const uniqueOptions = new Map();
-    options.forEach((option) => {
-      if (!uniqueOptions.has(option.value)) {
-        uniqueOptions.set(option.value, option);
-      }
-    });
-    return Array.from(uniqueOptions.values());
-  };
-  const handleMultiSelectChange = (label: string, value: any) => {
-    console.log(value, "selected");
-
-    switch (label) {
-      case "Industry":
-        setIndustry(value);
-        break;
-      case "Classification":
-        setClassification(value);
-        break;
-      default:
-        break;
-    }
-  };
-  const renderMultiSelect = (label: string) => {
-    // Map dropdown data to Mantine format and remove duplicates
-    const options =
-      dropdownData[label]?.map((option: any) => ({
-        value: option.value, // Ensure that value is unique
-        label: option.label, // Adjust according to your data structure
-      })) || [];
-
-    // Remove duplicate options based on 'value'
-    const uniqueOptions = removeDuplicates(options);
-
-    const getSelectedValues = (label: string) => {
-      switch (label) {
-        case "Industry":
-          return Array.isArray(industry) ? industry : [];
-        case "Classification":
-          return Array.isArray(classification) ? classification : [];
-        default:
-          return [];
-      }
-    };
-
-    return (
-      <div className="mb-4 w-full">
-        <MultiSelect
-          placeholder={`Pick ${label}`}
-          data={uniqueOptions} // Use the filtered unique options
-          value={getSelectedValues(label)} // Ensure value is an array
-          onChange={(selected) => handleMultiSelectChange(label, selected)}
-          className="basic-multi-select"
-        />
-      </div>
-    );
-  };
-  const dropdownLabels = ["Industry", "Classification"];
   return (
     <main className="flex pt-36 w-full items-center mt-6 justify-center">
       {loading && (
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="">
+          <div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
               <circle
                 fill="#FF156D"
                 stroke="#FF156D"
-                stroke-width="15"
+                strokeWidth="15"
                 r="15"
                 cx="40"
                 cy="65"
@@ -261,7 +211,7 @@ const Signup = ({ setIsLogin }: any) => {
               <circle
                 fill="#FF156D"
                 stroke="#FF156D"
-                stroke-width="15"
+                strokeWidth="15"
                 r="15"
                 cx="100"
                 cy="65"
@@ -279,7 +229,7 @@ const Signup = ({ setIsLogin }: any) => {
               <circle
                 fill="#FF156D"
                 stroke="#FF156D"
-                stroke-width="15"
+                strokeWidth="15"
                 r="15"
                 cx="160"
                 cy="65"
@@ -300,31 +250,34 @@ const Signup = ({ setIsLogin }: any) => {
       )}
       <div className="w-[80%]">
         <div className="bg-white border border-gray-200 rounded-3xl shadow-sm">
-          <ScrollArea className="lg:h-[58vh] xl:h-[82vh] h-[58vh] min-h-auto w-full">
+          <ScrollArea className="lg:h-[58vh] xl:h-[73vh] h-[58vh] min-h-auto w-full">
             <div className="p-8">
               <h1 className="text-2xl text-center font-bold mb-4">Register</h1>
               <form onSubmit={handleSubmit}>
                 {/* Registration form fields */}
                 {Object.keys(formData).map((key) => (
-                  <div key={key} className="mb-4">
-                    {/* <label
-                      htmlFor={key}
-                      className="block font-semibold text-gray-700 mb-1"
-                    >
-                      {key.charAt(0).toUpperCase() + key.slice(1)}
-                    </label> */}
+                  <div key={key} className="mb-4 relative">
                     <input
-                      type={key === "password" ? "password" : "text"}
-                      id={key}
+                      type={
+                        key === "password" && showPassword
+                          ? "text"
+                          : key === "confirmPassword" && showConfirmPassword
+                          ? "text"
+                          : key === "password" || key === "confirmPassword"
+                          ? "password"
+                          : "text"
+                      }
                       name={key}
-                      placeholder={`Enter your ${key}`}
                       value={formData[key]}
                       onChange={handleChange}
-                      className={`w-full py-2 px-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 ${
-                        errors[key] && "border-red-500"
-                      }`}
+                      placeholder={
+                        ` Enter a ` + key.charAt(0).toUpperCase() + key.slice(1)
+                      }
+                      className={`block w-full border ${
+                        errors[key] ? "border-red-500 " : "border-gray-300"
+                      } rounded-md p-2 text-sm`}
                     />
-                    {key === "email" && formData[key] && (
+                    {key === "email" && formData["email"] && (
                       <div className="w-max">
                         <DialogOpen
                           button={
@@ -388,36 +341,50 @@ const Signup = ({ setIsLogin }: any) => {
                         </DialogOpen>
                       </div>
                     )}
+                    {key === "password" && (
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="absolute right-3 top-3 text-gray-500"
+                      >
+                        {showPassword ? <Eye size={20} /> : <EyeClosedIcon />}
+                      </button>
+                    )}
+                    {key === "confirmPassword" && (
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword((prev) => !prev)}
+                        className="absolute right-3 top-3 text-gray-500"
+                      >
+                        {showConfirmPassword ? (
+                          <Eye size={20} />
+                        ) : (
+                          <EyeClosedIcon />
+                        )}
+                      </button>
+                    )}
                     {errors[key] && (
-                      <p className="text-sm text-red-500">{errors[key]}</p>
+                      <p className="text-red-500 text-sm">{errors[key]}</p>
                     )}
                   </div>
                 ))}
-                {/* General error message */}
-                {errors.general && (
-                  <p className="text-sm text-red-500 mb-4">{errors.general}</p>
-                )}
-                {dropdownLabels.map((label) => renderMultiSelect(label))}
                 <button
                   type="submit"
-                  className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                  className="w-full bg-blue-500 text-white p-2 rounded-md"
                 >
                   Register
                 </button>
               </form>
-
-              <div className="text-sm text-center w-full flex items-center gap-2 mt-4">
-                Already have an account? {/* <Link href="/login"> */}
-                <button onClick={() => setIsLogin(true)}>
-                  <div className="text-blue-500 hover:underline">Login</div>
-                </button>
-                {/* </Link> */}
-              </div>
+              {/* Additional UI elements can go here */}
             </div>
           </ScrollArea>
-        </div>
-        <div className="flex items-end pt-6 w-full justify-end">
-          <p>© TenderOnline 2024</p>
+          <DialogFooter className="flex justify-center">
+            <DialogOpen
+              title="Login"
+              description="Already have an account? Log in here."
+              setIsLogin={setIsLogin}
+            />
+          </DialogFooter>
         </div>
       </div>
     </main>

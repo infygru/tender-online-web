@@ -25,7 +25,7 @@ export default function RootLayout({
   const navigate = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   useEffect(() => {
-    const token = sessionStorage.getItem("authToken");
+    const token = sessionStorage.getItem("accessToken");
 
     // List of routes that do not require authentication
     const skipAuthRoutes = ["/support", "/about-us", "/pricing"];
@@ -55,6 +55,7 @@ export default function RootLayout({
           </QueryClientProvider>
         </MantineProvider>
         <Toaster richColors />
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
       </body>
     </html>
   );

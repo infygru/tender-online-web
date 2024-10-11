@@ -39,7 +39,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import TenderDetailsDialog from "../shared/TenderDetailsDialog";
 import { DatePickerWithRange } from "../shared/multi-select-demo";
 import { DateRange } from "@matharumanpreet00/react-daterange-picker";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 export const formatDate = (isoDateString: string): string => {
   const date = new Date(isoDateString);
@@ -314,6 +314,7 @@ const fetchTenders = async (queryParams: URLSearchParams): Promise<any> => {
 
 export function DataTableTender({ setSearch, search }: any) {
   const [foryou, setForYou] = React.useState<any | null>(null);
+  console.log(foryou, "foryou");
 
   React.useEffect(() => {
     // Check if window is defined (client-side only)
@@ -414,14 +415,14 @@ export function DataTableTender({ setSearch, search }: any) {
   const [user, setUser] = React.useState<any | null>(null);
 
   // Function to get the auth token from sessionStorage
-  const getAuthToken = () => sessionStorage.getItem("authToken");
+  const getaccessToken = () => sessionStorage.getItem("accessToken");
 
   // Fetch user details dynamically
   const fetchUserDetails = async (
     url: string = "https://tender-online-h4lh.vercel.app/api/auth/me"
   ): Promise<any | null> => {
     try {
-      const token = getAuthToken();
+      const token = getaccessToken();
       if (!token) throw new Error("No auth token found");
 
       const response = await axios.get<any>(url, {
@@ -443,17 +444,17 @@ export function DataTableTender({ setSearch, search }: any) {
       if (foryou === "true" || foryou === true) {
         const userDetails = await fetchUserDetails(); // Await the user details
         console.log(userDetails, "userDetails");
-
         if (userDetails) {
           setIndustry(userDetails.industry || []); // Set industry and classification
           setClassification(userDetails.classification || []);
         }
         refetch(); // Call refetch after setting the state
+        window.location.reload;
       }
     };
 
     fetchData(); // Call the inner async function
-  }, [foryou]); // Add 'foryou' as a dependency to re-fetch if it changes
+  }, [foryou, industry, classification]); // Add 'foryou' as a dependency to re-fetch if it changes
 
   const data = tenders?.result;
 
@@ -696,7 +697,7 @@ export function DataTableTender({ setSearch, search }: any) {
     };
 
     return (
-      <div className="mb-4 w-full">
+      <div className="w-full">
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline">{label}</Button>

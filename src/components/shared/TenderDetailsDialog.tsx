@@ -47,7 +47,7 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
         body: JSON.stringify(data),
       });
@@ -396,6 +396,7 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
                 {formatIndianRupeePrice(selectedRowData?.EMDAmountin)}
               </h3>
             </div>
+            <hr className="border-t-2 h-[1px] w-[80px] border-gray-500 rotate-90" />
             <div className="flex items-center flex-col">
               <h1 className="text-[#4B4B4B] font-semibold text-xs lg:text-xl">
                 Tender Value

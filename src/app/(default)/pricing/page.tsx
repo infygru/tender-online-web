@@ -1,4 +1,5 @@
 import Footer from "@/components/shared/footer";
+import PricingOptions from "@/components/shared/PricingOptions";
 import Header from "@/components/ui/header";
 import Link from "next/link";
 import React from "react";
@@ -80,7 +81,9 @@ const page = () => {
             <p className="mt-3 text-gray-500 dark:text-neutral-400">
               Tender Information updated everyday in tender online website
             </p>
-            <div className="w-full flex-wrap flex text-center gap-6 justify-center items-center">
+            <PricingOptions />
+
+            {/* <div className="w-full flex-wrap flex text-center gap-6 justify-center items-center">
               <div className="h-full  space-y-2 w-max bg-white lg:mt-px lg:py-5 px-8 dark:bg-neutral-900">
                 <span className="mt-7 flex flex-col font-bold text-2xl text-[#1075FF] dark:text-neutral-200">
                   ₹400
@@ -102,7 +105,7 @@ const page = () => {
                 <hr />
                 <span>Per Year</span>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
