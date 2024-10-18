@@ -47,6 +47,7 @@ const TenderHeader = () => {
             </div>
             <div className="flex items-center space-x-4">
               <Link
+                target="_black"
                 href="https://wa.me/9176133695"
                 className="flex items-center gap-2"
               >
@@ -57,6 +58,7 @@ const TenderHeader = () => {
               </Link>
 
               <Link
+                target="_black"
                 href="mailto:sales@tenderonline.co.in"
                 className="flex items-center gap-2"
               >

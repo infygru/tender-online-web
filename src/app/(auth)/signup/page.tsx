@@ -376,6 +376,18 @@ const Signup = ({ setIsLogin }: any) => {
                 </button>
               </form>
               {/* Additional UI elements can go here */}
+              <p className="mt-2 text-center text-sm text-gray-600 dark:text-neutral-400">
+                Already have an account?{" "}
+                <button
+                  className="text-blue-600 decoration-2 hover:underline font-medium dark:text-blue-500"
+                  onClick={() => setIsLogin(true)}
+                >
+                  Login here
+                </button>
+              </p>
+              <div className="flex items-end pt-6 w-full justify-end">
+                <p>© TenderOnline 2024</p>
+              </div>
             </div>
           </ScrollArea>
           <DialogFooter className="flex justify-center">

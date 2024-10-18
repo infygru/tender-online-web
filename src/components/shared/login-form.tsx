@@ -161,6 +161,15 @@ const LoginForm = ({ setIsLogin }: any) => {
                     )}
                   </div>
                 </div>
+                <div className="flex items-center justify-between w-full">
+                  <div className=""></div>
+                  <Link
+                    href="/forgot-password"
+                    className="text-sm font-medium text-blue-500 hover:underline dark:text-primary-500"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
                 {/* End Form Group */}
                 {errors.general && (
                   <p className="text-xs text-red-600 mt-2">{errors.general}</p>

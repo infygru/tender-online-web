@@ -30,7 +30,9 @@ export default function Page() {
 
   return (
     <div>
-      <Header />
+      <div className="">
+        <Header />
+      </div>
       <div className="pt-36 px-12">
         <BlogHero />
         <BlogTrending title={"Trending Blogs"} blog={blog} />
