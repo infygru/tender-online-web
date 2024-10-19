@@ -128,7 +128,7 @@ const Signup = ({ setIsLogin }: any) => {
       };
 
       const response = await axios.post(
-        "http://localhost:8080/api/auth/create/account",
+        "https://tender-online-h4lh.vercel.app/api/auth/create/account",
         {
           ...finaldata,
         }
