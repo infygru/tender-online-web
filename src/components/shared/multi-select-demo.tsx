@@ -33,6 +33,21 @@ export const DatePickerWithRange: React.FC<any> = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [open]);
+  const calculateDays = () => {
+    if (dateRange.startDate && dateRange.endDate) {
+      const start = new Date(dateRange.startDate);
+      const end = new Date(dateRange.endDate);
+
+      // Calculate the difference in time (in milliseconds)
+      const timeDiff = Math.abs(end.getTime() - start.getTime());
+
+      // Convert time difference from milliseconds to days
+      const diffDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+      return diffDays;
+    }
+    return 0;
+  };
 
   return (
     <div className="relative w-full">
@@ -51,6 +66,17 @@ export const DatePickerWithRange: React.FC<any> = ({
           ref={pickerRef} // Attach ref to the date picker container
           className="absolute z-50 top-12 right-0 bg-white"
         >
+          {dateRange && (
+            <div className="absolute bottom-4 py-2 px-5 flex items-center justify-center left-24 text-center border rounded">
+              <h3>
+                No. of days selected:{" "}
+                {dateRange?.startDate && dateRange?.endDate
+                  ? calculateDays()
+                  : 0}{" "}
+                days
+              </h3>
+            </div>
+          )}
           <DateRangePicker
             open={open}
             onChange={(range) => setDateRange(range)}

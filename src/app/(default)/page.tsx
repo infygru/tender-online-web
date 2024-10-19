@@ -105,10 +105,11 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-              <div className="flex text-gray-100  items-center  text-center justify-center z-50 gap-12  mt-auto  text-xs">
+              <div className="flex text-gray-100  items-center  text-center justify-center z-50 gap-12  mt-auto  text-base">
                 <Link href={"/terms"}>Terms & Conditions </Link>
                 <Link href={"/privacy-policy"}>Privacy Policy </Link>
                 <Link href={"/"}>Cookie Policy </Link>
+                <Link href={"/"}>Refund Policy</Link>
               </div>
             </div>
           </div>

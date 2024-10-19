@@ -30,6 +30,15 @@ const Signup = ({ setIsLogin }: any) => {
     confirmPassword: "",
   });
 
+  const [placeholder, setPlaceholder] = useState<any>({
+    name: "Full Name",
+    phone: "Mobile Number",
+    email: "Email Address",
+    companyName: "Company Name",
+    password: "Password",
+    confirmPassword: "Confirm Password",
+  });
+
   const [otp, setOtp] = useState<any>("");
   const [typeOtp, setTypeOtp] = useState<any>("");
   const [errors, setErrors] = useState<any>({});
@@ -119,7 +128,7 @@ const Signup = ({ setIsLogin }: any) => {
       };
 
       const response = await axios.post(
-        "https://tender-online-h4lh.vercel.app/api/auth/create/account",
+        "http://localhost:8080/api/auth/create/account",
         {
           ...finaldata,
         }
@@ -128,15 +137,19 @@ const Signup = ({ setIsLogin }: any) => {
 
       console.log(data, "data");
 
+      if (data.code === 400) {
+        toast.error(data.message);
+        return;
+      }
+
       if (data) {
         sessionStorage.setItem("accessToken", data.accessToken);
         toast.success("Registration successful");
+        router.push("/tenders"); // Redirect to login page after successful registration
       }
-
-      toast.success("Registration successful");
-      router.push("/tenders"); // Redirect to login page after successful registration
     } catch (error) {
       console.error("Registration failed:", error);
+      toast.error("Registration failed. Please try again.");
       setErrors({
         ...errors,
         general: "Registration failed. Please try again.",
@@ -258,6 +271,9 @@ const Signup = ({ setIsLogin }: any) => {
                 {Object.keys(formData).map((key) => (
                   <div key={key} className="mb-4 relative">
                     <input
+                      maxLength={
+                        key === "phone" ? 10 : key === "password" ? 20 : 50
+                      }
                       type={
                         key === "password" && showPassword
                           ? "text"
@@ -270,9 +286,7 @@ const Signup = ({ setIsLogin }: any) => {
                       name={key}
                       value={formData[key]}
                       onChange={handleChange}
-                      placeholder={
-                        ` Enter a ` + key.charAt(0).toUpperCase() + key.slice(1)
-                      }
+                      placeholder={placeholder[key]}
                       className={`block w-full border ${
                         errors[key] ? "border-red-500 " : "border-gray-300"
                       } rounded-md p-2 text-sm`}
@@ -377,12 +391,12 @@ const Signup = ({ setIsLogin }: any) => {
               </form>
               {/* Additional UI elements can go here */}
               <p className="mt-2 text-center text-sm text-gray-600 dark:text-neutral-400">
-                Already have an account?{" "}
+                Already a user ?
                 <button
-                  className="text-blue-600 decoration-2 hover:underline font-medium dark:text-blue-500"
+                  className="text-blue-600 decoration-2 ml-1 hover:underline font-medium dark:text-blue-500"
                   onClick={() => setIsLogin(true)}
                 >
-                  Login here
+                  Sign-in
                 </button>
               </p>
               <div className="flex items-end pt-6 w-full justify-end">

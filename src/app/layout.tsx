@@ -4,12 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 import { PrimeReactProvider } from "primereact/api";
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
-import Footer from "@/components/shared/footer";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createTheme, MantineProvider } from "@mantine/core";
@@ -53,7 +48,7 @@ export default function RootLayout({
   const [banner, setBanner] = useState<string>("");
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isSignup, setIsSignup] = useState<boolean>(false);
-
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   useEffect(() => {
     const fetchBanner = async () => {
       try {
@@ -64,6 +59,7 @@ export default function RootLayout({
         setBanner(data.banner);
         setIsActive(data.isActive);
         setIsSignup(data.isSignup);
+        setIsVisible(data.isActive);
       } catch (error) {
         console.error(error);
       }
@@ -71,6 +67,9 @@ export default function RootLayout({
     fetchBanner();
   }, []);
 
+  const handleClose = () => {
+    setIsVisible(false);
+  };
   return (
     <html lang="en">
       <Head>
@@ -80,36 +79,59 @@ export default function RootLayout({
         <MantineProvider theme={theme}>
           <QueryClientProvider client={queryClient}>
             <PrimeReactProvider>
-              {isActive && (
-                <Link
-                  className="group relative z-50 block bg-gray-100 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 py-2 rounded-lg text-center transition duration-300 dark:bg-white/10 dark:hover:bg-white/10 dark:focus:bg-white/10"
-                  href="/"
-                >
-                  <div className="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto">
-                    <p className="me-2 inline-block text-sm text-gray-800 dark:text-neutral-200">
-                      {banner}
-                    </p>
-                    {isSignup && (
-                      <span className="group-hover:underline group-focus:underline decoration-2 inline-flex justify-center items-center gap-x-2 font-semibold text-blue-600 text-sm dark:text-blue-500">
-                        Sign up
-                        <svg
-                          className="shrink-0 size-4"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={24}
-                          height={24}
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="m9 18 6-6-6-6" />
-                        </svg>
-                      </span>
-                    )}
-                  </div>
-                </Link>
+              {isVisible && (
+                <div className="relative">
+                  <Link
+                    className="group relative z-50 block bg-gray-100 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 py-2 rounded-lg text-center transition duration-300 dark:bg-white/10 dark:hover:bg-white/10 dark:focus:bg-white/10"
+                    href="/"
+                  >
+                    <div className="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto">
+                      <p className="me-2 inline-block text-sm text-gray-800 dark:text-neutral-200">
+                        {banner}
+                      </p>
+                      {isSignup && (
+                        <span className="group-hover:underline group-focus:underline decoration-2 inline-flex justify-center items-center gap-x-2 font-semibold text-blue-600 text-sm dark:text-blue-500">
+                          Sign up
+                          <svg
+                            className="shrink-0 size-4"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width={24}
+                            height={24}
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="m9 18 6-6-6-6" />
+                          </svg>
+                        </span>
+                      )}
+                    </div>
+                  </Link>
+
+                  {/* Close button */}
+                  <button
+                    onClick={handleClose}
+                    className="absolute top-2 right-2 text-gray-600 z-50 hover:text-gray-900 dark:text-neutral-200 dark:hover:text-white focus:outline-none"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </div>
               )}
               {children}
             </PrimeReactProvider>

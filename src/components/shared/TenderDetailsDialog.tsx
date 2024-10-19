@@ -388,22 +388,23 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
             </div>
           </div>
           <div className="bg-[#EDEDED]  border-[#EDEDED] border flex items-center gap-4 justify-between px-1 lg:px-24 py-3 rounded-3xl w-full">
-            <div className="flex items-center flex-col">
-              <h1 className="text-[#4B4B4B] font-semibold text-xs lg:text-xl">
-                EMD Amount
-              </h1>
-              <h3 className="text-[#2E2E2E] font-medium text-xs lg:text-base">
-                {formatIndianRupeePrice(selectedRowData?.EMDAmountin)}
-              </h3>
-            </div>
-            <hr className="border-t-2 h-[1px] w-[80px] border-gray-500 rotate-90" />
-            <div className="flex items-center flex-col">
-              <h1 className="text-[#4B4B4B] font-semibold text-xs lg:text-xl">
-                Tender Value
-              </h1>
-              <h3 className="text-[#2E2E2E] font-medium text-xs lg:text-base">
-                {formatIndianRupeePrice(selectedRowData?.tenderValue)}
-              </h3>
+            <div className="flex text-black items-center justify-center py-2 w-full">
+              <div className="lg:px-4 px-1 border-r border-gray-400 w-full text-center py-1 lg:py-3 space-y-2">
+                <h1 className="text-[#4B4B4B] font-semibold text-xs lg:text-xl">
+                  EMD Amount
+                </h1>
+                <h3 className="text-[#2E2E2E] font-medium text-xs lg:text-base">
+                  {formatIndianRupeePrice(selectedRowData?.EMDAmountin)}
+                </h3>
+              </div>
+              <div className="lg:px-4 px-1 w-full text-center py-1 lg:py-3 space-y-2">
+                <h1 className="text-[#4B4B4B] font-semibold text-xs lg:text-xl">
+                  Tender Value
+                </h1>
+                <h3 className="text-[#2E2E2E] font-medium text-xs lg:text-base">
+                  {formatIndianRupeePrice(selectedRowData?.tenderValue)}
+                </h3>
+              </div>
             </div>
           </div>
           <div className="flex justify-center pt-6 items-center w-full">

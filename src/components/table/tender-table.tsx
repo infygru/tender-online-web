@@ -41,6 +41,7 @@ import { DatePickerWithRange } from "../shared/multi-select-demo";
 import { DateRange } from "@matharumanpreet00/react-daterange-picker";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 export const formatDate = (isoDateString: string): string => {
   const date = new Date(isoDateString);
 
@@ -82,6 +83,7 @@ export type Tender = {
   bidOpeningDate: string;
   district?: string;
   department: string;
+  classification?: any;
   active: boolean;
 };
 
@@ -143,43 +145,42 @@ export const columns: ColumnDef<Tender>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "tenderName",
-    header: ({ column }) => (
-      <Button
-        className="text-xs text-gray-500"
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        title="Sort by Tender Title"
-      >
-        Tender Title
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => (
-      <div
-        title={row.getValue("tenderName")}
-        className="flex items-center min-w-60 gap-3"
-      >
-        <div className="flex flex-col">
-          <span className="font-bold text-gray-900" title="Department">
-            {row.getValue("department")}
-          </span>
+    accessorFn: (row) =>
+      `${row.department} - ${row.tenderName} - ${row.classification}`, // Combine two fields
+    header: "Tender Information",
+    cell: ({ row }) => {
+      const department = row.original.department; // Access the original row's department
+      const tenderName = row.original.tenderName; // Access the original row's tenderName
+      const classification = row.original.classification; // Access classification
+
+      return (
+        <div className="flex items-center min-w-60 gap-3">
+          <div className="flex flex-col">
+            {/* Display department name */}
+            <span className="font-bold text-gray-900" title="Department">
+              {department}
+            </span>
+
+            {/* Display tender title */}
+            <span
+              className="text-xs line-clamp-3 font-normal text-gray-500"
+              title="Tender Title"
+            >
+              {tenderName}
+            </span>
+          </div>
+
+          {/* Display classification */}
           <span
-            className="text-xs line-clamp-3 font-normal text-gray-500"
-            title="Tender Title"
+            className="bg-[#ECFDF3] text-[#027A48] gap-1 border rounded-full flex items-center w-max px-2 text-[9px] font-bold"
+            title="Classification"
           >
-            {row.getValue("tenderName")}
+            <div className="bg-green-500 rounded-full w-1 h-1" />
+            {classification}
           </span>
         </div>
-        <span
-          className="bg-[#ECFDF3] text-[#027A48] gap-1 border rounded-full flex items-center w-max px-2 text-[9px] font-bold"
-          title="Status: Active"
-        >
-          <div className="bg-green-500 rounded-full w-1 h-1" />
-          active
-        </span>
-      </div>
-    ),
+      );
+    },
   },
   {
     accessorKey: "epublishedDate",
@@ -628,6 +629,12 @@ export function DataTableTender({ setSearch, search }: any) {
 
   const handleMultiSelectChange = (label: string, value: any) => {
     console.log(value, "selected");
+    if (foryou === "true" || foryou === true) {
+      toast.error(
+        "You can't change the filter , kindy to profle page and add your industry and classification Filter"
+      );
+      return;
+    }
 
     switch (label) {
       case "District":
@@ -700,11 +707,22 @@ export function DataTableTender({ setSearch, search }: any) {
       <div className="w-full">
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline">{label}</Button>
+            <Button
+              disabled={foryou === "true" || foryou === true}
+              variant="outline"
+              className={cn(
+                "",
+                foryou === "true" ||
+                  (foryou === true && "cursor-not-allowed bg-gray-100")
+              )}
+            >
+              {label}
+            </Button>
           </PopoverTrigger>
           <PopoverContent className="w-96 bg-white">
             <div className="grid gap-4">
               <MultiSelect
+                disabled={foryou === "true" || foryou === true}
                 label={label}
                 placeholder={`Pick ${label}`}
                 data={uniqueOptions} // Use the filtered unique options
@@ -712,7 +730,11 @@ export function DataTableTender({ setSearch, search }: any) {
                 onChange={(selected) =>
                   handleMultiSelectChange(label, selected)
                 }
-                className="basic-multi-select"
+                className={cn(
+                  "basic-multi-select",
+                  foryou === "true" ||
+                    (foryou === true && "cursor-not-allowed bg-gray-100")
+                )}
               />
             </div>
           </PopoverContent>
@@ -768,9 +790,9 @@ export function DataTableTender({ setSearch, search }: any) {
               dateRange={dateRange}
             />
           </div>
-          <div className="mx-2">
+          <div className="w-full">
             {isAnyRowSelected && (
-              <button className="bg-[#1C1A1A] px-4 py-2.5 rounded-md text-white text-xs">
+              <button className="bg-[#1C1A1A] text-nowrap px-4 w-full py-2.5 rounded-md text-white text-xs">
                 Request For Documents
               </button>
             )}
@@ -799,6 +821,7 @@ export function DataTableTender({ setSearch, search }: any) {
               {district}
               <span className="text-[8px] font-light">district</span>
               <button
+                disabled={foryou === "true" || foryou === true}
                 onClick={() => removeDistrict(district, setSelectedDistricts)}
                 className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
                 aria-label={`Remove ${district}`}
@@ -816,6 +839,7 @@ export function DataTableTender({ setSearch, search }: any) {
               {value}
               <span className="text-[8px] font-light">tender value</span>
               <button
+                disabled={foryou === "true" || foryou === true}
                 onClick={() => removeDistrict(value, setSelectedTenderValues)}
                 className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
                 aria-label={`Remove ${value}`}
@@ -834,6 +858,7 @@ export function DataTableTender({ setSearch, search }: any) {
                 {industry}
                 <span className="text-[8px] font-light">industry</span>
                 <button
+                  disabled={foryou === "true" || foryou === true}
                   onClick={() => removeDistrict(industry, setIndustry)}
                   className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
                   aria-label={`Remove ${industry}`}
@@ -843,7 +868,26 @@ export function DataTableTender({ setSearch, search }: any) {
               </div>
             ))}
 
-          {classification && (
+          {classification &&
+            classification?.map((classification: string) => (
+              <div
+                className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+                key={classification}
+              >
+                {classification}
+                <span className="text-[8px] font-light">classification</span>
+                <button
+                  disabled={foryou === "true" || foryou === true}
+                  onClick={() => setClassification("")}
+                  className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
+                  aria-label={`Remove ${classification}`}
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </div>
+            ))}
+
+          {/* {classification && (
             <div
               className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
               key={classification}
@@ -858,7 +902,7 @@ export function DataTableTender({ setSearch, search }: any) {
                 <X className="h-3 w-3" />
               </button>
             </div>
-          )}
+          )} */}
         </div>
       </div>
       <div className="">
@@ -882,30 +926,45 @@ export function DataTableTender({ setSearch, search }: any) {
             </TableHeader>
             <TableBody>
               {table?.getRowModel().rows?.length ? (
-                table?.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell
-                        className="cursor-pointer"
-                        onClick={() => {
-                          // skip
-                          if (cell.column.columnDef.id !== "select") {
-                            handleRowClick(row.original);
-                          }
-                        }}
-                        key={cell.id}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
+                table?.getRowModel().rows.map((row) => {
+                  const bidSubmissionDate = new Date(
+                    row.original.bidSubmissionDate
+                  ); // Assuming bidSubmissionDate exists in row.original
+                  const isPastDate = bidSubmissionDate < new Date(); // Compare with current date
+
+                  return (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                      className={
+                        isPastDate ? "bg-gray-100 cursor-not-allowed" : ""
+                      }
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell
+                          className={`cursor-pointer ${
+                            isPastDate && "opacity-50"
+                          }`} // Make past rows appear dimmer
+                          onClick={() => {
+                            // Skip interaction for past date rows
+                            if (
+                              !isPastDate &&
+                              cell.column.columnDef.id !== "select"
+                            ) {
+                              handleRowClick(row.original);
+                            }
+                          }}
+                          key={cell.id}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  );
+                })
               ) : (
                 <TableRow>
                   <TableCell

@@ -87,8 +87,8 @@ const LoginForm = ({ setIsLogin }: any) => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="lg:mt-7 mt-44 w-[95%] lg:w-[80%]">
-      <div className="bg-white border border-gray-200 rounded-3xl shadow-sm dark:bg-neutral-900 dark:border-neutral-700">
+    <div className="lg:mt-7 mt-44 w-[95%] h-screen flex items-center justify-center relative lg:w-[80%]">
+      <div className="bg-white border w-full border-gray-200 rounded-3xl shadow-sm dark:bg-neutral-900 dark:border-neutral-700">
         <div className="p-4 sm:p-12">
           <div className="text-center">
             <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">
@@ -230,7 +230,7 @@ const LoginForm = ({ setIsLogin }: any) => {
           </div>
         </div>
       </div>
-      <div className="flex items-end pt-6 w-full justify-end">
+      <div className="flex items-end absolute bottom-16 right-5 mt-auto w-full justify-end">
         <p>© TenderOnline 2024</p>
       </div>
     </div>
