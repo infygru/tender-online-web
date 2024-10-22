@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import Loading from "../ui/loading";
-
+import { useGoogleLogin } from "@react-oauth/google";
 const LoginForm = ({ setIsLogin }: any) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -85,6 +85,82 @@ const LoginForm = ({ setIsLogin }: any) => {
   };
 
   if (isLoading) return <Loading />;
+
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      getUserEmail(tokenResponse.access_token)
+        .then(async (userInfo: any) => {
+          const email = userInfo?.email || ""; // Get the email
+          const userName = userInfo.names?.[0]?.displayName || ""; // Get the user's name
+          const phoneNumber = userInfo.phoneNumbers?.[0]?.value || null; // Get the phone number, if available
+
+          console.log(`Email: ${email}`);
+          console.log(`Name: ${userName}`);
+          console.log(`Phone Number: ${phoneNumber}`);
+
+          setFormData({ ...formData, email, password: "google" });
+
+          // Make login API call
+          const response = await fetch(
+            "https://tender-online-h4lh.vercel.app/api/auth/google/login",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email,
+                isGoogleAuth: true,
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            toast.error("Error fetching user information");
+          }
+
+          // Await the JSON response
+          const data = await response.json();
+
+          if (data.code === 404) {
+            toast.error(data.message);
+            return;
+          }
+          toast.success("Login successful");
+          console.log(data.token, "data.token");
+
+          sessionStorage.setItem("accessToken", data.token);
+
+          // Redirect or update state as needed
+          router.push("/tenders");
+        })
+        .catch((error: any) => {
+          console.error(error);
+          toast.error("Error fetching user information");
+        });
+      console.log(tokenResponse);
+    },
+  });
+
+  async function getUserEmail(accessToken: string): Promise<any> {
+    const response = await fetch(
+      "https://www.googleapis.com/oauth2/v3/userinfo",
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Error fetching user email: ${response.statusText}`);
+    }
+
+    const data: any = await response.json();
+    return data;
+  }
 
   return (
     <div className="lg:mt-7 mt-44 w-[95%] h-screen flex items-center justify-center relative lg:w-[80%]">
@@ -188,7 +264,7 @@ const LoginForm = ({ setIsLogin }: any) => {
               Or
             </div>
             <button
-              type="button"
+              onClick={() => login()}
               className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg  border-gray-200 bg-gray-100/50 text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
             >
               <svg

@@ -76,12 +76,6 @@ export default Header;
 
 import { Menu, Button, Text, rem } from "@mantine/core";
 import {
-  IconSettings,
-  IconSearch,
-  IconPhoto,
-  IconMessageCircle,
-  IconTrash,
-  IconArrowsLeftRight,
   IconLogout,
 } from "@tabler/icons-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -96,6 +90,7 @@ function DropdownMenuDemo() {
     sessionStorage.removeItem("accessToken");
     toast.success("Logout Successfully");
     router.push("/");
+    window.location.reload();
   };
 
   return (

@@ -13,7 +13,7 @@ import "@mantine/core/styles.css";
 import { ColorSchemeScript } from "@mantine/core";
 import Link from "next/link";
 import axios from "axios";
-
+import { GoogleOAuthProvider } from "@react-oauth/google";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -133,7 +133,9 @@ export default function RootLayout({
                   </button>
                 </div>
               )}
-              {children}
+              <GoogleOAuthProvider clientId="175197906673-63vakrbof9qaoug7s178arephhnv4iro.apps.googleusercontent.com">
+                {children}
+              </GoogleOAuthProvider>
             </PrimeReactProvider>
           </QueryClientProvider>
         </MantineProvider>
