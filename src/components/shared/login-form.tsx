@@ -7,6 +7,62 @@ import Loading from "../ui/loading";
 import { useGoogleLogin } from "@react-oauth/google";
 const LoginForm = ({ setIsLogin }: any) => {
   const router = useRouter();
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      getUserEmail(tokenResponse.access_token)
+        .then(async (userInfo: any) => {
+          const email = userInfo?.email || ""; // Get the email
+          const userName = userInfo.names?.[0]?.displayName || ""; // Get the user's name
+          const phoneNumber = userInfo.phoneNumbers?.[0]?.value || null; // Get the phone number, if available
+
+          console.log(`Email: ${email}`);
+          console.log(`Name: ${userName}`);
+          console.log(`Phone Number: ${phoneNumber}`);
+
+          setFormData({ ...formData, email, password: "google" });
+
+          // Make login API call
+          const response = await fetch(
+            "https://tender-online-h4lh.vercel.app/api/auth/google/login",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email,
+                isGoogleAuth: true,
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            toast.error("Error fetching user information");
+          }
+
+          // Await the JSON response
+          const data = await response.json();
+
+          if (data.code === 404) {
+            toast.error(data.message);
+            return;
+          }
+          toast.success("Login successful");
+          console.log(data.token, "data.token");
+
+          sessionStorage.setItem("accessToken", data.token);
+
+          // Redirect or update state as needed
+          router.push("/tenders");
+        })
+        .catch((error: any) => {
+          console.error(error);
+          toast.error("Error fetching user information");
+        });
+      console.log(tokenResponse);
+    },
+  });
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -85,62 +141,6 @@ const LoginForm = ({ setIsLogin }: any) => {
   };
 
   if (isLoading) return <Loading />;
-
-  const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      getUserEmail(tokenResponse.access_token)
-        .then(async (userInfo: any) => {
-          const email = userInfo?.email || ""; // Get the email
-          const userName = userInfo.names?.[0]?.displayName || ""; // Get the user's name
-          const phoneNumber = userInfo.phoneNumbers?.[0]?.value || null; // Get the phone number, if available
-
-          console.log(`Email: ${email}`);
-          console.log(`Name: ${userName}`);
-          console.log(`Phone Number: ${phoneNumber}`);
-
-          setFormData({ ...formData, email, password: "google" });
-
-          // Make login API call
-          const response = await fetch(
-            "https://tender-online-h4lh.vercel.app/api/auth/google/login",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                email,
-                isGoogleAuth: true,
-              }),
-            }
-          );
-
-          if (!response.ok) {
-            toast.error("Error fetching user information");
-          }
-
-          // Await the JSON response
-          const data = await response.json();
-
-          if (data.code === 404) {
-            toast.error(data.message);
-            return;
-          }
-          toast.success("Login successful");
-          console.log(data.token, "data.token");
-
-          sessionStorage.setItem("accessToken", data.token);
-
-          // Redirect or update state as needed
-          router.push("/tenders");
-        })
-        .catch((error: any) => {
-          console.error(error);
-          toast.error("Error fetching user information");
-        });
-      console.log(tokenResponse);
-    },
-  });
 
   async function getUserEmail(accessToken: string): Promise<any> {
     const response = await fetch(
