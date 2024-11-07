@@ -294,20 +294,26 @@ const LoginForm = ({ setIsLogin }: any) => {
               Sign in with Google
             </button>
             <p className="mt-2 text-center text-sm text-gray-600 dark:text-neutral-400">
-              Dont have an account yet?{" "}
+              Don't have an account?{" "}
               <button
                 className="text-blue-600 decoration-2 hover:underline font-medium dark:text-blue-500"
                 onClick={() => setIsLogin(false)}
               >
-                Sign up here
+                Sign up
               </button>
             </p>
             {/* End Form */}
           </div>
         </div>
       </div>
-      <div className="flex items-end absolute bottom-16 right-5 mt-auto w-full justify-end">
-        <p>© TenderOnline 2024</p>
+      <div className="flex gap-2 text-xs items-end absolute bottom-20 right-5 mt-auto w-full justify-end">
+        Follow us
+        <div className="flex items-center gap-2">
+          <img src="/twitter.png" alt="" className="w-6 h-6" />
+          <img src="/linkedin.png" alt="" className="w-6 h-6" />
+          <img src="/facebook.png" alt="" className="w-6 h-6" />
+        </div>
+        {/* <p>© TenderOnline 2024</p> */}
       </div>
     </div>
   );

@@ -133,7 +133,7 @@ export default function RootLayout({
                   </button>
                 </div>
               )}
-              <GoogleOAuthProvider clientId="175197906673-63vakrbof9qaoug7s178arephhnv4iro.apps.googleusercontent.com">
+              <GoogleOAuthProvider clientId="876377120617-rarlkfnh1m2nicrnp43q9sakc79vleeq.apps.googleusercontent.com">
                 {children}
               </GoogleOAuthProvider>
             </PrimeReactProvider>

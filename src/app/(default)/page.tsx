@@ -82,7 +82,7 @@ export default function Home() {
                       {section.hasBorder && (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          width="10"
+                          width="30"
                           height="95"
                           viewBox="0 0 10 95"
                           fill="none"
@@ -110,6 +110,16 @@ export default function Home() {
                 <Link href={"/privacy-policy"}>Privacy Policy </Link>
                 <Link href={"/"}>Cookie Policy </Link>
                 <Link href={"/"}>Refund Policy</Link>
+              </div>
+              <div className="border-b w-full pt-4"></div>
+              <div className="flex item-center justify-between w-full pt-4 px-4">
+                <div className="flex item-center text-gray-300  mt-auto w-full">
+                  <p>© TenderOnline 2024</p>
+                </div>
+                <div className="text-white flex items-center gap-4">
+                  <Link href={"/blog"}>Blog</Link>
+                  <Link href={"/support"}>Support</Link>
+                </div>
               </div>
             </div>
           </div>

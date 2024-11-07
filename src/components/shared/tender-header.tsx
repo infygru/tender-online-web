@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SelectState } from "./selectState";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const TenderHeader = () => {
   const [isClicked, setIsClicked] = React.useState(false);
@@ -18,6 +19,9 @@ const TenderHeader = () => {
       return response.json();
     },
   });
+  const searchParams = useSearchParams();
+
+  const search = searchParams.get("length");
 
   return (
     <div className="flex items-center w-full px-1 lg:px-8 py-2 lg:py-6">
@@ -32,7 +36,7 @@ const TenderHeader = () => {
             </div>
             <div className="hidden lg:block">
               <h1 className="text-white text-center text-base not-italic font-medium leading-[25px]">
-                Showing {data?.result?.length} Tenders in Tamilnadu{" "}
+                Showing {search || 0} Tenders in Tamilnadu{" "}
               </h1>
             </div>
           </div>

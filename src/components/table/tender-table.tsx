@@ -39,9 +39,15 @@ import { ScrollArea } from "../ui/scroll-area";
 import TenderDetailsDialog from "../shared/TenderDetailsDialog";
 import { DatePickerWithRange } from "../shared/multi-select-demo";
 import { DateRange } from "@matharumanpreet00/react-daterange-picker";
-import { useParams, useRouter } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import SearchTab from "./search-tab";
 export const formatDate = (isoDateString: string): string => {
   const date = new Date(isoDateString);
 
@@ -315,7 +321,7 @@ const fetchTenders = async (queryParams: URLSearchParams): Promise<any> => {
 
 export function DataTableTender({ setSearch, search }: any) {
   const [foryou, setForYou] = React.useState<any | null>(null);
-  console.log(foryou, "foryou");
+  const [searchList, setSearchList] = React.useState<string[]>([]);
 
   React.useEffect(() => {
     // Check if window is defined (client-side only)
@@ -400,8 +406,8 @@ export function DataTableTender({ setSearch, search }: any) {
       );
 
       // Append global search
-      if (search) {
-        queryParams.append("search", search);
+      if (searchList) {
+        queryParams.append("search", searchList.join(","));
       }
 
       // Append date range filter
@@ -459,6 +465,21 @@ export function DataTableTender({ setSearch, search }: any) {
 
   const data = tenders?.result;
 
+  const router = useRouter();
+  const pathName = usePathname();
+
+  React.useEffect(() => {
+    if (data) {
+      router.replace(
+        new URL(
+          `${pathName}?length=${data.length}`,
+          window.location.origin
+        ).toString(),
+        undefined
+      );
+    }
+  }, [data, router]);
+
   React.useEffect(() => {
     refetch();
   }, [
@@ -466,11 +487,11 @@ export function DataTableTender({ setSearch, search }: any) {
     tenderValue,
     department,
     status,
-    search,
     selectedDistricts,
     selectedDepartments,
     selectedTenderValues,
     selectedStatus,
+    searchList,
     industry,
     subIndustry,
     classification,
@@ -774,13 +795,12 @@ export function DataTableTender({ setSearch, search }: any) {
   return (
     <div className="w-full border rounded-xl">
       <div className="flex items-center justify-between px-2 py-2">
-        <Input
-          placeholder="Search tenders..."
-          value={search}
-          onChange={(event) => {
-            setSearch(event.target.value);
-          }}
-          className="max-w-sm"
+        <SearchTab
+          refetch={refetch}
+          setSearchList={setSearchList}
+          searchList={searchList}
+          search={search}
+          setSearch={setSearch}
         />
         <div className="flex items-center gap-2">
           {dropdownLabels.map((label) => renderMultiSelect(label))}
