@@ -36,7 +36,7 @@ const SearchTab: FC<SearchTabProps> = ({
 
   const handleRemoveTag = (index: number): void => {
     // Remove the tag from the searchList by index
-    setSearchList((prev: any) => prev.filter((_, i) => i !== index));
+    setSearchList((prev: string[]) => prev.filter((_, i) => i !== index));
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
