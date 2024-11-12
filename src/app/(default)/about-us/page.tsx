@@ -15,19 +15,19 @@ const page = () => {
       {/* Hero */}
       <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
         {/* Grid */}
-        <div className="grid md:grid-cols-2 gap-4 md:gap-8 xl:gap-20 md:items-center">
+        <div className="text-center flex pt-24 items-center justify-center gap-4 md:gap-8 xl:gap-20 md:items-center">
           <div>
-            <h1 className="block text-3xl font-bold text-gray-800 sm:text-4xl lg:text-2xl lg:leading-tight dark:text-white">
+            <h1 className="block text-3xl font-bold text-gray-800 sm:text-4xl lg:text-3xl lg:leading-tight dark:text-white">
               The People . The Government . The Business
             </h1>
-            <p className="mt-3 text-sm text-gray-800 dark:text-neutral-400">
+            <p className="mt-3 text-sm max-w-xl ml-12 w-full text-gray-800 dark:text-neutral-400">
               Hassle free premium bidding experience to businesses in all
               categories and scale. We specialize in government tenders. Our
               main goal is to bring equal opportunity for businesses to compete
               in the government tendering arena.
             </p>
             {/* Buttons */}
-            <div className="mt-7  flex gap-3 items-center">
+            <div className="mt-7 justify-center flex gap-3 items-center">
               <Dialog>
                 <DialogTrigger asChild>
                   <button className="py-3 px-0 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-blue-600 disabled:opacity-50 disabled:pointer-events-none">
@@ -72,20 +72,20 @@ const page = () => {
                 className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-[#F7CE46] text-black shadow-sm hover:bg-[#F7CE46] focus:outline-none  disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
                 href="/support"
               >
-                Contact sales team
+                Pricing <ArrowRightIcon className="w-5 h-5" />
               </Link>
             </div>
             {/* End Buttons */}
           </div>
           {/* End Col */}
-          <div className="relative ms-4">
+          {/* <div className="relative ms-4">
             <img
               className="w-full lg:h-[600px] h-[400px] rounded-md"
               src="/aboutus.png"
               alt="Hero Image"
             />
             <div className="absolute inset-0 -z-[1] bg-gradient-to-tr from-gray-200 via-white/0 to-white/0 size-full rounded-md mt-4 -mb-4 me-4 -ms-4 lg:mt-6 lg:-mb-6 lg:me-6 lg:-ms-6 dark:from-neutral-800 dark:via-neutral-900/0 dark:to-neutral-900/0" />
-            {/* SVG*/}
+
             <div className="absolute bottom-0 start-0">
               <svg
                 className="w-2/3 ms-auto h-auto text-white dark:text-neutral-900"
@@ -204,271 +204,66 @@ const page = () => {
                 />
               </svg>
             </div>
-            {/* End SVG*/}
-          </div>
-          {/* End Col */}
+          </div> */}
         </div>
         {/* End Grid */}
       </div>
 
-      <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[85rem] w-full text-balance pt-24 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-3">
           <h2 className="text-xl text-center font-bold md:text-3xl dark:text-white">
             Birth Of The Vision
           </h2>
 
-          <p className="text-lg text-gray-800 mx-auto max-w-[55rem] dark:text-neutral-200">
-            The core of the company and the vision was conceptualized inside of
-            two minds - one a successful serial entrepreneur Dr. J.Sai Shajan
-            and another an alumnus of IIM Kashipur, K.Sanjay.
-            <br />
-            <br />
-            <br />
-            After Building resources and experience in our respective fields we
-            wanted to apply for government tenders. It had enormous potential
-            for us and we were also happy that our resources were going to be
-            spent for the people. But the complex processing and irregular
-            handling of the projects in government organization was a
-            restricting factor. Consulting with
-            <br />
-            <br />
-            <br />
-            many other business owners and contractors in our circle we were
-            able to analyze that many people are facing the same issues. As a
-            result huge amounts of resources are being restricted/ withheld from
-            the people by this complexity.
+          <p className="text-lg text-gray-800 text-justify mx-auto max-w-[55rem] dark:text-neutral-200">
+            The foundation of our company stems from the collaboration between
+            two visionary minds: Dr. J. Sai Shajan, a successful serial
+            entrepreneur, and K. Sanjay, an alumnus of IIM Kashipur. Their
+            shared mission was to create a streamlined platform that could
+            revolutionize the government tendering process. By leveraging their
+            combined expertise, they aimed to bridge the gap between businesses
+            and opportunities in public sector tenders, making it easier for
+            companies to apply, compete, and grow.
+          </p>
+        </div>
+      </div>
+      <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="space-y-3">
+          <h2 className="text-xl text-center font-bold md:text-3xl dark:text-white">
+            Overcoming Challenges in Government Tenders
+          </h2>
+
+          <p className="text-lg text-gray-800 text-justify mx-auto max-w-[55rem] dark:text-neutral-200">
+            While exploring government tenders to diversify revenue, we realized
+            many businesses struggle with the complex requirements set by
+            various departments. Companies often face high costs or profit
+            sharing demands from intermediaries. These strict guidelines ensure
+            only the best vendors qualify, but they discourage many capable
+            firms from even attempting the process.
+          </p>
+        </div>
+      </div>
+      <div className="max-w-[85rem] pt-24 mx-auto px-4 text-justify sm:px-6 lg:px-8">
+        <div className="space-y-3">
+          <h2 className="text-xl text-center font-bold md:text-3xl dark:text-white">
+            Creating Opportunities for Businesses
+          </h2>
+
+          <p className="text-lg text-gray-800 mx-auto text-justify max-w-[55rem] dark:text-neutral-200">
+            Our goal is to bridge the gap between businesses and public sector
+            tenders by providing a clear, systematic approach. With the right
+            structure, companies can confidently bid and meet government
+            standards. Through our platform, we empower firms to unlock new
+            revenue streams while ensuring the government gains access to top
+            tier service providers benefiting both businesses and communities
+            alike.
           </p>
         </div>
       </div>
 
-      <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Features */}
-        <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-          {/* Grid */}
-          <div className="md:grid md:grid-cols-2 md:items-center md:gap-12 xl:gap-32">
-            <div>
-              <img
-                className="rounded-xl"
-                src="https://images.unsplash.com/photo-1648737963503-1a26da876aca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=900&q=80"
-                alt="Features Image"
-              />
-            </div>
-            {/* End Col */}
-            <div className="mt-5 sm:mt-10 lg:mt-0">
-              <div className="space-y-6 sm:space-y-8">
-                {/* Title */}
-                <div className="space-y-2 md:space-y-4">
-                  <h2 className="font-bold text-3xl lg:text-2xl text-gray-800 dark:text-neutral-200">
-                    How did our “Birth of the Vision” evolve into our Vision-
-                    The People, the Government, Business
-                  </h2>
-                  <p className="text-gray-500 dark:text-neutral-500">
-                    At Tenderonline, we have a team of efficient executives with
-                    experience in applying tenders listed by various government
-                    departments with diversified documentation requirement &
-                    processing. We aim to act as a catalyst for business
-                    entities striving to achieve greater scale, while also
-                    enhancing their products or services to benefit the public,
-                    with the assistance of government support.
-                  </p>
-                </div>
-                {/* End Title */}
-                {/* List */}
-                <ul className="space-y-2 sm:space-y-4">
-                  <li className="flex gap-x-3">
-                    <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-500">
-                      <svg
-                        className="shrink-0 size-3.5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width={24}
-                        height={24}
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    </span>
-                    <div className="grow">
-                      <span className="text-sm sm:text-base text-gray-500 dark:text-neutral-500">
-                        <span className="font-bold">Easy &amp; fast</span>{" "}
-                        designing
-                      </span>
-                    </div>
-                  </li>
-                  <li className="flex gap-x-3">
-                    <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-500">
-                      <svg
-                        className="shrink-0 size-3.5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width={24}
-                        height={24}
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    </span>
-                    <div className="grow">
-                      <span className="text-sm sm:text-base text-gray-500 dark:text-neutral-500">
-                        Powerful <span className="font-bold">features</span>
-                      </span>
-                    </div>
-                  </li>
-                  <li className="flex gap-x-3">
-                    <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-500">
-                      <svg
-                        className="shrink-0 size-3.5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width={24}
-                        height={24}
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    </span>
-                    <div className="grow">
-                      <span className="text-sm sm:text-base text-gray-500 dark:text-neutral-500">
-                        User Experience Design
-                      </span>
-                    </div>
-                  </li>
-                </ul>
-                {/* End List */}
-              </div>
-            </div>
-            {/* End Col */}
-          </div>
-          {/* End Grid */}
-        </div>
-        {/* End Features */}
-      </div>
-      <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
-        <div className=" px-2 py-10">
-          <div id="features" className="mx-auto max-w-6xl">
-            <p className="text-center  text-4xl font-semibold leading-7 text-primary-500">
-              Why Choose Us
-            </p>
-            <h2 className="text-center font-display pt-4 text-[#667085] text-sm font-bold tracking-tight ">
-              Reliable service provider committed to helping you achieve
-              procurement excellence.
-            </h2>
-            <ul className="mt-16 grid grid-cols-1 gap-6 text-center text-slate-700 md:grid-cols-3">
-              <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
-                <img
-                  src="https://www.svgrepo.com/show/530438/ddos-protection.svg"
-                  alt=""
-                  className="mx-auto h-10 w-10"
-                />
-                <h3 className="my-3 font-display font-medium">
-                  Expertise and Experience
-                </h3>
-                <p className="mt-1.5 text-sm leading-6 text-secondary-500">
-                  With years of experience in the tendering and procurement
-                  industry, Tender Online has the expertise to deliver tailored
-                  solutions that meet your specific needs.
-                </p>
-              </li>
-              <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
-                <img
-                  src="https://www.svgrepo.com/show/530442/port-detection.svg"
-                  alt=""
-                  className="mx-auto h-10 w-10"
-                />
-                <h3 className="my-3 font-display font-medium">
-                  Comprehensive Solutions
-                </h3>
-                <p className="mt-1.5 text-sm leading-6 text-secondary-500">
-                  We offer a complete suite of tendering services, from bid
-                  management and document preparation to supplier evaluation and
-                  contract management, ensuring a seamless experience.
-                </p>
-              </li>
-              <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
-                <img
-                  src="https://www.svgrepo.com/show/530444/availability.svg"
-                  alt=""
-                  className="mx-auto h-10 w-10"
-                />
-                <h3 className="my-3 font-display font-medium">
-                  User-Friendly Platform
-                </h3>
-                <p className="mt-1.5 text-sm leading-6 text-secondary-500">
-                  Our intuitive platform is designed to be user-friendly, making
-                  it easy for you to manage tenders, track progress, and
-                  collaborate with stakeholders
-                </p>
-              </li>
-              <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
-                <a href="/pricing" className="group">
-                  <img
-                    src="https://www.svgrepo.com/show/530440/machine-vision.svg"
-                    alt=""
-                    className="mx-auto h-10 w-10"
-                  />
-                  <h3 className="my-3 font-display font-medium group-hover:text-primary-500">
-                    Transparent Processes
-                  </h3>
-                  <p className="mt-1.5 text-sm leading-6 text-secondary-500">
-                    We prioritize transparency in all our processes, providing
-                    you with clear insights and detailed reports to make
-                    informed decisions.
-                  </p>
-                </a>
-              </li>
-              <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
-                <a href="/templates" className="group">
-                  <img
-                    src="https://www.svgrepo.com/show/530450/page-analysis.svg"
-                    alt=""
-                    className="mx-auto h-10 w-10"
-                  />
-                  <h3 className="my-3 font-display font-medium group-hover:text-primary-500">
-                    Dedicated Support
-                  </h3>
-                  <p className="mt-1.5 text-sm leading-6 text-secondary-500">
-                    Our dedicated support team is available to assist you at
-                    every step, ensuring that your experience with Tender Online
-                    is smooth and efficient.
-                  </p>
-                </a>
-              </li>
-              <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
-                <a href="/download" className="group">
-                  <img
-                    src="https://www.svgrepo.com/show/530453/mail-reception.svg"
-                    alt=""
-                    className="mx-auto h-10 w-10"
-                  />
-                  <h3 className="my-3 font-display font-medium group-hover:text-primary-500">
-                    Cost-Effective
-                  </h3>
-                  <p className="mt-1.5 text-sm leading-6 text-secondary-500">
-                    Our solutions are designed to save you time and money,
-                    improving your procurement efficiency and reducing
-                    operational costs.
-                  </p>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
       <div className="">
         {/* Testmonial */}
-        <div className="">
+        <div className=" w-[80%] flex items-center justify-center flex-col mx-auto">
           <h1 className="text-3xl font-bold text-center py-6">
             Don’t just take our words
           </h1>
@@ -482,7 +277,7 @@ const page = () => {
                     alt="User profile picture"
                   />
                 </div>
-                <div className="p-8">
+                <div className="p-8 ">
                   <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
                     <svg
                       width="113"
@@ -599,12 +394,36 @@ const page = () => {
             </div>
             <ContactPage />
           </div>
-          <div className="flex-[0.8]">
-            <img
-              className="rounded-3xl h-full w-full"
-              src="https://plus.unsplash.com/premium_photo-1689620817504-2f77cbddf142?q=80&w=1064&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt=""
-            />
+          <div className="flex-[0.8] space-y-4">
+            <div className="space-y-2 flex items-start flex-col gap-3">
+              <div className="flex items-center gap-3">
+                <MapPin />
+                <span className="text-xl font-bold">Tender Online</span>
+              </div>
+              <span className="text-gray-500 ml-8">
+                Block No.5, 1st Floor, Door No.19, Plot.5/2, Pari Salai,
+                Mogappair East, Chennai, Tamil Nadu 600037
+              </span>
+            </div>{" "}
+            <hr className="border-t pt-4" />
+            <div className="space-y-2 flex items-start flex-col gap-2">
+              <div className="flex items-center gap-3">
+                <PhoneCall />
+                <span className="text-xl font-bold">
+                  Call us (08:00 - 20:00)
+                </span>
+              </div>
+              <span className="text-gray-500 ml-8">+91 91761 33695</span>
+              <span className="text-gray-500 ml-8">+91 91761 33695</span>
+            </div>{" "}
+            <hr className="border-t pt-4" />
+            <div className="space-y-2 flex items-start flex-col gap-3">
+              <div className="flex items-center gap-3">
+                <Mail />
+                <span className="text-xl font-bold">Mail Us</span>
+              </div>
+              <span className="text-gray-500 ml-8">sales@tenderonline.in</span>
+            </div>{" "}
           </div>
         </div>
       </div>
@@ -621,6 +440,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Footer from "@/components/shared/footer";
 import { Button } from "@/components/ui/button";
+import { ArrowRightIcon, Mail, MapPin, PhoneCall } from "lucide-react";
 
 interface FormValues {
   firstName: string;
@@ -715,7 +535,7 @@ const ContactPage: React.FC = () => {
     <main>
       <div className="relative  dark:bg-gray-900">
         {/* Contact Form */}
-        <div className="p-4 py-6 rounded-lg bg-gray-50 dark:bg-gray-800 md:p-8">
+        <div className="p-4 py-6 rounded-lg  dark:bg-gray-800 md:p-8">
           <form onSubmit={handleSubmit}>
             <div className="-mx-2 md:items-center md:flex">
               <div className="flex-1 px-2">
@@ -801,3 +621,229 @@ const ContactPage: React.FC = () => {
     </main>
   );
 };
+
+//  <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
+//         {/* Features */}
+//         <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+//           {/* Grid */}
+//           <div className="md:grid md:grid-cols-2 md:items-center md:gap-12 xl:gap-32">
+//             <div>
+//               <img
+//                 className="rounded-xl"
+//                 src="https://images.unsplash.com/photo-1648737963503-1a26da876aca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=900&q=80"
+//                 alt="Features Image"
+//               />
+//             </div>
+//             {/* End Col */}
+//             <div className="mt-5 sm:mt-10 lg:mt-0">
+//               <div className="space-y-6 sm:space-y-8">
+//                 {/* Title */}
+//                 <div className="space-y-2 md:space-y-4">
+//                   <h2 className="font-bold text-3xl lg:text-2xl text-gray-800 dark:text-neutral-200">
+//                     How did our “Birth of the Vision” evolve into our Vision-
+//                     The People, the Government, Business
+//                   </h2>
+//                   <p className="text-gray-500 dark:text-neutral-500">
+//                     At Tenderonline, we have a team of efficient executives with
+//                     experience in applying tenders listed by various government
+//                     departments with diversified documentation requirement &
+//                     processing. We aim to act as a catalyst for business
+//                     entities striving to achieve greater scale, while also
+//                     enhancing their products or services to benefit the public,
+//                     with the assistance of government support.
+//                   </p>
+//                 </div>
+//                 {/* End Title */}
+//                 {/* List */}
+//                 <ul className="space-y-2 sm:space-y-4">
+//                   <li className="flex gap-x-3">
+//                     <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-500">
+//                       <svg
+//                         className="shrink-0 size-3.5"
+//                         xmlns="http://www.w3.org/2000/svg"
+//                         width={24}
+//                         height={24}
+//                         viewBox="0 0 24 24"
+//                         fill="none"
+//                         stroke="currentColor"
+//                         strokeWidth={2}
+//                         strokeLinecap="round"
+//                         strokeLinejoin="round"
+//                       >
+//                         <polyline points="20 6 9 17 4 12" />
+//                       </svg>
+//                     </span>
+//                     <div className="grow">
+//                       <span className="text-sm sm:text-base text-gray-500 dark:text-neutral-500">
+//                         <span className="font-bold">Easy &amp; fast</span>{" "}
+//                         designing
+//                       </span>
+//                     </div>
+//                   </li>
+//                   <li className="flex gap-x-3">
+//                     <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-500">
+//                       <svg
+//                         className="shrink-0 size-3.5"
+//                         xmlns="http://www.w3.org/2000/svg"
+//                         width={24}
+//                         height={24}
+//                         viewBox="0 0 24 24"
+//                         fill="none"
+//                         stroke="currentColor"
+//                         strokeWidth={2}
+//                         strokeLinecap="round"
+//                         strokeLinejoin="round"
+//                       >
+//                         <polyline points="20 6 9 17 4 12" />
+//                       </svg>
+//                     </span>
+//                     <div className="grow">
+//                       <span className="text-sm sm:text-base text-gray-500 dark:text-neutral-500">
+//                         Powerful <span className="font-bold">features</span>
+//                       </span>
+//                     </div>
+//                   </li>
+//                   <li className="flex gap-x-3">
+//                     <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-500">
+//                       <svg
+//                         className="shrink-0 size-3.5"
+//                         xmlns="http://www.w3.org/2000/svg"
+//                         width={24}
+//                         height={24}
+//                         viewBox="0 0 24 24"
+//                         fill="none"
+//                         stroke="currentColor"
+//                         strokeWidth={2}
+//                         strokeLinecap="round"
+//                         strokeLinejoin="round"
+//                       >
+//                         <polyline points="20 6 9 17 4 12" />
+//                       </svg>
+//                     </span>
+//                     <div className="grow">
+//                       <span className="text-sm sm:text-base text-gray-500 dark:text-neutral-500">
+//                         User Experience Design
+//                       </span>
+//                     </div>
+//                   </li>
+//                 </ul>
+//                 {/* End List */}
+//               </div>
+//             </div>
+//             {/* End Col */}
+//           </div>
+//           {/* End Grid */}
+//         </div>
+//         {/* End Features */}
+//       </div>
+//       <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
+//         <div className=" px-2 py-10">
+//           <div id="features" className="mx-auto max-w-6xl">
+//             <p className="text-center  text-4xl font-semibold leading-7 text-primary-500">
+//               Why Choose Us
+//             </p>
+//             <h2 className="text-center font-display pt-4 text-[#667085] text-sm font-bold tracking-tight ">
+//               Reliable service provider committed to helping you achieve
+//               procurement excellence.
+//             </h2>
+//             <ul className="mt-16 grid grid-cols-1 gap-6 text-center text-slate-700 md:grid-cols-3">
+//               <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
+//                 <img
+//                   src="https://www.svgrepo.com/show/530438/ddos-protection.svg"
+//                   alt=""
+//                   className="mx-auto h-10 w-10"
+//                 />
+//                 <h3 className="my-3 font-display font-medium">
+//                   Expertise and Experience
+//                 </h3>
+//                 <p className="mt-1.5 text-sm leading-6 text-secondary-500">
+//                   With years of experience in the tendering and procurement
+//                   industry, Tender Online has the expertise to deliver tailored
+//                   solutions that meet your specific needs.
+//                 </p>
+//               </li>
+//               <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
+//                 <img
+//                   src="https://www.svgrepo.com/show/530442/port-detection.svg"
+//                   alt=""
+//                   className="mx-auto h-10 w-10"
+//                 />
+//                 <h3 className="my-3 font-display font-medium">
+//                   Comprehensive Solutions
+//                 </h3>
+//                 <p className="mt-1.5 text-sm leading-6 text-secondary-500">
+//                   We offer a complete suite of tendering services, from bid
+//                   management and document preparation to supplier evaluation and
+//                   contract management, ensuring a seamless experience.
+//                 </p>
+//               </li>
+//               <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
+//                 <img
+//                   src="https://www.svgrepo.com/show/530444/availability.svg"
+//                   alt=""
+//                   className="mx-auto h-10 w-10"
+//                 />
+//                 <h3 className="my-3 font-display font-medium">
+//                   User-Friendly Platform
+//                 </h3>
+//                 <p className="mt-1.5 text-sm leading-6 text-secondary-500">
+//                   Our intuitive platform is designed to be user-friendly, making
+//                   it easy for you to manage tenders, track progress, and
+//                   collaborate with stakeholders
+//                 </p>
+//               </li>
+//               <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
+//                 <a href="/pricing" className="group">
+//                   <img
+//                     src="https://www.svgrepo.com/show/530440/machine-vision.svg"
+//                     alt=""
+//                     className="mx-auto h-10 w-10"
+//                   />
+//                   <h3 className="my-3 font-display font-medium group-hover:text-primary-500">
+//                     Transparent Processes
+//                   </h3>
+//                   <p className="mt-1.5 text-sm leading-6 text-secondary-500">
+//                     We prioritize transparency in all our processes, providing
+//                     you with clear insights and detailed reports to make
+//                     informed decisions.
+//                   </p>
+//                 </a>
+//               </li>
+//               <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
+//                 <a href="/templates" className="group">
+//                   <img
+//                     src="https://www.svgrepo.com/show/530450/page-analysis.svg"
+//                     alt=""
+//                     className="mx-auto h-10 w-10"
+//                   />
+//                   <h3 className="my-3 font-display font-medium group-hover:text-primary-500">
+//                     Dedicated Support
+//                   </h3>
+//                   <p className="mt-1.5 text-sm leading-6 text-secondary-500">
+//                     Our dedicated support team is available to assist you at
+//                     every step, ensuring that your experience with Tender Online
+//                     is smooth and efficient.
+//                   </p>
+//                 </a>
+//               </li>
+//               <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
+//                 <a href="/download" className="group">
+//                   <img
+//                     src="https://www.svgrepo.com/show/530453/mail-reception.svg"
+//                     alt=""
+//                     className="mx-auto h-10 w-10"
+//                   />
+//                   <h3 className="my-3 font-display font-medium group-hover:text-primary-500">
+//                     Cost-Effective
+//                   </h3>
+//                   <p className="mt-1.5 text-sm leading-6 text-secondary-500">
+//                     Our solutions are designed to save you time and money,
+//                     improving your procurement efficiency and reducing
+//                     operational costs.
+//                   </p>
+//                 </a>
+//               </li>
+//             </ul>
+//           </div>
+//         </div>
+//       </div>

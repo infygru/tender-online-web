@@ -64,24 +64,24 @@ const Footer = () => {
             <div className="">
               <ul className="flex text-xs items-center gap-3">
                 <li>
-                  <Link href="/blog" className="hover:underline">
+                  <Link href="/terms" className="hover:underline">
                     Terms & Conditions
                   </Link>
                 </li>
                 <li>
-                  <Link href="/blog" className="hover:underline">
+                  <Link href="/privacy-policy" className="hover:underline">
                     Privacy Policy
                   </Link>
                 </li>
 
                 <li>
-                  <Link href="/blog" className="hover:underline">
+                  <Link href="/cookie" className="hover:underline">
                     Cookie Policy
                   </Link>
                 </li>
 
                 <li>
-                  <Link href="/blog" className="hover:underline">
+                  <Link href="/refund-policy" className="hover:underline">
                     Refund Policy
                   </Link>
                 </li>
