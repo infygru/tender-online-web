@@ -163,7 +163,7 @@ const LoginForm = ({ setIsLogin }: any) => {
   }
 
   return (
-    <div className="lg:mt-7 mt-44 w-[95%] h-screen flex items-center justify-center relative lg:w-[80%]">
+    <div className="lg:mt-7 mt-44 w-[95%] h-[95vh] flex items-center justify-center relative lg:w-[80%]">
       <div className="bg-white border w-full border-gray-200 rounded-3xl shadow-sm dark:bg-neutral-900 dark:border-neutral-700">
         <div className="p-4 sm:p-12">
           <div className="text-center">
