@@ -80,6 +80,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AvatarIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export function DropdownMenuDemo() {
   const router = useRouter();
@@ -91,11 +93,30 @@ export function DropdownMenuDemo() {
     window.location.reload();
   };
 
+  const { data } = useQuery({
+    queryKey: ["profile"],
+    queryFn: async () => {
+      const response = await axios.get(
+        "https://tender-online-h4lh.vercel.app/api/auth/me",
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      return response.data;
+    },
+  });
+
+  const image = data?.profile_image;
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
         <Avatar className="cursor-pointer">
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarImage
+            src={image || "https://github.com/shadcn.png"}
+            alt="@shadcn"
+          />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </Menu.Target>
