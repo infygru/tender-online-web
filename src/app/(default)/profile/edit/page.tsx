@@ -228,8 +228,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-
-export function SelectState({ value, onChange }: any) {
+function SelectState({ value, onChange }: any) {
   return (
     <Select disabled defaultValue="tamil-nadu">
       <SelectTrigger className="w-full cursor-not-allowed">
@@ -248,7 +247,7 @@ export function SelectState({ value, onChange }: any) {
     </Select>
   );
 }
-export function SelectCity({ value, onChange }: any) {
+function SelectCity({ value, onChange }: any) {
   const cityOptions = [
     { value: "chennai", label: "Chennai" },
     { value: "coimbatore", label: "Coimbatore" },
