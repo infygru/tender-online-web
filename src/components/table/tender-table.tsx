@@ -337,6 +337,22 @@ export function DataTableTender({ setSearch, search }: any) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const TenderValue = [
+    { value: "1", label: "Less than ₹10L", minValue: 0, maxValue: 1000000 },
+    {
+      value: "2",
+      label: "₹10L - ₹1Cr",
+      minValue: 1000000,
+      maxValue: 10000000,
+    },
+    {
+      value: "3",
+      label: "₹1Cr - ₹100Cr",
+      minValue: 10000000,
+      maxValue: 1000000000,
+    },
+    { value: "4", label: "More than ₹100Cr", minValue: 1000000000 },
+  ];
 
   const [isfilterOpen, setIsFilterOpen] = React.useState(true);
 
@@ -851,7 +867,7 @@ export function DataTableTender({ setSearch, search }: any) {
             </div>
           ))}
 
-          {selectedTenderValues?.map((value: string) => (
+          {/* {selectedTenderValues?.map((value: string) => (
             <div
               key={value}
               className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
@@ -867,7 +883,32 @@ export function DataTableTender({ setSearch, search }: any) {
                 <X className="h-3 w-3" />
               </button>
             </div>
-          ))}
+          ))} */}
+
+          {selectedTenderValues?.map((value: string) => {
+            const tender = TenderValue.find((item) => item.value === value);
+            return (
+              tender && (
+                <div
+                  key={value}
+                  className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+                >
+                  {tender.label}
+                  <span className="text-[8px] font-light">tender value</span>
+                  <button
+                    disabled={foryou === "true" || foryou === true}
+                    onClick={() =>
+                      removeDistrict(value, setSelectedTenderValues)
+                    }
+                    className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
+                    aria-label={`Remove ${tender.label}`}
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+              )
+            );
+          })}
 
           {industry &&
             industry?.map((industry: string) => (
