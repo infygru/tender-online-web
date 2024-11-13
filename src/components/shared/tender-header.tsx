@@ -3,6 +3,7 @@ import { SelectState } from "./selectState";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { DropdownMenuDemo } from "../ui/header";
 
 const TenderHeader = () => {
   const [isClicked, setIsClicked] = React.useState(false);
@@ -71,6 +72,10 @@ const TenderHeader = () => {
                   sales@tenderonline.co.in
                 </h1>
               </Link>
+
+              <div className="hidden lg:block">
+                <DropdownMenuDemo />
+              </div>
             </div>
           </div>
         </div>

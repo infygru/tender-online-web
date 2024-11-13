@@ -11,8 +11,6 @@ import { createTheme, MantineProvider } from "@mantine/core";
 import Head from "next/head";
 import "@mantine/core/styles.css";
 import { ColorSchemeScript } from "@mantine/core";
-import Link from "next/link";
-import axios from "axios";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 export default function RootLayout({
   children,

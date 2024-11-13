@@ -1,6 +1,7 @@
 import React, { useState, KeyboardEvent, ChangeEvent, FC } from "react";
 import { Input } from "../ui/input";
 import { toast } from "sonner";
+import axios from "axios";
 
 interface SearchTabProps {
   search: string;
@@ -17,13 +18,29 @@ const SearchTab: FC<SearchTabProps> = ({
   searchList,
   setSearchList,
 }) => {
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>): void => {
+  const handleKeyDown = async (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && search.trim()) {
       // Prevent adding duplicate tags
       if (!searchList.includes(search)) {
         setSearchList((prev: any) => [...prev, search]);
         setSearch("");
+
         toast.success("Search tag added successfully");
+
+        const response = await axios.post(
+          "https://tender-online-h4lh.vercel.app/api/auth/keyword/suggestion",
+          {
+            keyword: search,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+            },
+          }
+        );
+
+        const data = response.data;
+        console.log(data);
       } else {
         toast.info(
           "Duplicate tags are not allowed please enter a different tag"

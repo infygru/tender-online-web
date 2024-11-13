@@ -75,15 +75,13 @@ const Header = () => {
 export default Header;
 
 import { Menu, Button, Text, rem } from "@mantine/core";
-import {
-  IconLogout,
-} from "@tabler/icons-react";
+import { IconLogout } from "@tabler/icons-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AvatarIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-function DropdownMenuDemo() {
+export function DropdownMenuDemo() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const handletoLogout = () => {
@@ -105,7 +103,7 @@ function DropdownMenuDemo() {
       <Menu.Dropdown>
         <Menu.Label>Account</Menu.Label>
         <Menu.Item
-          onClick={() => router.push("/profile")}
+          onClick={() => router.push("/profile/edit")}
           leftSection={
             <AvatarIcon style={{ width: rem(14), height: rem(14) }} />
           }

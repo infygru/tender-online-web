@@ -950,7 +950,7 @@ export function DataTableTender({ setSearch, search }: any) {
                   const bidSubmissionDate = new Date(
                     row.original.bidSubmissionDate
                   ); // Assuming bidSubmissionDate exists in row.original
-                  const isPastDate = bidSubmissionDate < new Date(); // Compare with current date
+                  const isPastDate = false;
 
                   return (
                     <TableRow
