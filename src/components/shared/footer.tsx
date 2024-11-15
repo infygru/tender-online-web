@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <div>
       <footer className="">
-        <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+        <div className="w-full w-full mx-auto p-4 md:py-8">
           <div className="sm:flex sm:items-center sm:justify-between">
             <div className="flex items-start flex-col">
               <Link
@@ -56,9 +56,8 @@ const Footer = () => {
               <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
                 © 2024{" "}
                 <a href="/" className="hover:underline">
-                  Tender™{" "}
+                  TenderOnline{" "}
                 </a>
-                Online
               </span>
             </div>
             <div className="">

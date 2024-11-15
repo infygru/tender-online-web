@@ -48,6 +48,7 @@ import {
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import SearchTab from "./search-tab";
+import Loading from "../ui/loading";
 export const formatDate = (isoDateString: string): string => {
   const date = new Date(isoDateString);
 
@@ -163,9 +164,9 @@ export const columns: ColumnDef<Tender>[] = [
         <div className="flex items-center min-w-60 gap-3">
           <div className="flex flex-col">
             {/* Display department name */}
-            <span className="font-bold text-gray-900" title="Department">
+            {/* <span className="font-bold text-gray-900" title="Department">
               {department}
-            </span>
+            </span> */}
 
             {/* Display tender title */}
             <span
@@ -286,7 +287,7 @@ export const columns: ColumnDef<Tender>[] = [
     id: "select",
     header: ({ table }) => (
       <Checkbox
-        className="rounded"
+        className="rounded mr-4"
         checked={
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && "indeterminate")
@@ -354,8 +355,6 @@ export function DataTableTender({ setSearch, search }: any) {
     { value: "4", label: "More than ₹100Cr", minValue: 1000000000 },
   ];
 
-  const [isfilterOpen, setIsFilterOpen] = React.useState(true);
-
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
@@ -383,7 +382,6 @@ export function DataTableTender({ setSearch, search }: any) {
 
   const [status, setStatus] = React.useState<string>("");
   const [endDate, setEndDate] = React.useState<any | null>(null);
-  console.log(endDate, "endDate");
 
   const [dateRange, setDateRange] = React.useState<DateRange | null>(null);
 
@@ -462,6 +460,16 @@ export function DataTableTender({ setSearch, search }: any) {
     }
   };
 
+  const [selectedRow, setSelectedRow] = React.useState<any>([]);
+
+  React.useEffect(() => {
+    if (rowSelection) {
+      const selectedRow = table?.getSelectedRowModel()?.rows;
+
+      const ids = selectedRow.map((row: any) => row.original._id);
+      setSelectedRow(ids);
+    }
+  }, [rowSelection]); // Only re-run when `table` changes (i.e., when the table is fully initialized)
   React.useEffect(() => {
     const fetchData = async () => {
       if (foryou === "true" || foryou === true) {
@@ -533,10 +541,6 @@ export function DataTableTender({ setSearch, search }: any) {
       rowSelection,
     },
   });
-
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
 
   const districts = [
     "Ariyalur",
@@ -654,9 +658,9 @@ export function DataTableTender({ setSearch, search }: any) {
     Industry: filterIndustry,
     SubIndustry: filterSubIndustry,
     Classification: [
-      { value: "Good", label: "Goods" },
-      { value: "service", label: "Service" },
-      { value: "work", label: "Works" },
+      { value: "Goods", label: "Goods" },
+      { value: "services", label: "Service" },
+      { value: "works", label: "Works" },
     ],
   };
 
@@ -780,6 +784,48 @@ export function DataTableTender({ setSearch, search }: any) {
     );
   };
 
+  const handleToAddRequest = async (selectedRowData: any): Promise<void> => {
+    console.log(selectedRowData, "selectedRowData");
+
+    const url =
+      "https://tender-online-h4lh.vercel.app/api/tender/tender-mapping";
+
+    try {
+      // Create an array of promises for each tender ID
+      const promises = selectedRow.map(async (tenderId: string) => {
+        const data = { tenderId };
+
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to create tender mapping for tenderId: ${tenderId}`
+          );
+        }
+
+        return response.json();
+      });
+
+      // Wait for all requests to complete
+      const results = await Promise.all(promises);
+
+      toast.success(
+        "Tender documents request sent successfully. We will reach out to you soon."
+      );
+      console.log("Tender mappings created successfully:", results);
+    } catch (error) {
+      toast.error("Error sending tender mapping requests.");
+      console.error("Error sending tender mapping:", error);
+    }
+  };
+
   const dropdownLabels = [
     "District",
     "Tender Value",
@@ -789,6 +835,10 @@ export function DataTableTender({ setSearch, search }: any) {
     "Classification",
   ];
   const clearFilters = () => {
+    if (foryou === "true" || foryou === true) {
+      router.push("/tenders");
+      window.location.reload();
+    }
     setDistrict("");
     setTenderValue("");
     setDepartment("");
@@ -807,6 +857,10 @@ export function DataTableTender({ setSearch, search }: any) {
       prev.filter((value: any) => value !== districtToRemove)
     );
   };
+
+  if (!tenders) {
+    return <Loading />;
+  }
 
   return (
     <div className="w-full border rounded-xl">
@@ -828,7 +882,10 @@ export function DataTableTender({ setSearch, search }: any) {
           </div>
           <div className="w-full">
             {isAnyRowSelected && (
-              <button className="bg-[#1C1A1A] text-nowrap px-4 w-full py-2.5 rounded-md text-white text-xs">
+              <button
+                onClick={() => handleToAddRequest(selectedRowData)}
+                className="bg-[#1C1A1A] text-nowrap px-4 w-full py-2.5 rounded-md text-white text-xs"
+              >
                 Request For Documents
               </button>
             )}
@@ -1009,7 +1066,7 @@ export function DataTableTender({ setSearch, search }: any) {
                           onClick={() => {
                             // Skip interaction for past date rows
                             if (
-                              !isPastDate &&
+                              isPastDate &&
                               cell.column.columnDef.id !== "select"
                             ) {
                               handleRowClick(row.original);

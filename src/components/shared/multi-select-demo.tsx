@@ -19,7 +19,7 @@ export const DatePickerWithRange: React.FC<any> = ({
         buttonRef.current &&
         !buttonRef.current.contains(event.target as Node) // Ensure the button is excluded
       ) {
-        setOpen(false);
+        // setOpen(false);
       }
     };
 
@@ -48,7 +48,7 @@ export const DatePickerWithRange: React.FC<any> = ({
     }
     return 0;
   };
-
+  const [newdDateRange, setNewDateRange] = React.useState<any>(null);
   return (
     <div className="relative w-full">
       {/* Button to toggle the date picker */}
@@ -64,7 +64,7 @@ export const DatePickerWithRange: React.FC<any> = ({
       {open && (
         <div
           ref={pickerRef} // Attach ref to the date picker container
-          className="absolute z-50 top-12 right-0 bg-white"
+          className="absolute z-50 border rounded-xl px-4 py-4 top-12 right-0 bg-white display-shadow "
         >
           {dateRange && (
             <div className="absolute bottom-4 py-2 px-5 flex items-center justify-center left-24 text-center border rounded">
@@ -78,9 +78,21 @@ export const DatePickerWithRange: React.FC<any> = ({
             </div>
           )}
           <DateRangePicker
+            minDate={new Date()}
             open={open}
-            onChange={(range) => setDateRange(range)}
+            onChange={(range) => setNewDateRange(range)}
           />
+          <div className="flex items-end justify-end">
+            <button
+              className="px-2 mt-6  py-2 border rounded-xl"
+              onClick={() => {
+                setOpen(false);
+                setDateRange(newdDateRange);
+              }}
+            >
+              Submit
+            </button>
+          </div>
         </div>
       )}
     </div>

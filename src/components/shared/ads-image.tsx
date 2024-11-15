@@ -19,7 +19,7 @@ const AdsImage = () => {
   });
 
   return (
-    <div className="pt-6 px-8 lg:px-16 pb-8">
+    <div className="pt-6 px-4 lg:px-4 pb-8">
       <Carousel className="w-full">
         <CarouselContent>
           {ads?.map((ads: any, index: number) => (
@@ -32,14 +32,14 @@ const AdsImage = () => {
                 <img
                   src={ads.imageUrl}
                   alt=""
-                  className="lg:h-52 h-28 object-cover w-full rounded-3xl"
+                  className="lg:h-52 h-28 object-cover w-full rounded-xl"
                 />
               </Link>
             </CarouselItem>
           ))}
         </CarouselContent>
         <CarouselPrevious />
-        <CarouselNext />
+        <CarouselNext className="mr-14" />
       </Carousel>
     </div>
   );

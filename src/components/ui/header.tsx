@@ -37,7 +37,7 @@ const Header = () => {
                   </Link>
                 </div>
               )}
-              <Link
+              {/* <Link
                 target="_black"
                 href="https://wa.me/9176133695"
                 className="flex items-center gap-2"
@@ -57,7 +57,7 @@ const Header = () => {
                 <h1 className="font-bold hidden lg:block  text-sm">
                   sales@tenderonline.co.in
                 </h1>
-              </Link>
+              </Link> */}
 
               {!!isLogin && (
                 <div className="hidden lg:block">
@@ -85,7 +85,6 @@ import axios from "axios";
 
 export function DropdownMenuDemo() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   const handletoLogout = () => {
     sessionStorage.removeItem("accessToken");
     toast.success("Logout Successfully");
@@ -93,7 +92,7 @@ export function DropdownMenuDemo() {
     window.location.reload();
   };
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
       const response = await axios.get(
@@ -108,16 +107,23 @@ export function DropdownMenuDemo() {
     },
   });
 
+  if (isLoading) {
+    return <div>L...</div>;
+  }
+
   const image = data?.profile_image;
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
-        <Avatar className="cursor-pointer">
+        <Avatar className="cursor-pointer border bg-white">
           <AvatarImage
             src={image || "https://github.com/shadcn.png"}
             alt="@shadcn"
           />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarFallback className="">
+            {data.name.split("")[0]}
+            {data.name.split("")[1]}
+          </AvatarFallback>
         </Avatar>
       </Menu.Target>
 

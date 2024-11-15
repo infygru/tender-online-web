@@ -6,3 +6,11 @@
 .font-istok-web {
   font-family: "Istok Web", sans-serif;
 }
+
+.display-shadow ul {
+  display: none;
+}
+
+.display-shadow div {
+  box-shadow: none;
+}

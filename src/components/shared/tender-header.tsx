@@ -51,7 +51,7 @@ const TenderHeader = () => {
               </a>
             </div>
             <div className="flex items-center space-x-4">
-              <Link
+              {/* <Link
                 target="_black"
                 href="https://wa.me/9176133695"
                 className="flex items-center gap-2"
@@ -71,7 +71,7 @@ const TenderHeader = () => {
                 <h1 className="font-bold hidden lg:block text-white text-sm">
                   sales@tenderonline.co.in
                 </h1>
-              </Link>
+              </Link> */}
 
               <div className="hidden lg:block">
                 <DropdownMenuDemo />
