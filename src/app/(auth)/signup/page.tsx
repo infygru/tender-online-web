@@ -114,13 +114,13 @@ const Signup = ({ setIsLogin }: any) => {
     }
 
     const realotp = otp?.result?.[0]?.otp;
-    // if (realotp !== typeOtp) {
-    //   setErrors({
-    //     ...errors,
-    //     general: "OTP is invalid",
-    //   });
-    //   return;
-    // }
+    if (realotp !== typeOtp) {
+      setErrors({
+        ...errors,
+        general: "OTP is invalid",
+      });
+      return;
+    }
 
     setLoading(true);
     try {

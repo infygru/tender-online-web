@@ -659,7 +659,7 @@ export function DataTableTender({ setSearch, search }: any) {
     SubIndustry: filterSubIndustry,
     Classification: [
       { value: "Goods", label: "Goods" },
-      { value: "services", label: "Service" },
+      { value: "services", label: "Services" },
       { value: "works", label: "Works" },
     ],
   };
@@ -909,7 +909,7 @@ export function DataTableTender({ setSearch, search }: any) {
           {selectedDistricts?.map((district: string) => (
             <div
               key={district}
-              className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+              className="mr-2 capitalize flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
             >
               {district}
               <span className="text-[8px] font-light">district</span>
@@ -948,7 +948,7 @@ export function DataTableTender({ setSearch, search }: any) {
               tender && (
                 <div
                   key={value}
-                  className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+                  className="mr-2 capitalize flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
                 >
                   {tender.label}
                   <span className="text-[8px] font-light">tender value</span>
@@ -971,7 +971,7 @@ export function DataTableTender({ setSearch, search }: any) {
             industry?.map((industry: string) => (
               <div
                 key={industry}
-                className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+                className="mr-2 capitalize flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
               >
                 {industry}
                 <span className="text-[8px] font-light">industry</span>
@@ -989,7 +989,7 @@ export function DataTableTender({ setSearch, search }: any) {
           {classification &&
             classification?.map((classification: string) => (
               <div
-                className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+                className="mr-2 capitalize flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
                 key={classification}
               >
                 {classification}
@@ -1066,7 +1066,7 @@ export function DataTableTender({ setSearch, search }: any) {
                           onClick={() => {
                             // Skip interaction for past date rows
                             if (
-                              isPastDate &&
+                              !isPastDate &&
                               cell.column.columnDef.id !== "select"
                             ) {
                               handleRowClick(row.original);

@@ -115,11 +115,8 @@ export function DropdownMenuDemo() {
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
-        <Avatar className="cursor-pointer border bg-white">
-          <AvatarImage
-            src={image || "https://github.com/shadcn.png"}
-            alt="@shadcn"
-          />
+        <Avatar className="cursor-pointer border bg-black">
+          <AvatarImage src={image || "/user.svg"} alt="@shadcn" />
           <AvatarFallback className="">
             {data.name.split("")[0]}
             {data.name.split("")[1]}
