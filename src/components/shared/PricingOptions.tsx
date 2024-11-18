@@ -50,7 +50,7 @@ const PricingOption: React.FC<PricingOptionProps> = ({ price, duration }) => {
       handler: async (response: any) => {
         try {
           const paymentId = response.razorpay_payment_id;
-          const apiUrl = `https://tender-online-h4lh.vercel.app/api/auth/success/payment`;
+          const apiUrl = `http://localhost:8080/api/auth/success/payment`;
 
           const result = await fetch(apiUrl, {
             method: "POST",

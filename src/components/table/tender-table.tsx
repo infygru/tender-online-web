@@ -104,7 +104,8 @@ export function formatIndianRupeePrice(amount: any): string {
     return "Refer the document";
   }
 
-  const numAmount = Number(amount);
+  // Remove commas from the input string and convert to a number
+  const numAmount = Number(String(amount).replace(/,/g, ""));
   if (Number.isNaN(numAmount)) {
     return "Refer the document";
   }
@@ -113,10 +114,12 @@ export function formatIndianRupeePrice(amount: any): string {
   const formatWithUnits = (value: number): string => {
     if (value >= 1e7) {
       // 1 Crore and above
-      return `${(value / 1e7).toFixed(1)} Crore`;
+      const crore = value / 1e7;
+      return `${crore.toFixed(2).replace(/\.00$/, "")} Crore`;
     } else if (value >= 1e5) {
       // 1 Lakh and above
-      return `${(value / 1e5).toFixed(1)} Lakh`;
+      const lakh = value / 1e5;
+      return `${lakh.toFixed(2).replace(/\.00$/, "")} Lakh`;
     }
     return value.toLocaleString("en-IN"); // Below 1 Lakh, use the standard comma format
   };
@@ -279,6 +282,7 @@ export const columns: ColumnDef<Tender>[] = [
     ),
     cell: ({ row }) => (
       <div title="Tender Value (₹)">
+        {/* {row.getValue("tenderValue")} */}
         {formatIndianRupeePrice(row.getValue("tenderValue"))}
       </div>
     ),
@@ -312,7 +316,7 @@ export const columns: ColumnDef<Tender>[] = [
 ];
 const fetchTenders = async (queryParams: URLSearchParams): Promise<any> => {
   const response = await fetch(
-    `https://tender-online-h4lh.vercel.app/api/tender/all?${queryParams.toString()}`
+    `http://localhost:8080/api/tender/all?${queryParams.toString()}`
   );
   if (!response.ok) {
     toast.error("Failed to fetch tenders");
@@ -440,7 +444,7 @@ export function DataTableTender({ setSearch, search }: any) {
 
   // Fetch user details dynamically
   const fetchUserDetails = async (
-    url: string = "https://tender-online-h4lh.vercel.app/api/auth/me"
+    url: string = "http://localhost:8080/api/auth/me"
   ): Promise<any | null> => {
     try {
       const token = getaccessToken();
@@ -618,7 +622,7 @@ export function DataTableTender({ setSearch, search }: any) {
 
   const fetchIndustry = async () => {
     const response = await axios.get(
-      "https://tender-online-h4lh.vercel.app/api/tender/industries"
+      "http://localhost:8080/api/tender/industries"
     );
     setFilterIndustry(response.data.industries);
     return response.data.industries;
@@ -626,7 +630,7 @@ export function DataTableTender({ setSearch, search }: any) {
 
   const fetchSubIndustry = async () => {
     const response = await axios.get(
-      "https://tender-online-h4lh.vercel.app/api/tender/sub-industries"
+      "http://localhost:8080/api/tender/sub-industries"
     );
     setFilterSubIndustry(response.data.subIndustries);
     return response.data.subIndustries;
@@ -787,8 +791,7 @@ export function DataTableTender({ setSearch, search }: any) {
   const handleToAddRequest = async (selectedRowData: any): Promise<void> => {
     console.log(selectedRowData, "selectedRowData");
 
-    const url =
-      "https://tender-online-h4lh.vercel.app/api/tender/tender-mapping";
+    const url = "http://localhost:8080/api/tender/tender-mapping";
 
     try {
       // Create an array of promises for each tender ID

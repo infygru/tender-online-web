@@ -76,12 +76,9 @@ const ForgotPassword = ({ setIsLogin }: any) => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(
-        "https://tender-online-h4lh.vercel.app/api/auth/otp",
-        {
-          email: formData.email,
-        }
-      );
+      const response = await axios.post("http://localhost:8080/api/auth/otp", {
+        email: formData.email,
+      });
 
       if (response.status === 200) {
         setOtp(response.data.result[0].otp);
@@ -109,7 +106,7 @@ const ForgotPassword = ({ setIsLogin }: any) => {
 
     try {
       const response = await axios.post(
-        "https://tender-online-h4lh.vercel.app/api/auth/forgot/password",
+        "http://localhost:8080/api/auth/forgot/password",
         {
           email: formData.email,
           password: formData.password,

@@ -129,7 +129,7 @@ const Signup = ({ setIsLogin }: any) => {
       };
 
       const response = await axios.post(
-        "https://tender-online-h4lh.vercel.app/api/auth/create/account",
+        "http://localhost:8080/api/auth/create/account",
         {
           ...finaldata,
         }
@@ -171,16 +171,13 @@ const Signup = ({ setIsLogin }: any) => {
 
   const handletosendemail = async () => {
     try {
-      const response = await fetch(
-        "https://tender-online-h4lh.vercel.app/api/auth/otp",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email: formData.email }),
-        }
-      );
+      const response = await fetch("http://localhost:8080/api/auth/otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: formData.email }),
+      });
 
       if (!response.ok) {
         throw new Error("Failed to send OTP");
@@ -213,7 +210,7 @@ const Signup = ({ setIsLogin }: any) => {
 
           // Make login API call
           const response = await fetch(
-            "https://tender-online-h4lh.vercel.app/api/auth/create/account/google",
+            "http://localhost:8080/api/auth/create/account/google",
             {
               method: "POST",
               headers: {

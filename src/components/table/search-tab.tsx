@@ -28,7 +28,7 @@ const SearchTab: FC<SearchTabProps> = ({
         toast.success("Search tag added successfully");
 
         const response = await axios.post(
-          "https://tender-online-h4lh.vercel.app/api/auth/keyword/suggestion",
+          "http://localhost:8080/api/auth/keyword/suggestion",
           {
             keyword: search,
           },

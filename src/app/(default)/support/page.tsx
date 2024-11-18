@@ -48,10 +48,7 @@ const ContactPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const queryClient = useQueryClient();
   const postTodo = async (data: FormValues) => {
-    await axios.post(
-      "https://tender-online-h4lh.vercel.app/api/tender/contact",
-      data
-    );
+    await axios.post("http://localhost:8080/api/tender/contact", data);
   };
   const router = useRouter();
   // Mutations

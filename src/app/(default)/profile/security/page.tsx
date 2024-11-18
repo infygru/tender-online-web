@@ -49,7 +49,7 @@ const ChangePassword: React.FC = () => {
       // Placeholder for your password change API call
       // await changePasswordAPI(data);
       const response = await axios.post(
-        "https://tender-online-h4lh.vercel.app/api/auth/change-password",
+        "http://localhost:8080/api/auth/change-password",
         {
           currentPassword: data.currentPassword,
           newPassword: data.newPassword,

@@ -62,7 +62,7 @@ export default function Home() {
     const fetchBanner = async () => {
       try {
         const response = await axios.get(
-          "https://tender-online-h4lh.vercel.app/api/auth/banner"
+          "http://localhost:8080/api/auth/banner"
         );
         const data = await response.data.banner;
         setBanner(data.banner);

@@ -15,7 +15,7 @@ function CheckSuggestion() {
   const [filterIndustry, setFilterIndustry] = React.useState<any>([]);
   const fetchIndustry = async () => {
     const response = await axios.get(
-      "https://tender-online-h4lh.vercel.app/api/tender/industries"
+      "http://localhost:8080/api/tender/industries"
     );
     setFilterIndustry(response.data.industries);
     return response.data.industries;
@@ -28,7 +28,7 @@ function CheckSuggestion() {
   // Fetch suggestions to check if the user has already added them
   const fetchSuggestions = async () => {
     const { data } = await axios.get(
-      "https://tender-online-h4lh.vercel.app/api/auth/suggestion/check",
+      "http://localhost:8080/api/auth/suggestion/check",
       {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
@@ -151,7 +151,7 @@ function CheckSuggestion() {
   const addSuggestionMutation = useMutation({
     mutationFn: async () => {
       const response = await axios.post(
-        "https://tender-online-h4lh.vercel.app/api/auth/suggestion",
+        "http://localhost:8080/api/auth/suggestion",
         {
           classification,
           industry,

@@ -13,17 +13,14 @@ const Page = () => {
     }
 
     // Store message in api
-    const response: any = fetch(
-      "https://tender-online-h4lh.vercel.app/api/auth/message",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-        },
-        body: JSON.stringify({ message }),
-      }
-    );
+    const response: any = fetch("http://localhost:8080/api/auth/message", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify({ message }),
+    });
 
     if (!response.ok) {
       toast.error("Failed to store message");
