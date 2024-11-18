@@ -13,7 +13,7 @@ const Page = () => {
     }
 
     // Store message in api
-    const response: any = fetch("http://localhost:8080/api/auth/message", {
+    const response: any = fetch("https://tender-online.vercel.app/api/auth/message", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

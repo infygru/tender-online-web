@@ -9,7 +9,7 @@ const KeywordSuggestion: React.FC = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["tenders"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:8080/api/auth/keyword", {
+      const response = await fetch("https://tender-online.vercel.app/api/auth/keyword", {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },

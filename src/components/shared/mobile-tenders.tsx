@@ -12,7 +12,7 @@ import { X } from "lucide-react";
 
 const fetchTenders = async (queryParams: URLSearchParams): Promise<any> => {
   const response = await fetch(
-    `http://localhost:8080/api/tender/all?${queryParams.toString()}`
+    `https://tender-online.vercel.app/api/tender/all?${queryParams.toString()}`
   );
   if (!response.ok) {
     toast.error("Failed to fetch tenders");
@@ -165,7 +165,7 @@ const MobileTenderList: React.FC = () => {
 
   const fetchIndustry = async () => {
     const response = await axios.get(
-      "http://localhost:8080/api/tender/industries"
+      "https://tender-online.vercel.app/api/tender/industries"
     );
     setFilterIndustry(response.data.industries);
     return response.data.industries;
@@ -173,7 +173,7 @@ const MobileTenderList: React.FC = () => {
 
   const fetchSubIndustry = async () => {
     const response = await axios.get(
-      "http://localhost:8080/api/tender/sub-industries"
+      "https://tender-online.vercel.app/api/tender/sub-industries"
     );
     setFilterSubIndustry(response.data.subIndustries);
     return response.data.subIndustries;

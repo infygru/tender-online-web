@@ -14,7 +14,7 @@ const TenderHeader = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["tenders"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:8080/api/tender/all");
+      const response = await fetch("https://tender-online.vercel.app/api/tender/all");
       return response.json();
     },
   });

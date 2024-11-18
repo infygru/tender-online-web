@@ -118,7 +118,7 @@ export const PricingTabs: React.FC = () => {
       handler: async (response: any) => {
         try {
           const paymentId = response.razorpay_payment_id;
-          const apiUrl = `http://localhost:8080/api/auth/success/payment`;
+          const apiUrl = `https://tender-online.vercel.app/api/auth/success/payment`;
 
           const result = await fetch(apiUrl, {
             method: "POST",

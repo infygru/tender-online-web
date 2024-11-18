@@ -23,7 +23,7 @@ const LoginForm = ({ setIsLogin }: any) => {
 
           // Make login API call
           const response = await fetch(
-            "http://localhost:8080/api/auth/google/login",
+            "https://tender-online.vercel.app/api/auth/google/login",
             {
               method: "POST",
               headers: {
@@ -108,7 +108,7 @@ const LoginForm = ({ setIsLogin }: any) => {
 
     try {
       // Make login API call
-      const response = await fetch("http://localhost:8080/api/auth/login", {
+      const response = await fetch("https://tender-online.vercel.app/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

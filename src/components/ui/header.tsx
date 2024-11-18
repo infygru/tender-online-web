@@ -95,7 +95,7 @@ export function DropdownMenuDemo() {
   const { data, isLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:8080/api/auth/me", {
+      const response = await axios.get("https://tender-online.vercel.app/api/auth/me", {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },

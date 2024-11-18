@@ -129,7 +129,7 @@ const Signup = ({ setIsLogin }: any) => {
       };
 
       const response = await axios.post(
-        "http://localhost:8080/api/auth/create/account",
+        "https://tender-online.vercel.app/api/auth/create/account",
         {
           ...finaldata,
         }
@@ -171,7 +171,7 @@ const Signup = ({ setIsLogin }: any) => {
 
   const handletosendemail = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/auth/otp", {
+      const response = await fetch("https://tender-online.vercel.app/api/auth/otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -210,7 +210,7 @@ const Signup = ({ setIsLogin }: any) => {
 
           // Make login API call
           const response = await fetch(
-            "http://localhost:8080/api/auth/create/account/google",
+            "https://tender-online.vercel.app/api/auth/create/account/google",
             {
               method: "POST",
               headers: {

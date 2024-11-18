@@ -17,7 +17,7 @@ export default function Page() {
   const { data: userStatus, isLoading } = useQuery({
     queryKey: ["userStatus"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:8080/api/auth/status", {
+      const response = await fetch("https://tender-online.vercel.app/api/auth/status", {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },

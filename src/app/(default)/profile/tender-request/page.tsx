@@ -31,7 +31,7 @@ const Page: React.FC = () => {
     queryKey: ["user-tender"],
     queryFn: async () => {
       const response = await axios.get(
-        "http://localhost:8080/api/auth/me/tender",
+        "https://tender-online.vercel.app/api/auth/me/tender",
         {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,

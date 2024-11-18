@@ -35,7 +35,7 @@ export interface TenderDocument {
 
 const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
   const handleToSendTender = async (tenderId: string) => {
-    const url = "http://localhost:8080/api/tender/tender-mapping"; // Adjust the URL as needed
+    const url = "https://tender-online.vercel.app/api/tender/tender-mapping"; // Adjust the URL as needed
 
     const data = {
       tenderId,

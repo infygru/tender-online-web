@@ -8,7 +8,7 @@ import axios from "axios";
 export default function Page({ params }: { params: { slug: string } }) {
   const fetchBlog = async () => {
     const res = await axios.get(
-      `http://localhost:8080/api/blog/${params.slug}`
+      `https://tender-online.vercel.app/api/blog/${params.slug}`
     );
     return res.data;
   };

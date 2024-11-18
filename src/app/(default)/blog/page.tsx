@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function Page() {
   const fetchBlog = async () => {
-    const res = await fetch("http://localhost:8080/api/blog");
+    const res = await fetch("https://tender-online.vercel.app/api/blog");
     return res.json();
   };
 

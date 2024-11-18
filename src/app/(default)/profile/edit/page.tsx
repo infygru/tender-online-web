@@ -8,7 +8,7 @@ const Page = () => {
     // You can replace this with your API call to save profile data
     console.log("Profile updated with data:", data);
     const response = await axios.put(
-      "http://localhost:8080/api/auth/me",
+      "https://tender-online.vercel.app/api/auth/me",
       data,
       {
         headers: {
@@ -22,7 +22,7 @@ const Page = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:8080/api/auth/me", {
+      const response = await axios.get("https://tender-online.vercel.app/api/auth/me", {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
