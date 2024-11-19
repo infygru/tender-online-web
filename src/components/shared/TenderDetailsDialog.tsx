@@ -13,7 +13,12 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { formatDate, formatIndianRupeePrice } from "../table/tender-table";
 import { toast } from "sonner";
-
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { ChevronsUpDown } from "lucide-react";
 export interface TenderDocument {
   tenderName: string;
   description?: string;
@@ -145,7 +150,18 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
                 {selectedRowData?.tenderName}
               </h3>
               <p className="text-sm text-center">
-                {selectedRowData?.WorkDescription}
+                <Collapsible>
+                  <CollapsibleTrigger className="w-full px-6 flex items-center justify-between">
+                    <span>Description </span>
+                    <Button variant="ghost" size="sm" className="w-9 p-0">
+                      <ChevronsUpDown className="h-4 w-4" />
+                      <span className="sr-only">Toggle</span>
+                    </Button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    {selectedRowData?.WorkDescription}
+                  </CollapsibleContent>
+                </Collapsible>
               </p>
             </div>
             <div className="space-y-3 py-2">

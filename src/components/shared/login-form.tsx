@@ -5,8 +5,9 @@ import React, { useState } from "react";
 import { toast } from "sonner";
 import Loading from "../ui/loading";
 import { useGoogleLogin } from "@react-oauth/google";
-const LoginForm = ({ setIsLogin }: any) => {
+const LoginForm = ({ setIsLogin, setLoading , loading }: any) => {
   const router = useRouter();
+
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => {
       getUserEmail(tokenResponse.access_token)
@@ -49,11 +50,11 @@ const LoginForm = ({ setIsLogin }: any) => {
           }
           toast.success("Login successful");
           console.log(data.token, "data.token");
-
           sessionStorage.setItem("accessToken", data.token);
 
           // Redirect or update state as needed
           router.push("/tenders");
+          setLoading(false);
         })
         .catch((error: any) => {
           console.error(error);
@@ -108,13 +109,16 @@ const LoginForm = ({ setIsLogin }: any) => {
 
     try {
       // Make login API call
-      const response = await fetch("https://tender-online.vercel.app/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://tender-online.vercel.app/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Login failed");
@@ -261,7 +265,10 @@ const LoginForm = ({ setIsLogin }: any) => {
               Or
             </div>
             <button
-              onClick={() => login()}
+              onClick={() => {
+                setLoading(true);
+                login();
+              }}
               className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg  border-gray-200 bg-gray-100/50 text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
             >
               <svg

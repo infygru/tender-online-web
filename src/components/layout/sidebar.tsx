@@ -150,6 +150,14 @@ const Sidebar: React.FC = () => {
       <Link className="px-3 py-6" href={"/"}>
         <img src="/logo.png" className="h-8 lg:h-16" alt="" />
       </Link>
+      <div className="flex items-center justify-center">
+        <Link
+          href={"/tenders"}
+          className="border text-center text-sm font-semibold text-[#0c1073] rounded-xl w-full border-[#0c1073] mx-4 py-2 "
+        >
+          Tenders
+        </Link>
+      </div>
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}

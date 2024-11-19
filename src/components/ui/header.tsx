@@ -31,7 +31,7 @@ const Header = () => {
                 <div className="hidden lg:block">
                   <Link
                     href={"/tenders"}
-                    className="text-sm font-bold text-[#454545]"
+                    className="border text-center text-sm font-semibold text-[#0c1073] border-[#0c1073] rounded-xl px-6 w-full mx-4 py-2 "
                   >
                     Tenders
                   </Link>
@@ -95,11 +95,14 @@ export function DropdownMenuDemo() {
   const { data, isLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      const response = await axios.get("https://tender-online.vercel.app/api/auth/me", {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-        },
-      });
+      const response = await axios.get(
+        "https://tender-online.vercel.app/api/auth/me",
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+          },
+        }
+      );
       return response.data;
     },
   });
@@ -110,7 +113,7 @@ export function DropdownMenuDemo() {
 
   const image = data?.profile_image;
   return (
-    <Menu shadow="md" width={200}>
+    <Menu shadow="lg" width={200}>
       <Menu.Target>
         <Avatar className="cursor-pointer border bg-black">
           <AvatarImage src={image || "/user.svg"} alt="@shadcn" />
@@ -122,7 +125,14 @@ export function DropdownMenuDemo() {
       </Menu.Target>
 
       <Menu.Dropdown>
-        <Menu.Label>Account</Menu.Label>
+        <Menu.Label>Welcome {data.name}</Menu.Label>
+        {/* add clientId */}
+        <Menu.Item>
+          <Text size="xs" color="gray">
+            Client ID: {data.clientID}
+          </Text>
+        </Menu.Item>
+
         <Menu.Item
           onClick={() => router.push("/profile/edit")}
           leftSection={

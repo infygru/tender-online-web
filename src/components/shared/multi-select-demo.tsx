@@ -33,10 +33,11 @@ export const DatePickerWithRange: React.FC<any> = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [open]);
+    const [newdDateRange, setNewDateRange] = React.useState<any>(null);
   const calculateDays = () => {
-    if (dateRange.startDate && dateRange.endDate) {
-      const start = new Date(dateRange.startDate);
-      const end = new Date(dateRange.endDate);
+    if (newdDateRange.startDate && newdDateRange.endDate) {
+      const start = new Date(newdDateRange.startDate);
+      const end = new Date(newdDateRange.endDate);
 
       // Calculate the difference in time (in milliseconds)
       const timeDiff = Math.abs(end.getTime() - start.getTime());
@@ -48,7 +49,7 @@ export const DatePickerWithRange: React.FC<any> = ({
     }
     return 0;
   };
-  const [newdDateRange, setNewDateRange] = React.useState<any>(null);
+
   return (
     <div className="relative w-full">
       {/* Button to toggle the date picker */}
@@ -66,23 +67,23 @@ export const DatePickerWithRange: React.FC<any> = ({
           ref={pickerRef} // Attach ref to the date picker container
           className="absolute z-50 border rounded-xl px-4 py-4 top-12 right-0 bg-white display-shadow "
         >
-          {dateRange && (
-            <div className="absolute bottom-4 py-2 px-5 flex items-center justify-center left-24 text-center border rounded">
-              <h3>
-                No. of days selected:{" "}
-                {dateRange?.startDate && dateRange?.endDate
-                  ? calculateDays()
-                  : 0}{" "}
-                days
-              </h3>
-            </div>
-          )}
           <DateRangePicker
             minDate={new Date()}
             open={open}
             onChange={(range) => setNewDateRange(range)}
           />
-          <div className="flex items-end justify-end">
+          <div className="flex items-center justify-between">
+            {newdDateRange && (
+              <div className="  py-2 px-5 flex items-center justify-center  text-center border rounded">
+                <h3>
+                  No. of days selected:{" "}
+                  {newdDateRange?.startDate && newdDateRange?.endDate
+                    ? calculateDays()
+                    : 0}{" "}
+                  days
+                </h3>
+              </div>
+            )}
             <button
               className="px-2 mt-6  py-2 border rounded-xl"
               onClick={() => {

@@ -474,6 +474,7 @@ export function DataTableTender({ setSearch, search }: any) {
       setSelectedRow(ids);
     }
   }, [rowSelection]); // Only re-run when `table` changes (i.e., when the table is fully initialized)
+
   React.useEffect(() => {
     const fetchData = async () => {
       if (foryou === "true" || foryou === true) {
@@ -489,7 +490,8 @@ export function DataTableTender({ setSearch, search }: any) {
     };
 
     fetchData(); // Call the inner async function
-  }, [foryou, industry, classification]); // Add 'foryou' as a dependency to re-fetch if it changes
+  }, [foryou]); // Add 'foryou' as a dependency to re-fetch if it changes
+console.log(classification, "classification");
 
   const data = tenders?.result;
 
@@ -498,13 +500,14 @@ export function DataTableTender({ setSearch, search }: any) {
 
   React.useEffect(() => {
     if (data) {
-      router.replace(
-        new URL(
-          `${pathName}?length=${data.length}`,
-          window.location.origin
-        ).toString(),
-        undefined
-      );
+      const currentUrl = new URL(window.location.href); // Get the current URL
+      const params = new URLSearchParams(currentUrl.search); // Get existing query params
+
+      // Update or add new query parameters
+      params.set("length", data.length);
+
+      // Preserve the current path and add the updated query string
+      router.replace(`${currentUrl.pathname}?${params.toString()}`, undefined);
     }
   }, [data, router]);
 
@@ -674,12 +677,12 @@ export function DataTableTender({ setSearch, search }: any) {
 
   const handleMultiSelectChange = (label: string, value: any) => {
     console.log(value, "selected");
-    if (foryou === "true" || foryou === true) {
-      toast.error(
-        "You can't change the filter , kindy to profle page and add your industry and classification Filter"
-      );
-      return;
-    }
+    // if (foryou === "true" || foryou === true) {
+    //   toast.error(
+    //     "You can't change the filter , kindy to profle page and add your industry and classification Filter"
+    //   );
+    //   return;
+    // }
 
     switch (label) {
       case "District":
@@ -752,22 +755,11 @@ export function DataTableTender({ setSearch, search }: any) {
       <div className="w-full">
         <Popover>
           <PopoverTrigger asChild>
-            <Button
-              disabled={foryou === "true" || foryou === true}
-              variant="outline"
-              className={cn(
-                "",
-                foryou === "true" ||
-                  (foryou === true && "cursor-not-allowed bg-gray-100")
-              )}
-            >
-              {label}
-            </Button>
+            <Button variant="outline">{label}</Button>
           </PopoverTrigger>
           <PopoverContent className="w-96 bg-white">
             <div className="grid gap-4">
               <MultiSelect
-                disabled={foryou === "true" || foryou === true}
                 label={label}
                 placeholder={`Pick ${label}`}
                 data={uniqueOptions} // Use the filtered unique options
@@ -775,11 +767,7 @@ export function DataTableTender({ setSearch, search }: any) {
                 onChange={(selected) =>
                   handleMultiSelectChange(label, selected)
                 }
-                className={cn(
-                  "basic-multi-select",
-                  foryou === "true" ||
-                    (foryou === true && "cursor-not-allowed bg-gray-100")
-                )}
+                className={cn("basic-multi-select")}
               />
             </div>
           </PopoverContent>
@@ -861,6 +849,12 @@ export function DataTableTender({ setSearch, search }: any) {
     );
   };
 
+  const removeClassificatin = (removedata:string , setState: any) => {
+      setState((prev: any) =>
+        prev.filter((value: any) => value !== removedata)
+      );
+  }
+
   if (!tenders) {
     return <Loading />;
   }
@@ -917,7 +911,6 @@ export function DataTableTender({ setSearch, search }: any) {
               {district}
               <span className="text-[8px] font-light">district</span>
               <button
-                disabled={foryou === "true" || foryou === true}
                 onClick={() => removeDistrict(district, setSelectedDistricts)}
                 className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
                 aria-label={`Remove ${district}`}
@@ -935,7 +928,7 @@ export function DataTableTender({ setSearch, search }: any) {
               {value}
               <span className="text-[8px] font-light">tender value</span>
               <button
-                disabled={foryou === "true" || foryou === true}
+                
                 onClick={() => removeDistrict(value, setSelectedTenderValues)}
                 className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
                 aria-label={`Remove ${value}`}
@@ -956,7 +949,6 @@ export function DataTableTender({ setSearch, search }: any) {
                   {tender.label}
                   <span className="text-[8px] font-light">tender value</span>
                   <button
-                    disabled={foryou === "true" || foryou === true}
                     onClick={() =>
                       removeDistrict(value, setSelectedTenderValues)
                     }
@@ -979,7 +971,6 @@ export function DataTableTender({ setSearch, search }: any) {
                 {industry}
                 <span className="text-[8px] font-light">industry</span>
                 <button
-                  disabled={foryou === "true" || foryou === true}
                   onClick={() => removeDistrict(industry, setIndustry)}
                   className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
                   aria-label={`Remove ${industry}`}
@@ -998,8 +989,9 @@ export function DataTableTender({ setSearch, search }: any) {
                 {classification}
                 <span className="text-[8px] font-light">classification</span>
                 <button
-                  disabled={foryou === "true" || foryou === true}
-                  onClick={() => setClassification("")}
+                  onClick={() =>
+                    removeDistrict(classification, setClassification)
+                  }
                   className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
                   aria-label={`Remove ${classification}`}
                 >

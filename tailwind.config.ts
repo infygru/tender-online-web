@@ -18,6 +18,10 @@ const config = {
       },
     },
     extend: {
+      colors: {
+        purpleGradientStart: "#8D1DB8",
+        purpleGradientEnd: "#1B3BF1",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

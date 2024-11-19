@@ -8,6 +8,7 @@ import Signup from "../(auth)/signup/page";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import axios from "axios";
+import Loading from "@/components/ui/loading";
 interface SectionData {
   title: string;
   description: string;
@@ -35,6 +36,7 @@ const sections: SectionData[] = [
 export default function Home() {
   const [isLogin, setIsLogin] = React.useState(true);
   const navigate = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   useEffect(() => {
     const token = sessionStorage.getItem("accessToken");
@@ -79,7 +81,7 @@ export default function Home() {
   const handleClose = () => {
     setIsVisible(false);
   };
-
+  if (loading) return <Loading />;
   return (
     <main className="relative">
       {isVisible && (
@@ -241,7 +243,11 @@ export default function Home() {
           {!isLoggedIn && (
             <div className="w-full lg:w-[40%] flex items-start lg:items-center justify-center lg:justify-center">
               {isLogin ? (
-                <LoginForm setIsLogin={setIsLogin} />
+                <LoginForm
+                  setLoading={setLoading}
+                  loading={loading}
+                  setIsLogin={setIsLogin}
+                />
               ) : (
                 <Signup setIsLogin={setIsLogin} />
               )}

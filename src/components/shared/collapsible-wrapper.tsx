@@ -18,15 +18,15 @@ const CollapsibleWrapper = ({
   colTitle,
 }: any) => {
   return (
-    <div className="max-w-[1400px] pt-24 mx-auto flex items-center">
+    <div className="max-w-[1400px] pt-6 lg:pt-24 mx-auto flex items-center">
       <Collapsible className=" w-full">
         <CollapsibleTrigger className="w-full bg-black px-6 py-4">
           <div className=" w-full flex items-center justify-between text-white">
             <div className="flex items-start flex-col">
-              <h3 className="text-xl font-semibold">{title} </h3>
-              <p>{subTitle}</p>
+              <h3 className="lg:text-xl text-sm font-semibold">{title} </h3>
+              <p className="lg:text-sm text-xs">{subTitle}</p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex lg:text-sm text-xs items-center gap-3">
               More details{" "}
               <ChevronUp className="data-[state=active]:rotate-0 rotate-180" />
             </div>

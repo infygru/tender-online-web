@@ -4,28 +4,29 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { DropdownMenuDemo } from "../ui/header";
+import { cn } from "@/lib/utils";
 
 const TenderHeader = () => {
   const [isClicked, setIsClicked] = React.useState(false);
-
-  const handleClick = () => {
-    setIsClicked(!isClicked);
-  };
-  const { data, isLoading } = useQuery({
-    queryKey: ["tenders"],
-    queryFn: async () => {
-      const response = await fetch("https://tender-online.vercel.app/api/tender/all");
-      return response.json();
-    },
-  });
+  const [foryou, setForYou] = React.useState<any | null>(null);
   const searchParams = useSearchParams();
-
+  React.useEffect(() => {
+    // Check if window is defined (client-side only)
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const foryouValue = params.get("foryou");
+      setForYou(foryouValue);
+      console.log(foryouValue, "foryou");
+    }
+  }, []);
   const search = searchParams.get("length");
 
   return (
     <div className="flex items-center w-full px-1 lg:px-8 py-2 lg:py-6">
       <div className="">
-        <img src="/logo.png" className=" w-44 lg:w-[96%]" alt="logo" />
+        <Link href={"/"}>
+          <img src="/logo.png" className=" w-44 lg:w-[96%]" alt="logo" />
+        </Link>
       </div>
       <div className="flex items-center gap-3 w-full">
         <div className="lg:bg-[#171717] bg-white py-2 w-full  px-0 lg:px-4 flex items-center justify-between gap-6 rounded-full">
@@ -42,8 +43,17 @@ const TenderHeader = () => {
           <div className="hidden lg:flex items-center gap-3">
             <div className="">
               <a
-                href={"/tenders?foryou=true"}
-                className="border-2 text-white px-4 py-2 rounded-xl capitalize"
+                href={(function () {
+                  const params = new URLSearchParams(window.location.search);
+                  params.set("foryou", "true"); // Add or update the 'foryou' parameter
+                  return `/tenders?${params.toString()}`;
+                })()}
+                className={cn(
+                  "border-2 text-white px-4 py-2 text-sm font-semibold rounded-xl capitalize",
+                  foryou === "true" || foryou === true
+                    ? "border-none bg-gradient-to-r from-purpleGradientStart to-purpleGradientEnd text-white px-4 py-2 rounded-xl capitalize"
+                    : "border-2 text-white px-4 py-2 rounded-xl capitalize"
+                )}
               >
                 for You
               </a>

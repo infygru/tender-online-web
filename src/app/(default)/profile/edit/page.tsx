@@ -22,11 +22,14 @@ const Page = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      const response = await axios.get("https://tender-online.vercel.app/api/auth/me", {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-        },
-      });
+      const response = await axios.get(
+        "https://tender-online.vercel.app/api/auth/me",
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+          },
+        }
+      );
       return response.data;
     },
   });
@@ -41,6 +44,7 @@ const Page = () => {
     city: data?.city || "",
     state: data?.state?.[0] || "",
     companyName: data?.companyName || "",
+    clientID: data?.clientID || "TO-0001",
   };
 
   return (
@@ -62,6 +66,7 @@ interface ProfileData {
   city: string;
   state: string;
   companyName: string;
+  clientId?: string;
 }
 
 interface ProfileEditFormProps {
@@ -89,6 +94,7 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = ({
       case "city":
       case "state":
       case "companyName":
+      case "clientId":
       case "address":
         return value.length > 0 ? "" : `${field} is required`;
       default:
@@ -112,7 +118,7 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = ({
     Object.keys(formData).forEach((field) => {
       const error = validateField(
         field as keyof ProfileData,
-        formData[field as keyof ProfileData]
+        formData[field as keyof ProfileData] || ""
       );
       if (error) hasErrors = true;
       newErrors[field as keyof ProfileData] = error;
@@ -133,6 +139,7 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = ({
   };
 
   const formFields = [
+    { label: "clientId", field: "clientId" },
     { label: "First Name", field: "name" },
     { label: "Email", field: "email" },
     { label: "Address", field: "address" },

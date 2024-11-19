@@ -12,27 +12,7 @@ const page = () => {
   const [isRazorpayLoaded, setIsRazorpayLoaded] = useState<boolean>(false);
   // Change handler for tabs
 
-  const [carts, setCarts] = useState<any[]>([
-    {
-      label: "Monthly",
-      value: "monthly",
-      price: 499,
-      period: "per month",
-      total: 499,
-    },
-    {
-      label: "Quarterly",
-      value: "quarterly",
-      price: 1499,
-      period: "per quarter",
-    },
-    {
-      label: "Yearly",
-      value: "yearly",
-      price: 4999,
-      period: "per year",
-    },
-  ]);
+  const [carts, setCarts] = useState<any[]>([]);
 
   const router = useRouter();
   // Ensure Razorpay is loaded
@@ -56,9 +36,9 @@ const page = () => {
   const isLogin =
     typeof window !== "undefined" && sessionStorage.getItem("accessToken");
 
-  const handlePayment = (duration: any, price: any) => {
-    const paymentAmount = price;
+  const handlePayment = (paymentAmount: any, duration: any) => {
     if (!isLogin) {
+      toast.error("Please login to continue");
       router.push("/");
       return;
     }
@@ -76,7 +56,7 @@ const page = () => {
       handler: async (response: any) => {
         try {
           const paymentId = response.razorpay_payment_id;
-          const apiUrl = `https://tender-online.vercel.app/api/auth/success/payment`;
+          const apiUrl = `https://tender-online.vercel.app/api/auth/payment/success/executive`;
 
           const result = await fetch(apiUrl, {
             method: "POST",
@@ -86,13 +66,19 @@ const page = () => {
             },
             body: JSON.stringify({
               paymentId,
-              amount: paymentAmount,
-              duration: duration,
+              amount_received: paymentAmount,
+              price: paymentAmount,
+              payment_method: "Razorpay",
+              transaction_status: "Completed",
+              total_amount_paid: paymentAmount,
+              content: paymentAmount === 1000 ? "Per Tender" : "10 Tender",
             }),
           });
 
           if (result.ok) {
-            toast.success("Payment Successful!");
+            toast.success(
+              "Payment Successful! soon we will get in touch with you with in 24 hours"
+            );
             router.push("/tenders");
           } else {
             toast.error("Payment Failed");
@@ -114,6 +100,7 @@ const page = () => {
     const razorpay = new window.Razorpay(options);
     razorpay.open();
   };
+
   return (
     <main>
       <Header />
@@ -127,8 +114,8 @@ const page = () => {
               with Value-for-Money Guaranteed Plans
             </p>
           </div>
-          <div className="flex items-center pb-8 justify-center gap-8">
-            <div className="flex items-center gap-2 border rounded-3xl bg-gray-200 border-black border-opacity-10 px-4 py-1 text-sm font-semibold">
+          <div className="lg:flex grid grid-cols-2 items-center pb-8 justify-center gap-4 lg:gap-8">
+            <div className="flex items-center gap-2 border rounded-3xl bg-gray-200 border-black border-opacity-10 px-4 py-1 text-xs lg:text-sm font-semibold">
               <svg
                 height="5px"
                 width="5px"
@@ -165,7 +152,7 @@ const page = () => {
               </svg>
               Newsletter Package
             </div>
-            <div className="flex items-center gap-2 border rounded-3xl bg-gray-200 border-black border-opacity-10 px-4 py-1 text-sm font-semibold">
+            <div className="flex items-center gap-2 border rounded-3xl bg-gray-200 border-black border-opacity-10 px-4 py-1 text-xs lg:text-sm font-semibold">
               <svg
                 height="5px"
                 width="5px"
@@ -202,7 +189,7 @@ const page = () => {
               </svg>
               Tender Executive
             </div>
-            <div className="flex items-center gap-2 border rounded-3xl bg-gray-200 border-black border-opacity-10 px-4 py-1 text-sm font-semibold">
+            <div className="flex items-center gap-2 border rounded-3xl bg-gray-200 border-black border-opacity-10 px-4 py-1 text-xs lg:text-sm font-semibold">
               <svg
                 height="5px"
                 width="5px"
@@ -239,7 +226,7 @@ const page = () => {
               </svg>
               GeM Suite Package
             </div>
-            <div className="flex items-center gap-2 border rounded-3xl bg-gray-200 border-black border-opacity-10 px-4 py-1 text-sm font-semibold">
+            <div className="flex items-center gap-2 border rounded-3xl bg-gray-200 border-black border-opacity-10 px-4 py-1 text-xs lg:text-sm font-semibold">
               <svg
                 height="5px"
                 width="5px"
@@ -1537,14 +1524,14 @@ const page = () => {
         title={"Tender Executive"}
         subTitle={"Executive Tender Processing Service"}
       >
-        <div className="">
-          <div className="flex items-center  justify-between py-6 text-xl font-semibold">
+        <div className="lg:px-0 px-4">
+          <div className="flex items-center  justify-between py-6 text-xs lg:text-xl font-semibold">
             <p>Tender Bidding</p>
             <p>Tender Result Update</p>
             <p>Tender result Analysis</p>
           </div>
 
-          <div className="flex items-center justify-around">
+          <div className="lg:flex grid grid-cols-1 items-center  justify-around">
             <div className="flex items-center justify-center text-[#0c1073] flex-col py-8 pt-12">
               <h2>
                 <span className="text-4xl font-semibold ">₹1000</span>
@@ -1552,7 +1539,7 @@ const page = () => {
               </h2>
               <div className="flex pt-6 items-center justify-center gap-6 mt-4">
                 <button
-                  onClick={() => handlePayment("1000", "Tender")}
+                  onClick={() => handlePayment(1000, "Tender")}
                   className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-6 py-3 text-xl rounded-xl"
                 >
                   Buy Now
@@ -1569,7 +1556,7 @@ const page = () => {
               </h2>
               <div className="flex pt-6 items-center justify-center gap-6 mt-4">
                 <button
-                  onClick={() => handlePayment("7000", "10 Tender")}
+                  onClick={() => handlePayment(7000, "10 Tender")}
                   className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-6 py-3 text-xl rounded-xl"
                 >
                   Buy Now
@@ -2352,10 +2339,7 @@ const page = () => {
                 </div>
 
                 <div className="flex pb-8 text-xs items-center px-4 justify-center gap-6 mt-2">
-                  <button
-                    onClick={() => handlePayment("150", "Per Registration")}
-                    className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-4 py-2 rounded-xl"
-                  >
+                  <button className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-4 py-2 rounded-xl">
                     Buy Now
                   </button>
                   <button className="text-black px-4 py-2 border-[#8d1db8] rounded-xl border">
@@ -2570,10 +2554,7 @@ const page = () => {
                   </div>
                 </div>
                 <div className="flex pb-8 text-xs items-center px-4 justify-center gap-6 mt-2">
-                  <button
-                    onClick={() => handlePayment("250", "Per Update")}
-                    className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-4 py-2 rounded-xl"
-                  >
+                  <button className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-4 py-2 rounded-xl">
                     Buy Now
                   </button>
                   <button className="text-black px-4 py-2 border-[#8d1db8] rounded-xl border">
@@ -2850,10 +2831,7 @@ const page = () => {
                   </div>
                 </div>
                 <div className="flex pb-8 text-xs items-center px-4 justify-center gap-6 mt-2">
-                  <button
-                    onClick={() => handlePayment("375", "updates")}
-                    className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-4 py-2 rounded-xl"
-                  >
+                  <button className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-4 py-2 rounded-xl">
                     Buy Now
                   </button>
                   <button className="text-black px-4 py-2 border-[#8d1db8] rounded-xl border">
@@ -2992,10 +2970,7 @@ const page = () => {
                   </div>
                 </div>
                 <div className="flex pb-8 text-xs items-center px-4 justify-center gap-6 mt-2">
-                  <button
-                    onClick={() => handlePayment("250", "AOC")}
-                    className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-4 py-2 rounded-xl"
-                  >
+                  <button className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-4 py-2 rounded-xl">
                     Buy Now
                   </button>
                   <button className="text-black px-4 py-2 border-[#8d1db8] rounded-xl border">
