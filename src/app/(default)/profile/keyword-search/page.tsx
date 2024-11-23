@@ -9,11 +9,14 @@ const KeywordSuggestion: React.FC = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["tenders"],
     queryFn: async () => {
-      const response = await fetch("https://tender-online.vercel.app/api/auth/keyword", {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-        },
-      });
+      const response = await fetch(
+        "https://tender-online.vercel.app/api/auth/keyword",
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+          },
+        }
+      );
       return response.json();
     },
   });
@@ -33,9 +36,6 @@ const KeywordSuggestion: React.FC = () => {
 
         {/* no data fount message */}
         {isLoading && <div>Loading...</div>}
-        {!isLoading && !keywords.length && (
-          <div className="text-center text-gray-500">No data found</div>
-        )}
 
         {/* Keyword Input */}
 

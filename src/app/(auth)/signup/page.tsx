@@ -102,6 +102,12 @@ const Signup = ({ setIsLogin }: any) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!otp) {
+      toast.error("Please enter the OTP");
+      return;
+    }
+    
+
     // Validation
     const { error } = validateForm();
     if (error) {
@@ -171,13 +177,16 @@ const Signup = ({ setIsLogin }: any) => {
 
   const handletosendemail = async () => {
     try {
-      const response = await fetch("https://tender-online.vercel.app/api/auth/otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: formData.email }),
-      });
+      const response = await fetch(
+        "https://tender-online.vercel.app/api/auth/otp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: formData.email }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to send OTP");
@@ -509,9 +518,6 @@ const Signup = ({ setIsLogin }: any) => {
                   Sign-in
                 </button>
               </p>
-              <div className="flex items-end pt-6 w-full justify-end">
-                <p>© TenderOnline 2024</p>
-              </div>
             </div>
           </ScrollArea>
           <DialogFooter className="flex justify-center">

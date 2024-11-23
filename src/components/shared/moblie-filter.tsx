@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/popover";
 import { Filter } from "lucide-react";
 
-export function PopoverMobileFilter({ renderMultiSelect }: any) {
+export function PopoverMobileFilter({ renderMultiSelect, children }: any) {
   const dropdownLabels = [
     "District",
     "Tender Value",
@@ -25,6 +25,8 @@ export function PopoverMobileFilter({ renderMultiSelect }: any) {
       <PopoverContent className="w-80 bg-white">
         <div className="grid gap-4">
           {dropdownLabels.map((label) => renderMultiSelect(label))}
+          {children}
+
         </div>
       </PopoverContent>
     </Popover>

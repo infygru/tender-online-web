@@ -7,10 +7,7 @@ export default function RootLayout({
 }>) {
   return (
     <div className="">
-      {/* {pathName === "/tenders" && <Sidebar />} */}
-
         <div className="">{children}</div>
-
     </div>
   );
 }

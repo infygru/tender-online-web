@@ -40,19 +40,19 @@ const TenderHeader = () => {
               </h1>
             </div>
           </div>
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="flex items-center gap-3">
             <div className="">
               <a
                 href={(function () {
                   const params = new URLSearchParams(window.location.search);
                   params.set("foryou", "true"); // Add or update the 'foryou' parameter
                   return `/tenders?${params.toString()}`;
-                })()}
+              })()}
                 className={cn(
-                  "border-2 text-white px-4 py-2 text-sm font-semibold rounded-xl capitalize",
+                  "border-2 lg:text-white text-black px-4 py-2 text-sm font-semibold rounded-xl capitalize",
                   foryou === "true" || foryou === true
                     ? "border-none bg-gradient-to-r from-purpleGradientStart to-purpleGradientEnd text-white px-4 py-2 rounded-xl capitalize"
-                    : "border-2 text-white px-4 py-2 rounded-xl capitalize"
+                    : "border-2 text-black lg:text-white px-4 py-2 rounded-xl capitalize"
                 )}
               >
                 for You

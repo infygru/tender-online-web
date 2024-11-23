@@ -33,7 +33,7 @@ export const DatePickerWithRange: React.FC<any> = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [open]);
-    const [newdDateRange, setNewDateRange] = React.useState<any>(null);
+  const [newdDateRange, setNewDateRange] = React.useState<any>(null);
   const calculateDays = () => {
     if (newdDateRange.startDate && newdDateRange.endDate) {
       const start = new Date(newdDateRange.startDate);
@@ -51,7 +51,7 @@ export const DatePickerWithRange: React.FC<any> = ({
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative lg:w-full">
       {/* Button to toggle the date picker */}
       <button
         ref={buttonRef} // Attach ref to the button
@@ -65,7 +65,7 @@ export const DatePickerWithRange: React.FC<any> = ({
       {open && (
         <div
           ref={pickerRef} // Attach ref to the date picker container
-          className="absolute z-50 border rounded-xl px-4 py-4 top-12 right-0 bg-white display-shadow "
+          className="absolute z-50 lg:w-auto w-[500px] border rounded-xl px-4 py-4 top-12 right-0 bg-white display-shadow "
         >
           <DateRangePicker
             minDate={new Date()}

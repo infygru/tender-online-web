@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import { MultiSelect } from "@mantine/core";
 import axios from "axios";
 import { X } from "lucide-react";
+import { DatePickerWithRange } from "./multi-select-demo";
+import { formatIndianRupeePrice } from "../table/tender-table";
 
 const fetchTenders = async (queryParams: URLSearchParams): Promise<any> => {
   const response = await fetch(
@@ -80,6 +82,7 @@ const MobileTenderList: React.FC = () => {
   const [selectedDistricts, setSelectedDistricts] = React.useState<any>([]);
   const [selectedDepartments, setSelectedDepartments] = React.useState<any>([]);
   const [selectedStatus, setSelectedStatus] = React.useState<any>([]);
+  const [selectedRow, setSelectedRow] = React.useState<any>([]);
 
   const [status, setStatus] = React.useState<string>("");
   const [industry, setIndustry] = React.useState<any>("");
@@ -396,6 +399,47 @@ const MobileTenderList: React.FC = () => {
       prev.filter((value: any) => value !== districtToRemove)
     );
   };
+  const handleToAddRequest = async (selectedRowData: any): Promise<void> => {
+    console.log(selectedRowData, "selectedRowData");
+
+    const url = "https://tender-online.vercel.app/api/tender/tender-mapping";
+
+    try {
+      // Create an array of promises for each tender ID
+      const promises = selectedRow.map(async (tenderId: string) => {
+        const data = { tenderId };
+
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to create tender mapping for tenderId: ${tenderId}`
+          );
+        }
+
+        return response.json();
+      });
+
+      // Wait for all requests to complete
+      const results = await Promise.all(promises);
+
+      toast.success(
+        "Tender documents request sent successfully. We will reach out to you soon."
+      );
+      console.log("Tender mappings created successfully:", results);
+    } catch (error) {
+      toast.error("Error sending tender mapping requests.");
+      console.error("Error sending tender mapping:", error);
+    }
+  };
+
   return (
     <div className="px-2 bg-[#F6F8F9] rounded-3xl py-4">
       <div className=" flex items-center justify-between w-full">
@@ -403,7 +447,25 @@ const MobileTenderList: React.FC = () => {
           Showing {tenders.length} Tenders in Tamilnadu
         </h2>
         <div className="">
-          <PopoverMobileFilter renderMultiSelect={renderMultiSelect} />
+          <PopoverMobileFilter renderMultiSelect={renderMultiSelect}>
+            <div className="">
+              <DatePickerWithRange
+                setDateRange={setDateRange}
+                dateRange={dateRange}
+              />
+            </div>
+
+            <div className="w-full">
+              {isAnyRowSelected && (
+                <button
+                  onClick={() => handleToAddRequest(selectedRowData)}
+                  className="bg-[#1C1A1A] text-nowrap px-4 w-full py-2.5 rounded-md text-white text-xs"
+                >
+                  Request For Documents
+                </button>
+              )}
+            </div>
+          </PopoverMobileFilter>
         </div>
       </div>
       <div className="flex items-center py-2  px-2">
@@ -505,11 +567,12 @@ const MobileTenderList: React.FC = () => {
             <p>Closing Date: {formatDate(tender.bidSubmissionDate)}</p>
           </div>
           <div className="flex items-center justify-between">
-            <div className="bg-[#F8DD4E] text-[#500187] px-0.5 py-0.5 rounded font-semibold text-[10px]">
+            {/* <div className="bg-[#F8DD4E] text-[#500187] px-0.5 py-0.5 rounded font-semibold text-[10px]">
               <p>{tender.department}</p>
-            </div>
-            <div className="text-[20px] text-[#500187] font-bold">
-              ₹{formatCurrency(tender.tenderValue)}
+            </div> */}
+            <div className=""></div>
+            <div className="text-[20px]  text-[#500187] font-bold">
+              {formatIndianRupeePrice(tender.tenderValue)}
             </div>
           </div>
           <div className="flex items-center justify-between">

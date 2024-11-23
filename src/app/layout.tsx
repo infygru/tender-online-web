@@ -1,8 +1,8 @@
 "use client";
-import { Inter } from "next/font/google";
+
 import "./globals.css";
 import { Toaster } from "sonner";
-const inter = Inter({ subsets: ["latin"] });
+
 import { PrimeReactProvider } from "primereact/api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -48,7 +48,7 @@ export default function RootLayout({
       <Head>
         <ColorSchemeScript defaultColorScheme="auto" />
       </Head>
-      <body className={inter.className}>
+    <body>
         <MantineProvider theme={theme}>
           <QueryClientProvider client={queryClient}>
             <PrimeReactProvider>

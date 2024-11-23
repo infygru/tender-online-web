@@ -57,7 +57,7 @@ interface TabOption {
   period: string;
 }
 
-export const PricingTabs: React.FC = () => {
+export const PricingTabs = ({ handletoAddcart }: any) => {
   // Define tab options dynamically
   const tabs: TabOption[] = [
     { label: "Month", value: "Per Month", price: 400, period: "/ Per Month" },
@@ -198,7 +198,17 @@ export const PricingTabs: React.FC = () => {
                   >
                     Buy Now
                   </button>
-                  <button className="text-black px-6 py-3 text-xl border-[#8d1db8] rounded-xl border">
+                  <button
+                    onClick={() =>
+                      handletoAddcart(
+                        "NewsLetter Package",
+                        tab.price,
+                        tab.value,
+                        "newsletter"
+                      )
+                    }
+                    className="text-black px-6 py-3 text-xl border-[#8d1db8] rounded-xl border"
+                  >
                     Add to Cart
                   </button>
                 </div>

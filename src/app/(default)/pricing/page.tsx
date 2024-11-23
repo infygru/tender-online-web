@@ -3,8 +3,10 @@ import CollapsibleWrapper, {
   PricingTabs,
 } from "@/components/shared/collapsible-wrapper";
 import Footer from "@/components/shared/footer";
+import ShoppingCart from "@/components/shared/ShoppingCart";
 import Header from "@/components/ui/header";
 import { useRouter } from "next/navigation";
+import { title } from "process";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -99,6 +101,47 @@ const page = () => {
 
     const razorpay = new window.Razorpay(options);
     razorpay.open();
+  };
+
+  const handletoAddcart = (
+    title: string,
+    price: number,
+    teams: string,
+    type: string
+  ) => {
+    setCarts((prev: any) => {
+      const isAlreadyInCart = prev.some(
+        (item: any) => item.title === title && item.type === "tender"
+      );
+
+      const isAlreadyinCartNews = prev.some(
+        (item: any) => item.title === title && item.type === "newsletter"
+      );
+
+      if (isAlreadyinCartNews) {
+        toast.error("Already newsLetter Package added");
+        return prev;
+      }
+      if (isAlreadyInCart) {
+        toast.error("This tender is already in your cart.");
+        // Optionally, you can show a newsletter or other UI instead
+        // showNewsletter();
+        return prev;
+      }
+
+      return [
+        ...prev,
+        {
+          title,
+          price,
+          teams,
+          total: price,
+          type,
+        },
+      ];
+    });
+
+    router.push("#cart");
   };
 
   return (
@@ -293,7 +336,7 @@ const page = () => {
         title={"Newsletter Package"}
         subTitle={"Tender information updated every day"}
       >
-        <PricingTabs />
+        <PricingTabs handletoAddcart={handletoAddcart} />
       </CollapsibleWrapper>
       <CollapsibleWrapper
         description={
@@ -1544,7 +1587,17 @@ const page = () => {
                 >
                   Buy Now
                 </button>
-                <button className="text-black px-6 py-3 text-xl border-[#8d1db8] rounded-xl border">
+                <button
+                  onClick={() =>
+                    handletoAddcart(
+                      "Per Tender Executive",
+                      1000,
+                      "Per Tender",
+                      "tender"
+                    )
+                  }
+                  className="text-black px-6 py-3 text-xl border-[#8d1db8] rounded-xl border"
+                >
                   Add to Cart
                 </button>
               </div>
@@ -3004,13 +3057,7 @@ const page = () => {
           </div>
         </div>
       </CollapsibleWrapper>
-
-      {/* <div className="max-w-[1400px] pt-24 mx-auto flex items-center">
-        <div className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-6 py-4 text-xl font-bold w-full">
-          Shopping cart
-        </div>
-        <div className=""></div>
-      </div> */}
+      {carts?.length >= 1 && <ShoppingCart setCarts={setCarts} carts={carts} />}
       <Footer />
     </main>
   );

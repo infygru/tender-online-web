@@ -474,6 +474,7 @@ export function DataTableTender({ setSearch, search }: any) {
       setSelectedRow(ids);
     }
   }, [rowSelection]); // Only re-run when `table` changes (i.e., when the table is fully initialized)
+  const router = useRouter();
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -491,12 +492,9 @@ export function DataTableTender({ setSearch, search }: any) {
 
     fetchData(); // Call the inner async function
   }, [foryou]); // Add 'foryou' as a dependency to re-fetch if it changes
-console.log(classification, "classification");
+  console.log(classification, "classification");
 
   const data = tenders?.result;
-
-  const router = useRouter();
-  const pathName = usePathname();
 
   React.useEffect(() => {
     if (data) {
@@ -849,11 +847,9 @@ console.log(classification, "classification");
     );
   };
 
-  const removeClassificatin = (removedata:string , setState: any) => {
-      setState((prev: any) =>
-        prev.filter((value: any) => value !== removedata)
-      );
-  }
+  const removeClassificatin = (removedata: string, setState: any) => {
+    setState((prev: any) => prev.filter((value: any) => value !== removedata));
+  };
 
   if (!tenders) {
     return <Loading />;
