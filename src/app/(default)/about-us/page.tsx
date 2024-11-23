@@ -46,40 +46,7 @@ const testimonials = [
   },
 ];
 
-export function Testimonials() {
-  return (
-    <div className="w-full max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold text-center mb-6">
-        What Our Clients Say
-      </h2>
-      <Carousel className="w-full">
-        <CarouselContent>
-          {testimonials.map((testimonial, index) => (
-            <CarouselItem key={index} className="p-4 basis-0 lg:basis-1/2">
-              <Card className="shadow-lg">
-                <CardContent className="p-6">
-                  <p className="text-lg text-gray-700 h-[250px] italic mb-4">
-                    "{testimonial.text}"
-                  </p>
-                  <div className="text-sm font-semibold text-gray-900">
-                    — {testimonial.author}
-                  </div>
-                  <div className="text-sm text-gray-500">
-                    {testimonial.position}
-                  </div>
-                </CardContent>
-              </Card>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white rounded-full shadow-md p-2 hover:bg-gray-100" />
-        <CarouselNext className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white rounded-full shadow-md p-2 hover:bg-gray-100" />
-      </Carousel>
-    </div>
-  );
-}
-
-const page = () => {
+const Page = () => {
   return (
     <div>
       <Header />
@@ -332,7 +299,7 @@ const page = () => {
         </div>
       </div>
 
-      <Testimonials />
+      <Testimonial />
       <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="isolate flex lg:flex-row flex-col gap-5 items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
           <div className="flex-1">
@@ -384,7 +351,41 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
+
+const Testimonial = () => {
+  return (
+    <div className="w-full max-w-4xl mx-auto">
+      <h2 className="text-3xl font-bold text-center mb-6">
+        What Our Clients Say
+      </h2>
+      <Carousel className="w-full">
+        <CarouselContent>
+          {testimonials.map((testimonial, index) => (
+            <CarouselItem key={index} className="p-4 basis-0 lg:basis-1/2">
+              <Card className="shadow-lg">
+                <CardContent className="p-6">
+                  <p className="text-lg text-gray-700 h-[250px] italic mb-4">
+                    "{testimonial.text}"
+                  </p>
+                  <div className="text-sm font-semibold text-gray-900">
+                    — {testimonial.author}
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    {testimonial.position}
+                  </div>
+                </CardContent>
+              </Card>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white rounded-full shadow-md p-2 hover:bg-gray-100" />
+        <CarouselNext className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white rounded-full shadow-md p-2 hover:bg-gray-100" />
+      </Carousel>
+    </div>
+  );
+};
+
 import Joi from "joi";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
