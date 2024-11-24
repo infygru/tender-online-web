@@ -890,11 +890,12 @@ export function DataTableTender({ setSearch, search }: any) {
           {/* Conditional rendering of the Reset All button */}
           {(selectedDistricts.length > 0 ||
             selectedTenderValues.length > 0 ||
+            dateRange ||
             industry.length > 0 ||
             classification) && (
             <button
               onClick={clearFilters}
-              className="px-4 rounded-xl mr-3 border py-3 text-xs"
+              className="px-4 rounded-md mr-3 border py-3 text-xs"
             >
               Reset All
             </button>
@@ -902,7 +903,7 @@ export function DataTableTender({ setSearch, search }: any) {
           {selectedDistricts?.map((district: string) => (
             <div
               key={district}
-              className="mr-2 capitalize flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+              className="mr-2 capitalize flex flex-col items-start px-3 pr-6 py-1 border text-xs rounded-md relative"
             >
               {district}
               <span className="text-[8px] font-light">district</span>
@@ -915,6 +916,23 @@ export function DataTableTender({ setSearch, search }: any) {
               </button>
             </div>
           ))}
+
+          {/* // add  date filter also  */}
+          {dateRange && (
+            <div className="mr-2 capitalize flex flex-col items-start px-3 pr-6 py-1 border text-xs rounded-md relative">
+              {`${dateRange?.startDate?.toLocaleDateString() ?? ""} - ${
+                dateRange?.endDate?.toLocaleDateString() ?? ""
+              }`}
+              <span className="text-[8px] font-light">date range</span>
+              <button
+                onClick={() => setDateRange(null)}
+                className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
+                aria-label={`Remove ${dateRange}`}
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </div>
+          )}
 
           {/* {selectedTenderValues?.map((value: string) => (
             <div
@@ -940,7 +958,7 @@ export function DataTableTender({ setSearch, search }: any) {
               tender && (
                 <div
                   key={value}
-                  className="mr-2 capitalize flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+                  className="mr-2  capitalize flex flex-col items-start px-3 pr-6 py-1 border text-xs rounded-md relative"
                 >
                   {tender.label}
                   <span className="text-[8px] font-light">tender value</span>
@@ -962,7 +980,7 @@ export function DataTableTender({ setSearch, search }: any) {
             industry?.map((industry: string) => (
               <div
                 key={industry}
-                className="mr-2 capitalize flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+                className="mr-2 capitalize flex flex-col items-start px-3 pr-6 py-1  border text-xs rounded-md relative"
               >
                 {industry}
                 <span className="text-[8px] font-light">industry</span>
@@ -979,10 +997,10 @@ export function DataTableTender({ setSearch, search }: any) {
           {classification &&
             classification?.map((classification: string) => (
               <div
-                className="mr-2 capitalize flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
+                className="mr-2 capitalize flex flex-col items-start px-3 pr-6 py-1  border text-xs rounded-md relative"
                 key={classification}
               >
-                {classification}
+                {classification + "s"}
                 <span className="text-[8px] font-light">classification</span>
                 <button
                   onClick={() =>
@@ -995,23 +1013,6 @@ export function DataTableTender({ setSearch, search }: any) {
                 </button>
               </div>
             ))}
-
-          {/* {classification && (
-            <div
-              className="mr-2 flex flex-col items-start px-3 pr-4 py-1 border text-xs rounded-xl relative"
-              key={classification}
-            >
-              {classification}
-              <span className="text-[8px] font-light">classification</span>
-              <button
-                onClick={() => setClassification("")}
-                className="absolute top-0 right-0 p-1 text-gray-500 hover:text-gray-700"
-                aria-label={`Remove ${classification}`}
-              >
-                <X className="h-3 w-3" />
-              </button>
-            </div>
-          )} */}
         </div>
       </div>
       <div className="">
@@ -1097,6 +1098,21 @@ export function DataTableTender({ setSearch, search }: any) {
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getRowModel().rows.length} row(s) selected.
         </div>
+        {/* show pagination Number and find number of page and show here   */}
+
+       <div className="">
+        <p>
+          Page{" "}
+          <span className="font-bold">
+            {table.getState().pagination.pageIndex + 1}
+          </span>{" "}
+          of{" "}
+          <span className="font-bold">
+            {table.getPageCount()}
+          </span>
+        </p>
+       </div>
+
         <Button
           variant="outline"
           size="sm"

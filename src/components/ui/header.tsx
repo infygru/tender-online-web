@@ -129,7 +129,7 @@ export function DropdownMenuDemo() {
         {/* add clientId */}
         <Menu.Item>
           <Text size="xs" color="gray">
-            Client ID: {data.clientID}
+            Client ID: {data.clientId}
           </Text>
         </Menu.Item>
 

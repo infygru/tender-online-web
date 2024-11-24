@@ -149,16 +149,18 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
               <h3 className="py-6 text-center font-medium text-xs lg:text-lg">
                 {selectedRowData?.tenderName}
               </h3>
-              <p className="text-sm text-center">
-                <Collapsible>
-                  <CollapsibleTrigger className="w-full px-6 flex items-center justify-between">
-                    <span>Description </span>
-                    <Button variant="ghost" size="sm" className="w-9 p-0">
-                      <ChevronsUpDown className="h-4 w-4" />
-                      <span className="sr-only">Toggle</span>
-                    </Button>
+              <p className="text-sm text-center flex items-center justify-center">
+                <Collapsible className="flex flex-col items-centers justify-center">
+                  <CollapsibleTrigger className=" text-black gap-6 flex items-center justify-center">
+                    <div className="bg-white flex items-center gap-3 px-24 rounded-lg">
+                      <span>Description </span>
+                      <Button variant="ghost" size="sm" className="w-9 p-0">
+                        <ChevronsUpDown className="h-4 w-4" />
+                        <span className="sr-only">Toggle</span>
+                      </Button>
+                    </div>
                   </CollapsibleTrigger>
-                  <CollapsibleContent>
+                  <CollapsibleContent className="pt-2">
                     {selectedRowData?.WorkDescription}
                   </CollapsibleContent>
                 </Collapsible>

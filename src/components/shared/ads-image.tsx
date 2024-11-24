@@ -13,7 +13,9 @@ const AdsImage = () => {
   const { data: ads } = useQuery<any>({
     queryKey: ["Ads"],
     queryFn: () =>
-      fetch(`https://tender-online.vercel.app/api/ads/images`).then((res) => res.json()),
+      fetch(`https://tender-online.vercel.app/api/ads/images`).then((res) =>
+        res.json()
+      ),
   });
 
   return (
@@ -24,7 +26,7 @@ const AdsImage = () => {
             <CarouselItem key={index} className="lg:basis-1/2 basis-full">
               <Link
                 target="_black"
-                href={"/pricing"}
+                href={ads.url ? ads.url : "/"}
                 className="lg:h-64 h-28 w-full"
               >
                 <img

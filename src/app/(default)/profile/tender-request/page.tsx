@@ -46,8 +46,13 @@ const Page: React.FC = () => {
   if (isError) return <div>Error loading tenders.</div>;
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-white lg:bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-semibold text-center mb-8">Tender List</h1>
+      {data?.length === 0 && (
+        <div className="text-center text-gray-500">
+          No tenders found. Please check back later.
+        </div>
+      )}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {data?.map((tender: TenderData) => (
           <div

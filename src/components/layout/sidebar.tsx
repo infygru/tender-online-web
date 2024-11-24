@@ -146,16 +146,16 @@ const Sidebar: React.FC = () => {
   const pathName = usePathname();
 
   return (
-    <div className="border-r">
-      <Link className="px-3 py-6" href={"/"}>
+    <div className="lg:border-r border-none">
+      <Link className="px-3 py-6 lg:block hidden" href={"/"}>
         <img src="/logo.png" className="h-8 lg:h-16" alt="" />
       </Link>
-      <div className="flex items-center justify-center">
+      <div className=" items-center lg:flex hidden justify-center">
         <Link
           href={"/tenders"}
-          className="border text-center text-sm font-semibold text-[#0c1073] rounded-xl w-full border-[#0c1073] mx-4 py-2 "
+          className="border text-center text-sm font-semibold text-[#8D1DB8] rounded-xl w-full border-[#0c1073] mx-4 py-2 "
         >
-          Tenders
+          Tender Dashboard
         </Link>
       </div>
       <button
@@ -181,11 +181,19 @@ const Sidebar: React.FC = () => {
       </button>
       <aside
         id="default-sidebar"
-        className={` top-0 left-0 z-40 w-64 h-screen transition-transform ${
+        className={` top-14 lg:relative fixed lg:bg-transparent lg:border-none border-r bg-white left-0 z-40 w-64 h-screen transition-transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0`}
         aria-label="Sidebar"
       >
+        <div className="flex items-center lg:hidden  justify-center">
+          <Link
+            href={"/tenders"}
+            className="border text-center text-sm font-semibold text-[#8D1DB8] rounded-xl w-full border-[#0c1073] mx-4 py-2 "
+          >
+            Tender Dashboard
+          </Link>
+        </div>
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-100/20 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             {menuItems.map((item, index) => (

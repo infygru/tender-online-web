@@ -284,8 +284,8 @@ const Signup = ({ setIsLogin }: any) => {
   return (
     <main className="flex pt-36 w-full items-center mt-6 justify-center">
       {loading && (
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div>
+        <div className="absolute inset-0  flex items-center justify-center">
+
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
               <circle
                 fill="#FF156D"
@@ -342,7 +342,7 @@ const Signup = ({ setIsLogin }: any) => {
                 ></animate>
               </circle>
             </svg>
-          </div>
+
         </div>
       )}
       <div className="w-[80%]">
@@ -520,13 +520,13 @@ const Signup = ({ setIsLogin }: any) => {
               </p>
             </div>
           </ScrollArea>
-          <DialogFooter className="flex justify-center">
+          {/* <DialogFooter className="flex justify-center">
             <DialogOpen
               title="Login"
               description="Already have an account? Log in here."
               setIsLogin={setIsLogin}
             />
-          </DialogFooter>
+          </DialogFooter> */}
         </div>
       </div>
     </main>

@@ -14,3 +14,7 @@
 .display-shadow div {
   box-shadow: none;
 }
+
+.mantine-Modal-content {
+  border-radius: 1rem !important;
+}

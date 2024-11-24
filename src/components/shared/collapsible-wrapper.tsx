@@ -16,9 +16,13 @@ const CollapsibleWrapper = ({
   subTitle,
   description,
   colTitle,
+  id,
 }: any) => {
   return (
-    <div className="max-w-[1400px] pt-6 lg:pt-24 mx-auto flex items-center">
+    <div
+      id={id}
+      className="max-w-[1050px] lg:px-0 px-6 pt-6 lg:pt-24 mx-auto flex items-center"
+    >
       <Collapsible className=" w-full">
         <CollapsibleTrigger className="w-full bg-black px-6 py-4">
           <div className=" w-full flex items-center justify-between text-white">

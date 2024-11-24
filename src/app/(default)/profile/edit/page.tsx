@@ -44,11 +44,11 @@ const Page = () => {
     city: data?.city || "",
     state: data?.state?.[0] || "",
     companyName: data?.companyName || "",
-    clientID: data?.clientID || "TO-0001",
+    clientId: data?.clientId || "TO-0001",
   };
 
   return (
-    <div className="px-24 w-full py-8">
+    <div className="lg:px-24 px-4 w-full py-8">
       <h2 className="text-3xl text-black font-bold">Profile Information</h2>
 
       <ProfileEditForm initialData={initialData} onSubmit={handleFormSubmit} />
@@ -178,7 +178,7 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = ({
                 onChange={(e) =>
                   handleChange(field as keyof ProfileData, e.target.value)
                 }
-                className="p-2 border text-sm rounded-xl"
+                className="p-2 border text-sm rounded-md"
                 aria-invalid={!!errors[field as keyof ProfileData]}
               />
             ) : (
@@ -189,7 +189,7 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = ({
                 onChange={(e) =>
                   handleChange(field as keyof ProfileData, e.target.value)
                 }
-                className="p-2 border text-sm rounded-xl"
+                className="p-2 border text-sm rounded-md"
                 aria-invalid={!!errors[field as keyof ProfileData]}
               />
             )}

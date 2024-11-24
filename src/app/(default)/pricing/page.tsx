@@ -5,6 +5,7 @@ import CollapsibleWrapper, {
 import Footer from "@/components/shared/footer";
 import ShoppingCart from "@/components/shared/ShoppingCart";
 import Header from "@/components/ui/header";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { title } from "process";
 import React, { useEffect, useState } from "react";
@@ -158,7 +159,10 @@ const page = () => {
             </p>
           </div>
           <div className="lg:flex grid grid-cols-2 items-center pb-8 justify-center gap-4 lg:gap-8">
-            <div className="flex items-center gap-2 border rounded-3xl bg-gray-200 border-black border-opacity-10 px-4 py-1 text-xs lg:text-sm font-semibold">
+            <Link
+              href={"#newsletter"}
+              className="flex items-center gap-2 border rounded-3xl bg-gray-200 border-black border-opacity-10 px-4 py-1 text-xs lg:text-sm font-semibold"
+            >
               <svg
                 height="5px"
                 width="5px"
@@ -194,8 +198,11 @@ const page = () => {
                 </g>
               </svg>
               Newsletter Package
-            </div>
-            <div className="flex items-center gap-2 border rounded-3xl bg-gray-200 border-black border-opacity-10 px-4 py-1 text-xs lg:text-sm font-semibold">
+            </Link>
+            <Link
+              href={"#package"}
+              className="flex items-center gap-2 border rounded-3xl bg-gray-200 border-black border-opacity-10 px-4 py-1 text-xs lg:text-sm font-semibold"
+            >
               <svg
                 height="5px"
                 width="5px"
@@ -231,8 +238,8 @@ const page = () => {
                 </g>
               </svg>
               Tender Executive
-            </div>
-            <div className="flex items-center gap-2 border rounded-3xl bg-gray-200 border-black border-opacity-10 px-4 py-1 text-xs lg:text-sm font-semibold">
+            </Link>
+            {/* <div className="flex items-center gap-2 border rounded-3xl bg-gray-200 border-black border-opacity-10 px-4 py-1 text-xs lg:text-sm font-semibold">
               <svg
                 height="5px"
                 width="5px"
@@ -305,7 +312,7 @@ const page = () => {
                 </g>
               </svg>
               Digital Signature
-            </div>
+            </div> */}
           </div>
           {/* Buttons */}
           {/* <div className="gap-3 justify-center w-full flex">
@@ -331,6 +338,7 @@ const page = () => {
         </div>
       </div>
       <CollapsibleWrapper
+        id="newsletter"
         description={`Our team will gather tender information from multiple government sources and provide it to you. This service saves your valuable time and effort that would otherwise be spent searching for tenders. Many government sites lack user-friendly interfaces, but we ensure a seamless solution through our platform, making it easier for you to access and utilize the information. A special add-on "For you" tab has been specifically created containing only those relevant tenders that suits the specified company profile.`}
         colTitle={"  Tender information updated every day"}
         title={"Newsletter Package"}
@@ -339,6 +347,7 @@ const page = () => {
         <PricingTabs handletoAddcart={handletoAddcart} />
       </CollapsibleWrapper>
       <CollapsibleWrapper
+        id="package"
         description={
           <div>
             <>
@@ -2236,7 +2245,7 @@ const page = () => {
       >
         <div className="flex">
           <div className="px-6 py-3 rounded-3xl">
-            <div className="grid gap-3  grid-cols-1  lg:grid-cols-5">
+            <div className="grid gap-3  grid-cols-1  lg:grid-cols-4">
               <div className="flex flex-col lg:py-0 py-8  rounded-lg bg-blue-100/20  lg:border-t-0 border-t h-full text-center">
                 <div className=" flex items-center justify-center pt-8 pb-5 px-8 dark:bg-neutral-900">
                   <svg
@@ -2382,23 +2391,27 @@ const page = () => {
                     </li>
                   </ul>
                 </div>
-                <div className="flex items-center justify-center">
+
+                <div className="bg-gradient-to-r rounded-md px-4 text-sm text-white from-[#8d1db8] font-semibold to-[#0c1073] py-4 mt-12">
+                  <p>For More details Kindly Contact Us</p>
+                </div>
+                {/* <div className="flex items-center justify-center">
                   <div className="h-full w-max space-y-2  lg:mt-px lg:py-5 px-8 dark:bg-neutral-900">
                     <span className="mt-7 flex flex-col font-bold text-2xl text-[#1075FF] dark:text-neutral-200">
                       ₹150
                     </span>
                     <span>Per Registration</span>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="flex pb-8 text-xs items-center px-4 justify-center gap-6 mt-2">
+                {/* <div className="flex pb-8 text-xs items-center px-4 justify-center gap-6 mt-2">
                   <button className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-4 py-2 rounded-xl">
                     Buy Now
                   </button>
                   <button className="text-black px-4 py-2 border-[#8d1db8] rounded-xl border">
                     Add to Cart
                   </button>
-                </div>
+                </div> */}
               </div>
               <div className="flex flex-col lg:py-0 py-8  rounded-lg bg-blue-100/20  lg:border-t-0 border-t h-full text-center">
                 <div className=" flex items-center justify-center pt-8 pb-5 px-8 dark:bg-neutral-900">
@@ -2598,21 +2611,8 @@ const page = () => {
                     </li>
                   </ul>
                 </div>
-                <div className="flex items-center justify-center">
-                  <div className="h-full w-max space-y-2  lg:mt-px lg:py-5 px-8 dark:bg-neutral-900">
-                    <span className="mt-7 flex flex-col font-bold text-2xl text-[#1075FF] dark:text-neutral-200">
-                      ₹250
-                    </span>
-                    <span>Per Update</span>
-                  </div>
-                </div>
-                <div className="flex pb-8 text-xs items-center px-4 justify-center gap-6 mt-2">
-                  <button className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-4 py-2 rounded-xl">
-                    Buy Now
-                  </button>
-                  <button className="text-black px-4 py-2 border-[#8d1db8] rounded-xl border">
-                    Add to Cart
-                  </button>
+                <div className="bg-gradient-to-r rounded-md px-4 text-sm text-white from-[#8d1db8] font-semibold to-[#0c1073] py-4 mt-12">
+                  <p>For More details Kindly Contact Us</p>
                 </div>
               </div>
               <div className="flex flex-col lg:py-0 py-8  rounded-lg bg-blue-100/20  lg:border-t-0 border-t h-full text-center">
@@ -2875,21 +2875,8 @@ const page = () => {
                     </li>
                   </ul>
                 </div>
-                <div className="flex items-center justify-center">
-                  <div className="h-full w-max space-y-2  lg:mt-px lg:py-5 px-8 dark:bg-neutral-900">
-                    <span className="mt-7 flex flex-col font-bold text-2xl text-[#1075FF] dark:text-neutral-200">
-                      ₹375
-                    </span>
-                    <span>/ update</span>
-                  </div>
-                </div>
-                <div className="flex pb-8 text-xs items-center px-4 justify-center gap-6 mt-2">
-                  <button className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-4 py-2 rounded-xl">
-                    Buy Now
-                  </button>
-                  <button className="text-black px-4 py-2 border-[#8d1db8] rounded-xl border">
-                    Add to Cart
-                  </button>
+                <div className="bg-gradient-to-r rounded-md px-4 text-sm text-white from-[#8d1db8] font-semibold to-[#0c1073] py-4 mt-12">
+                  <p>For More details Kindly Contact Us</p>
                 </div>
               </div>
               <div className="flex flex-col lg:py-0 py-8  rounded-lg bg-blue-100/20  lg:border-t-0 border-t h-full text-center">
@@ -3014,43 +3001,8 @@ const page = () => {
                     </li>
                   </ul>
                 </div>
-                <div className="flex items-center justify-center">
-                  <div className="h-full w-max space-y-2  lg:mt-px lg:py-5 px-8 dark:bg-neutral-900">
-                    <span className="mt-7 flex flex-col font-bold text-2xl text-[#1075FF] dark:text-neutral-200">
-                      ₹250
-                    </span>
-                    <span>Per AOC</span>
-                  </div>
-                </div>
-                <div className="flex pb-8 text-xs items-center px-4 justify-center gap-6 mt-2">
-                  <button className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-4 py-2 rounded-xl">
-                    Buy Now
-                  </button>
-                  <button className="text-black px-4 py-2 border-[#8d1db8] rounded-xl border">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-              <div className="flex flex-col justify-center items-center lg:py-12 py-8  rounded-lg bg-gradient-to-r text-white from-[#8d1db8] to-[#0c1073]  lg:border-t-0 border-t h-full text-center">
-                <h2>Complete Profile Management</h2>
-                <p>With The Login details & Secoundary User Access</p>
-
-                <span className="mt-7 flex flex-col font-bold text-2xl text-[#1075FF] dark:text-neutral-200">
-                  ₹4500
-                </span>
-
-                <div className="flex pb-8 pt-8 text-xs items-center px-4 justify-center gap-6 mt-2">
-                  <button
-                    onClick={() =>
-                      handlePayment("4500", "Complate Profile Management")
-                    }
-                    className="bg-white text-black px-4 py-2 rounded-xl"
-                  >
-                    Buy Now
-                  </button>
-                  <button className="text-white px-4 py-2 border-[#8d1db8] rounded-xl border">
-                    Add to Cart
-                  </button>
+                <div className="bg-gradient-to-r rounded-md px-4 text-sm text-white from-[#8d1db8] font-semibold to-[#0c1073] py-4 mt-12">
+                  <p>For More details Kindly Contact Us</p>
                 </div>
               </div>
             </div>

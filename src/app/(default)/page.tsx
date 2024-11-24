@@ -9,6 +9,10 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import axios from "axios";
 import Loading from "@/components/ui/loading";
+import { useQuery } from "@tanstack/react-query";
+import { XIcon } from "lucide-react";
+import { useDisclosure } from "@mantine/hooks";
+import { Modal, Button } from "@mantine/core";
 interface SectionData {
   title: string;
   description: string;
@@ -38,6 +42,7 @@ export default function Home() {
   const navigate = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
   useEffect(() => {
     const token = sessionStorage.getItem("accessToken");
 
@@ -60,6 +65,15 @@ export default function Home() {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isSignup, setIsSignup] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [opened, { open, close }] = useDisclosure(true);
+  const { data, error } = useQuery({
+    queryKey: ["images"],
+    queryFn: () =>
+      fetch("https://tender-online.vercel.app/api/ads/banner/images").then(
+        (res) => res.json()
+      ),
+  });
+
   useEffect(() => {
     const fetchBanner = async () => {
       try {
@@ -81,7 +95,20 @@ export default function Home() {
   const handleClose = () => {
     setIsVisible(false);
   };
+
   if (loading) return <Loading />;
+
+  const handleToClose = () => {
+    const isClosed = localStorage.getItem("isClosed");
+    if (!isClosed) {
+      localStorage.setItem("isClosed", "true");
+    }
+    close();
+  };
+
+  const isClosed =
+    typeof window !== "undefined" && localStorage.getItem("isClosed");
+    
   return (
     <main className="relative">
       {isVisible && (
@@ -138,6 +165,39 @@ export default function Home() {
           </button>
         </div>
       )}
+
+      {isClosed !== "true" && (
+        <>
+          {data && data[0].active && (
+            <Modal
+              style={{ borderRadius: "24px" }}
+              size={"xl"}
+              className="rounded-3xl"
+              opened={opened}
+              onClose={handleToClose}
+              centered
+            >
+              {/* Modal content */}{" "}
+              <div className="">
+                <div className="">
+                  <XIcon
+                    onClick={handleToClose}
+                    className="h-6 w-6 text-white"
+                  />
+                  <Link href={data[0].url || "/"}>
+                    <img
+                      src={data[0].imageUrl}
+                      alt="banner"
+                      className="w-full rounded-xl h-[400px] object-cover"
+                    />
+                  </Link>
+                </div>
+              </div>
+            </Modal>
+          )}
+        </>
+      )}
+
       <Header />
       {!isLoggedIn ? (
         <div className="flex h-screen">

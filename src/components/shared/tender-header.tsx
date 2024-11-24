@@ -44,18 +44,22 @@ const TenderHeader = () => {
             <div className="">
               <a
                 href={(function () {
+                  const foryouIs =
+                    foryou === "true" || foryou === true ? "false" : "true";
                   const params = new URLSearchParams(window.location.search);
-                  params.set("foryou", "true"); // Add or update the 'foryou' parameter
+                  params.set("foryou", foryouIs); // Add or update the 'foryou' parameter
                   return `/tenders?${params.toString()}`;
-              })()}
+                })()}
                 className={cn(
                   "border-2 lg:text-white text-black px-4 py-2 text-sm font-semibold rounded-xl capitalize",
-                  foryou === "true" || foryou === true
+                  foryou === "false" || foryou === false
                     ? "border-none bg-gradient-to-r from-purpleGradientStart to-purpleGradientEnd text-white px-4 py-2 rounded-xl capitalize"
-                    : "border-2 text-black lg:text-white px-4 py-2 rounded-xl capitalize"
+                    : "border-2 text-white lg:text-black px-4 py-2 rounded-xl capitalize bg-black lg:bg-white"
                 )}
               >
-                for You
+                {foryou === "true" || foryou === true
+                  ? "All Tenders"
+                  : "For you"}
               </a>
             </div>
             <div className="flex items-center space-x-4">

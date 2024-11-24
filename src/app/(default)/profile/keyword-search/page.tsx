@@ -28,7 +28,7 @@ const KeywordSuggestion: React.FC = () => {
   }, [data, isLoading]);
 
   return (
-    <div className="p-6 bg-gradient-to-b from-gray-100 to-gray-200 w-full min-h-screen flex items-center justify-center">
+    <div className="p-6 bg-white w-full min-h-screen flex items-center justify-center">
       <div className="w-full max-w-lg bg-white rounded-lg p-6 space-y-4">
         <h2 className="text-2xl font-bold text-gray-800 text-center">
           Keyword Suggestions

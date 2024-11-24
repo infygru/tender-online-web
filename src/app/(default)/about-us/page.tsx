@@ -400,6 +400,7 @@ interface FormValues {
   lastName: string;
   email: string;
   message: string;
+  type: string;
 }
 
 const formSchema = Joi.object({
@@ -430,6 +431,7 @@ const ContactPage: React.FC = () => {
     lastName: "",
     email: "",
     message: "",
+    type: "contacted",
   });
 
   const [errors, setErrors] = useState<Partial<FormValues>>({});

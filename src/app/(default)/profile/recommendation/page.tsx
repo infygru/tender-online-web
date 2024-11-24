@@ -192,7 +192,7 @@ function CheckSuggestion() {
   }
 
   return (
-    <div className="px-44 w-full space-y-4 py-24">
+    <div className="lg:px-44 px-6 w-full space-y-4 py-8 lg:py-24">
       <h1 className="text-3xl font-bold">Recommendations</h1>
       {/* {data && !checkIfSuggestionsExist(data.suggestion) && ( */}
       <form onSubmit={handleSubmit} className="grid gap-4 w-full py-4">

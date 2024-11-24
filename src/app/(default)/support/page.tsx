@@ -12,6 +12,7 @@ interface FormValues {
   lastName: string;
   email: string;
   message: string;
+  type: string;
 }
 
 const formSchema = Joi.object({
@@ -42,15 +43,21 @@ const ContactPage: React.FC = () => {
     lastName: "",
     email: "",
     message: "",
+    type: "support",
   });
 
   const [errors, setErrors] = useState<Partial<FormValues>>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const queryClient = useQueryClient();
   const postTodo = async (data: FormValues) => {
-    await axios.post("https://tender-online.vercel.app/api/tender/contact", data);
+    await axios.post(
+      "https://tender-online.vercel.app/api/tender/contact",
+      data
+    );
   };
+
   const router = useRouter();
+  
   // Mutations
   const mutation = useMutation({
     mutationFn: postTodo,
