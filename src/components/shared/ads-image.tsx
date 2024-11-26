@@ -26,7 +26,7 @@ const AdsImage = () => {
             <CarouselItem key={index} className="lg:basis-1/2 basis-full">
               <Link
                 target="_black"
-                href={ads.url ? ads.url : "/"}
+                href={ads?.url || "/"}
                 className="lg:h-64 h-28 w-full"
               >
                 <img

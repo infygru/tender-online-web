@@ -18,7 +18,8 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown, ChevronUp } from "lucide-react";
+import React from "react";
 export interface TenderDocument {
   tenderName: string;
   description?: string;
@@ -70,6 +71,7 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
       console.error("Error sending tender mapping:", error);
     }
   };
+  const [desOpen, setDesOpen] = React.useState(false);
 
   return (
     <Dialog
@@ -150,12 +152,19 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
                 {selectedRowData?.tenderName}
               </h3>
               <p className="text-sm text-center flex items-center justify-center">
-                <Collapsible className="flex flex-col items-centers justify-center">
-                  <CollapsibleTrigger className=" text-black gap-6 flex items-center justify-center">
-                    <div className="bg-white flex items-center gap-3 px-24 rounded-lg">
+                <Collapsible
+                  onOpenChange={() => setDesOpen(!desOpen)}
+                  className="flex flex-col items-centers justify-center"
+                >
+                  <CollapsibleTrigger className=" duration-300 text-black gap-6 flex items-center justify-center">
+                    <div className="bg-white flex items-center gap-3 px-12 rounded-lg">
                       <span>Description </span>
                       <Button variant="ghost" size="sm" className="w-9 p-0">
-                        <ChevronsUpDown className="h-4 w-4" />
+                        {desOpen ? (
+                          <ChevronUp className="h-4 w-4 -rotate-180 " />
+                        ) : (
+                          <ChevronUp className="h-4 w-4 rotate-180 data-[state=active]:-rotate-180" />
+                        )}
                         <span className="sr-only">Toggle</span>
                       </Button>
                     </div>

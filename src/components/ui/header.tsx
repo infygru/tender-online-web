@@ -33,7 +33,7 @@ const Header = () => {
                     href={"/tenders"}
                     className="border text-center text-sm font-semibold text-[#0c1073] border-[#0c1073] rounded-xl px-6 w-full mx-4 py-2 "
                   >
-                    Tenders
+                    Tenders Dashboard
                   </Link>
                 </div>
               )}

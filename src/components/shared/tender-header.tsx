@@ -5,11 +5,13 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { DropdownMenuDemo } from "../ui/header";
 import { cn } from "@/lib/utils";
+import { useUserContext } from "../hook/length";
 
 const TenderHeader = () => {
   const [isClicked, setIsClicked] = React.useState(false);
   const [foryou, setForYou] = React.useState<any | null>(null);
   const searchParams = useSearchParams();
+  const { length, setLength, setRefetch, refetch } = useUserContext();
   React.useEffect(() => {
     // Check if window is defined (client-side only)
     if (typeof window !== "undefined") {
@@ -36,13 +38,14 @@ const TenderHeader = () => {
             </div>
             <div className="hidden lg:block">
               <h1 className="text-white text-center text-base not-italic font-medium leading-[25px]">
-                Showing {search || 0} Tenders in Tamilnadu{" "}
+                Showing {length || 0} Tenders in Tamilnadu{" "}
               </h1>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <div className="">
               <a
+                onClick={() => setRefetch(!refetch)}
                 href={(function () {
                   const foryouIs =
                     foryou === "true" || foryou === true ? "false" : "true";
@@ -52,7 +55,10 @@ const TenderHeader = () => {
                 })()}
                 className={cn(
                   "border-2 lg:text-white text-black px-4 py-2 text-sm font-semibold rounded-xl capitalize",
-                  foryou === "false" || foryou === false
+                  foryou === "false" ||
+                    foryou === false ||
+                    foryou === null ||
+                    foryou === undefined
                     ? "border-none bg-gradient-to-r from-purpleGradientStart to-purpleGradientEnd text-white px-4 py-2 rounded-xl capitalize"
                     : "border-2 text-white lg:text-black px-4 py-2 rounded-xl capitalize bg-black lg:bg-white"
                 )}

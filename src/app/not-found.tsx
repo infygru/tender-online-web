@@ -12,7 +12,7 @@ const Error10 = () => {
             href="#"
             aria-label="Brand"
           >
-            Brand
+            <img src="/logo.png" className="h-8 lg:h-24" alt="" />
           </a>
         </nav>
       </header>

@@ -102,13 +102,15 @@ export default function Home() {
     const isClosed = localStorage.getItem("isClosed");
     if (!isClosed) {
       localStorage.setItem("isClosed", "true");
+    } else {
+      localStorage.setItem("isClosed", "false");
     }
     close();
   };
 
   const isClosed =
     typeof window !== "undefined" && localStorage.getItem("isClosed");
-    
+
   return (
     <main className="relative">
       {isVisible && (

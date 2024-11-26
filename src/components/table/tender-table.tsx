@@ -49,6 +49,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import SearchTab from "./search-tab";
 import Loading from "../ui/loading";
+import { useUserContext } from "../hook/length";
 export const formatDate = (isoDateString: string): string => {
   const date = new Date(isoDateString);
 
@@ -324,6 +325,14 @@ const fetchTenders = async (queryParams: URLSearchParams): Promise<any> => {
   return response.json();
 };
 
+function addSIfEndsWithS(word: string): string {
+  if (word.endsWith("s")) {
+    return word;
+  } else {
+    return word + "s";
+  }
+}
+
 export function DataTableTender({ setSearch, search }: any) {
   const [foryou, setForYou] = React.useState<any | null>(null);
   const [searchList, setSearchList] = React.useState<string[]>([]);
@@ -473,39 +482,45 @@ export function DataTableTender({ setSearch, search }: any) {
       const ids = selectedRow.map((row: any) => row.original._id);
       setSelectedRow(ids);
     }
-  }, [rowSelection]); // Only re-run when `table` changes (i.e., when the table is fully initialized)
+  }, [rowSelection]);
   const router = useRouter();
-
+  const { length, setLength, refetch: refetchUserContext } = useUserContext();
   React.useEffect(() => {
     const fetchData = async () => {
-      if (foryou === "true" || foryou === true) {
-        const userDetails = await fetchUserDetails(); // Await the user details
-        console.log(userDetails, "userDetails");
-        if (userDetails) {
-          setIndustry(userDetails.industry || []); // Set industry and classification
-          setClassification(userDetails.classification || []);
+      setTimeout(async () => {
+        if (foryou === "true" || foryou === true) {
+          const userDetails = await fetchUserDetails(); // Await the user details
+          console.log(userDetails, "userDetails");
+          if (userDetails) {
+            setIndustry(userDetails.industry || []); // Set industry and classification
+            setClassification(userDetails.classification || []);
+          }
+          refetch(); // Call refetch after setting the state
+          window.location.reload;
         }
+
         refetch(); // Call refetch after setting the state
-        window.location.reload;
-      }
+      }, 2000);
     };
 
     fetchData(); // Call the inner async function
-  }, [foryou]); // Add 'foryou' as a dependency to re-fetch if it changes
+  }, [foryou, refetchUserContext, refetch]); // Add 'foryou' as a dependency to re-fetch if it changes
   console.log(classification, "classification");
 
   const data = tenders?.result;
 
   React.useEffect(() => {
     if (data) {
-      const currentUrl = new URL(window.location.href); // Get the current URL
-      const params = new URLSearchParams(currentUrl.search); // Get existing query params
+      // const currentUrl = new URL(window.location.href); // Get the current URL
+      // const params = new URLSearchParams(currentUrl.search); // Get existing query params
 
-      // Update or add new query parameters
-      params.set("length", data.length);
+      // // Update or add new query parameters
+      // params.set("length", data.length);
 
-      // Preserve the current path and add the updated query string
-      router.replace(`${currentUrl.pathname}?${params.toString()}`, undefined);
+      // // Preserve the current path and add the updated query string
+      // router.replace(`${currentUrl.pathname}?${params.toString()}`, undefined);
+
+      setLength(data.length);
     }
   }, [data, router]);
 
@@ -526,6 +541,7 @@ export function DataTableTender({ setSearch, search }: any) {
     classification,
     dateRange,
     user,
+    refetchUserContext,
   ]);
 
   const table = useReactTable({
@@ -1000,7 +1016,7 @@ export function DataTableTender({ setSearch, search }: any) {
                 className="mr-2 capitalize flex flex-col items-start px-3 pr-6 py-1  border text-xs rounded-md relative"
                 key={classification}
               >
-                {classification + "s"}
+                {addSIfEndsWithS(classification)}
                 <span className="text-[8px] font-light">classification</span>
                 <button
                   onClick={() =>
@@ -1100,18 +1116,15 @@ export function DataTableTender({ setSearch, search }: any) {
         </div>
         {/* show pagination Number and find number of page and show here   */}
 
-       <div className="">
-        <p>
-          Page{" "}
-          <span className="font-bold">
-            {table.getState().pagination.pageIndex + 1}
-          </span>{" "}
-          of{" "}
-          <span className="font-bold">
-            {table.getPageCount()}
-          </span>
-        </p>
-       </div>
+        <div className="">
+          <p>
+            Page{" "}
+            <span className="font-bold">
+              {table.getState().pagination.pageIndex + 1}
+            </span>{" "}
+            of <span className="font-bold">{table.getPageCount()}</span>
+          </p>
+        </div>
 
         <Button
           variant="outline"

@@ -12,6 +12,7 @@ import Head from "next/head";
 import "@mantine/core/styles.css";
 import { ColorSchemeScript } from "@mantine/core";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { UserProvider } from "@/components/hook/length";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -43,17 +44,23 @@ export default function RootLayout({
     }
   }, [navigate, location]);
 
+  const initialUserState = {
+    length: 0,
+  };
+
   return (
     <html lang="en">
       <Head>
         <ColorSchemeScript defaultColorScheme="auto" />
       </Head>
-    <body>
+      <body>
         <MantineProvider theme={theme}>
           <QueryClientProvider client={queryClient}>
             <PrimeReactProvider>
               <GoogleOAuthProvider clientId="876377120617-rarlkfnh1m2nicrnp43q9sakc79vleeq.apps.googleusercontent.com">
-                {children}
+                <UserProvider initialState={initialUserState}>
+                  {children}
+                </UserProvider>
               </GoogleOAuthProvider>
             </PrimeReactProvider>
           </QueryClientProvider>
