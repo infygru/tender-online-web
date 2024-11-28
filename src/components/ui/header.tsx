@@ -18,12 +18,27 @@ const Header = () => {
   return (
     <div>
       <div className="absolute z-40 top-8 right-0  px-2 lg:px-24 left-0">
-        <div className="border  bg-white rounded-xl px-6 py-3  w-full">
+        <div className="border  bg-white rounded-xl px-6 py-2  w-full">
           <div className="flex justify-between">
-            <div className="text-2xl font-bold">
+            <div className="text-2xl flex items-center gap-2 font-bold">
               <Link href={"/"}>
                 <img src="/logo.png" className="h-8 lg:h-16" alt="" />
               </Link>
+              <hr className="border-t rotate-90 h-6 w-10" />
+              <div className="flex items-center gap-6 pl-6">
+                <Link className="text-xs font-normal" href={"/"}>
+                  Home
+                </Link>
+                <Link className="text-xs font-normal" href={"/about-us"}>
+                  About Us
+                </Link>
+                <Link className="text-xs font-normal" href={"/pricing"}>
+                  Pricing
+                </Link>
+                <Link className="text-xs font-normal" href={"/blog"}>
+                  Blog
+                </Link>
+              </div>
             </div>
             <div className="flex items-center space-x-6">
               {/* sign up */}
@@ -37,6 +52,7 @@ const Header = () => {
                   </Link>
                 </div>
               )}
+
               {/* <Link
                 target="_black"
                 href="https://wa.me/9176133695"
@@ -59,6 +75,13 @@ const Header = () => {
                 </h1>
               </Link> */}
 
+              {!isLogin && (
+                <div className="hidden lg:block">
+                  <button className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-sm">
+                    Sign Up
+                  </button>
+                </div>
+              )}
               {!!isLogin && (
                 <div className="hidden lg:block">
                   <DropdownMenuDemo />

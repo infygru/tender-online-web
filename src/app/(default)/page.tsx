@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { XIcon } from "lucide-react";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button } from "@mantine/core";
+import Footer from "@/components/shared/footer";
 interface SectionData {
   title: string;
   description: string;
@@ -206,44 +207,138 @@ export default function Home() {
           {/* Left Pane */}
           <div className="hidden lg:flex h-screen relative w-full items-center justify-center flex-1 bg-white text-black">
             <div className=" text-center  w-full relative">
-              <div className="fill-black bg-black opacity-50 absolute inset-0"></div>
-              <img
-                src="/login.png"
-                className="object-cover  w-full h-screen"
-                alt=""
-              />
+              {/* <div className="fill-black bg-black opacity-50 absolute inset-0"></div> */}
+              <div className="object-cover  w-full h-screen" />
               <div
                 className={cn(
-                  "absolute h-[65%] flex items-center justify-between flex-col top-[23%] px-24",
+                  "absolute h-[65%] flex items-center justify-between flex-col top-[25%] px-32",
                   !isLoggedIn && "!w-full"
                 )}
               >
                 <div className="">
-                  <h1
-                    className={cn(
-                      "text-white text-start w-full text-[32px] not-italic font-semibold leading-[51px] uppercase",
-                      !isLoggedIn && "text-center"
-                    )}
-                  >
-                    Join The Line Up Of Bidders For Government Tenders
-                  </h1>
-                  <div className="flex pl-0 pt-8 gap-8">
-                    <Link
-                      target="_black"
-                      href={"/about-us"}
-                      className="px-6 py-1 rounded-md bg-gray-100 "
-                    >
-                      About us
-                    </Link>
-                    <Link
-                      target="_black"
-                      href={"/pricing"}
-                      className="px-6 py-1 rounded-md bg-gray-100 "
-                    >
-                      Pricing
-                    </Link>
+                  <div className="flex pl-0 pt-8 gap-8 py-2 font-semibold text-sm">
+                    <div className="flex items-center gap-2">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g clip-path="url(#clip0_0_98)">
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M8.18144 1.34328C9.20469 0.385573 10.7953 0.385573 11.8186 1.34328L12.7046 2.17259C12.9544 2.40632 13.2805 2.54141 13.6224 2.55272L14.8353 2.59285C16.2361 2.6392 17.3608 3.76394 17.4072 5.16469L17.4473 6.37766C17.4586 6.7195 17.5937 7.04563 17.8274 7.29538L18.6567 8.18144C19.6144 9.20469 19.6144 10.7953 18.6567 11.8186L17.8274 12.7046C17.5937 12.9544 17.4586 13.2805 17.4473 13.6224L17.4072 14.8353C17.3608 16.2361 16.2361 17.3608 14.8353 17.4072L13.6223 17.4473C13.2805 17.4586 12.9544 17.5937 12.7046 17.8274L11.8186 18.6567C10.7953 19.6144 9.20469 19.6144 8.18144 18.6567L7.29538 17.8274C7.04563 17.5937 6.7195 17.4586 6.37766 17.4473L5.16469 17.4072C3.76394 17.3608 2.6392 16.2361 2.59285 14.8353L2.55272 13.6224C2.54141 13.2805 2.40632 12.9544 2.17259 12.7046L1.34328 11.8186C0.385573 10.7953 0.385573 9.20469 1.34328 8.18144L2.17259 7.29538C2.40632 7.04563 2.54141 6.7195 2.55272 6.37766L2.59285 5.16469C2.6392 3.76394 3.76394 2.6392 5.16469 2.59285L6.37766 2.55272C6.7195 2.54141 7.04563 2.40632 7.29538 2.17259L8.18144 1.34328ZM13.8938 7.92713C14.1297 7.67516 14.1166 7.27963 13.8646 7.04375C13.6127 6.80784 13.2171 6.82088 12.9813 7.07288L8.75666 11.5855L7.01875 9.72913C6.78288 9.47713 6.38734 9.46409 6.13538 9.7C5.88338 9.93588 5.87034 10.3314 6.10625 10.5834L8.30038 12.9271C8.41856 13.0534 8.58375 13.125 8.75666 13.125C8.92956 13.125 9.09475 13.0534 9.21291 12.9271L13.8938 7.92713Z"
+                            fill="url(#paint0_linear_0_98)"
+                          />
+                        </g>
+                        <defs>
+                          <linearGradient
+                            id="paint0_linear_0_98"
+                            x1="24.5762"
+                            y1="23.1634"
+                            x2="7.94531"
+                            y2="3.70719"
+                            gradientUnits="userSpaceOnUse"
+                          >
+                            <stop offset="0.00265844" stop-color="#FF37DF" />
+                            <stop offset="1" stop-color="#6E00FF" />
+                          </linearGradient>
+                          <clipPath id="clip0_0_98">
+                            <rect width="20" height="20" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                      <span>Effortless Bidding</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g clip-path="url(#clip0_0_98)">
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M8.18144 1.34328C9.20469 0.385573 10.7953 0.385573 11.8186 1.34328L12.7046 2.17259C12.9544 2.40632 13.2805 2.54141 13.6224 2.55272L14.8353 2.59285C16.2361 2.6392 17.3608 3.76394 17.4072 5.16469L17.4473 6.37766C17.4586 6.7195 17.5937 7.04563 17.8274 7.29538L18.6567 8.18144C19.6144 9.20469 19.6144 10.7953 18.6567 11.8186L17.8274 12.7046C17.5937 12.9544 17.4586 13.2805 17.4473 13.6224L17.4072 14.8353C17.3608 16.2361 16.2361 17.3608 14.8353 17.4072L13.6223 17.4473C13.2805 17.4586 12.9544 17.5937 12.7046 17.8274L11.8186 18.6567C10.7953 19.6144 9.20469 19.6144 8.18144 18.6567L7.29538 17.8274C7.04563 17.5937 6.7195 17.4586 6.37766 17.4473L5.16469 17.4072C3.76394 17.3608 2.6392 16.2361 2.59285 14.8353L2.55272 13.6224C2.54141 13.2805 2.40632 12.9544 2.17259 12.7046L1.34328 11.8186C0.385573 10.7953 0.385573 9.20469 1.34328 8.18144L2.17259 7.29538C2.40632 7.04563 2.54141 6.7195 2.55272 6.37766L2.59285 5.16469C2.6392 3.76394 3.76394 2.6392 5.16469 2.59285L6.37766 2.55272C6.7195 2.54141 7.04563 2.40632 7.29538 2.17259L8.18144 1.34328ZM13.8938 7.92713C14.1297 7.67516 14.1166 7.27963 13.8646 7.04375C13.6127 6.80784 13.2171 6.82088 12.9813 7.07288L8.75666 11.5855L7.01875 9.72913C6.78288 9.47713 6.38734 9.46409 6.13538 9.7C5.88338 9.93588 5.87034 10.3314 6.10625 10.5834L8.30038 12.9271C8.41856 13.0534 8.58375 13.125 8.75666 13.125C8.92956 13.125 9.09475 13.0534 9.21291 12.9271L13.8938 7.92713Z"
+                            fill="url(#paint0_linear_0_98)"
+                          />
+                        </g>
+                        <defs>
+                          <linearGradient
+                            id="paint0_linear_0_98"
+                            x1="24.5762"
+                            y1="23.1634"
+                            x2="7.94531"
+                            y2="3.70719"
+                            gradientUnits="userSpaceOnUse"
+                          >
+                            <stop offset="0.00265844" stop-color="#FF37DF" />
+                            <stop offset="1" stop-color="#6E00FF" />
+                          </linearGradient>
+                          <clipPath id="clip0_0_98">
+                            <rect width="20" height="20" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                      <span>Government Expertise</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g clip-path="url(#clip0_0_98)">
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M8.18144 1.34328C9.20469 0.385573 10.7953 0.385573 11.8186 1.34328L12.7046 2.17259C12.9544 2.40632 13.2805 2.54141 13.6224 2.55272L14.8353 2.59285C16.2361 2.6392 17.3608 3.76394 17.4072 5.16469L17.4473 6.37766C17.4586 6.7195 17.5937 7.04563 17.8274 7.29538L18.6567 8.18144C19.6144 9.20469 19.6144 10.7953 18.6567 11.8186L17.8274 12.7046C17.5937 12.9544 17.4586 13.2805 17.4473 13.6224L17.4072 14.8353C17.3608 16.2361 16.2361 17.3608 14.8353 17.4072L13.6223 17.4473C13.2805 17.4586 12.9544 17.5937 12.7046 17.8274L11.8186 18.6567C10.7953 19.6144 9.20469 19.6144 8.18144 18.6567L7.29538 17.8274C7.04563 17.5937 6.7195 17.4586 6.37766 17.4473L5.16469 17.4072C3.76394 17.3608 2.6392 16.2361 2.59285 14.8353L2.55272 13.6224C2.54141 13.2805 2.40632 12.9544 2.17259 12.7046L1.34328 11.8186C0.385573 10.7953 0.385573 9.20469 1.34328 8.18144L2.17259 7.29538C2.40632 7.04563 2.54141 6.7195 2.55272 6.37766L2.59285 5.16469C2.6392 3.76394 3.76394 2.6392 5.16469 2.59285L6.37766 2.55272C6.7195 2.54141 7.04563 2.40632 7.29538 2.17259L8.18144 1.34328ZM13.8938 7.92713C14.1297 7.67516 14.1166 7.27963 13.8646 7.04375C13.6127 6.80784 13.2171 6.82088 12.9813 7.07288L8.75666 11.5855L7.01875 9.72913C6.78288 9.47713 6.38734 9.46409 6.13538 9.7C5.88338 9.93588 5.87034 10.3314 6.10625 10.5834L8.30038 12.9271C8.41856 13.0534 8.58375 13.125 8.75666 13.125C8.92956 13.125 9.09475 13.0534 9.21291 12.9271L13.8938 7.92713Z"
+                            fill="url(#paint0_linear_0_98)"
+                          />
+                        </g>
+                        <defs>
+                          <linearGradient
+                            id="paint0_linear_0_98"
+                            x1="24.5762"
+                            y1="23.1634"
+                            x2="7.94531"
+                            y2="3.70719"
+                            gradientUnits="userSpaceOnUse"
+                          >
+                            <stop offset="0.00265844" stop-color="#FF37DF" />
+                            <stop offset="1" stop-color="#6E00FF" />
+                          </linearGradient>
+                          <clipPath id="clip0_0_98">
+                            <rect width="20" height="20" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                      <span>Fair Competition</span>
+                    </div>
                   </div>
-                  <div className="bg-[rgba(20,20,20,0.58)] py-3 px-4 flex items-center justify-between rounded-xl mt-8">
+                  <div className="text-xl font-normal">
+                    <h4 className=" text-start w-[70%]">
+                      A hassle-free, premium bidding experience specializing in
+                      government tenders, ensuring equal opportunities for
+                      businesses of all sizes.
+                    </h4>
+                  </div>
+                  <div className="py-8">
+                    <div className="bg-white w-max py-1.5 px-1.5 border flex items-center gap-3 rounded-2xl shadow-md">
+                      <button className="px-4 py-2 text-sm font-semibold rounded-xl bg-black text-white">
+                        Watch Demo
+                      </button>
+                      Get 3 Days Free Trial. No payment required
+                    </div>
+                  </div>
+                  <div className=" bg-[#141414] bg-opacity-50 py-3 px-4 flex items-center justify-between rounded-xl mt-8">
                     {sections.map((section, index) => (
                       <>
                         <div
@@ -259,6 +354,7 @@ export default function Home() {
                         </div>
                         {section.hasBorder && (
                           <svg
+                            className="relative z-50"
                             xmlns="http://www.w3.org/2000/svg"
                             width="30"
                             height="95"
@@ -270,11 +366,11 @@ export default function Home() {
                               y1="2.18557e-08"
                               x2="2.5"
                               y2="95"
-                              stroke="#757575"
+                              stroke="#F4F4F4"
                             />
                             <path
                               d="M10 48L2.5 54.9282L2.5 41.0718L10 48Z"
-                              fill="#757575"
+                              fill="#F4F4F4"
                               fill-opacity="0.78"
                             />
                           </svg>
@@ -283,14 +379,14 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-                <div className="flex text-gray-100  items-center  text-center justify-center z-50 gap-12  mt-auto  text-base">
+                {/* <div className="flex text-gray-100  items-center  text-center justify-center z-50 gap-12  mt-auto  text-base">
                   <Link href={"/terms"}>Terms & Conditions </Link>
                   <Link href={"/privacy-policy"}>Privacy Policy </Link>
                   <Link href={"/cookie"}>Cookie Policy </Link>
                   <Link href={"/refund-policy"}>Refund Policy</Link>
-                </div>
-                <div className="border-b w-full pt-4"></div>
-                <div className="flex item-center justify-between w-full pt-4 px-4">
+                </div> */}
+                {/* <div className="border-b w-full pt-4"></div> */}
+                {/* <div className="flex item-center justify-between w-full pt-4 px-4">
                   <div className="flex item-center text-gray-300  mt-auto w-full">
                     <p>© TenderOnline 2024</p>
                   </div>
@@ -298,7 +394,7 @@ export default function Home() {
                     <Link href={"/blog"}>Blog</Link>
                     <Link href={"/support"}>Support</Link>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -317,47 +413,142 @@ export default function Home() {
           )}
         </div>
       ) : (
-        <div className="flex h-screen">
+        <div className="flex h-screen w-full items-center justify-center">
           {/* Left Pane */}
-          <div className="hidden lg:flex h-screen relative w-full items-center justify-center flex-1 bg-white text-black">
+          <div className="hidden w-full lg:flex h-screen relative items-center justify-center flex-1 bg-white text-black">
             <div className=" text-center  w-full relative">
-              <div className="fill-black bg-black opacity-50 absolute inset-0"></div>
-              <img
-                src="/login.png"
-                className="object-cover  w-full h-screen"
-                alt=""
-              />
+              {/* <div className="fill-black bg-black opacity-50 absolute inset-0"></div> */}
+              <div className="object-cover  w-full h-screen" />
               <div
                 className={cn(
-                  "absolute h-[65%] w-full flex items-center justify-between flex-col top-[23%] px-24"
+                  "absolute h-[65%] w-full flex items-center justify-center flex-col top-[15%] px-32",
+                  !isLoggedIn && "!w-full"
                 )}
               >
-                <div className="w-[50%]">
-                  <h1
-                    className={cn(
-                      "text-white w-[100%] text-center text-[32px] not-italic font-semibold leading-[51px] uppercase",
-                      !isLoggedIn && "text-center"
-                    )}
-                  >
-                    Join The Line Up Of Bidders For Government Tenders
-                  </h1>
-                  <div className="flex items-center justify-center pl-0 pt-8 gap-8">
-                    <Link
-                      target="_black"
-                      href={"/about-us"}
-                      className="px-6 py-1 rounded-md bg-gray-100 "
-                    >
-                      About us
-                    </Link>
-                    <Link
-                      target="_black"
-                      href={"/pricing"}
-                      className="px-6 py-1 rounded-md bg-gray-100 "
-                    >
-                      Pricing
-                    </Link>
+                <div className="flex items-center justify-center flex-col">
+                  <div className="flex pl-0 pt-8 gap-8 py-2 font-semibold text-sm">
+                    <div className="flex items-center gap-2">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g clip-path="url(#clip0_0_98)">
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M8.18144 1.34328C9.20469 0.385573 10.7953 0.385573 11.8186 1.34328L12.7046 2.17259C12.9544 2.40632 13.2805 2.54141 13.6224 2.55272L14.8353 2.59285C16.2361 2.6392 17.3608 3.76394 17.4072 5.16469L17.4473 6.37766C17.4586 6.7195 17.5937 7.04563 17.8274 7.29538L18.6567 8.18144C19.6144 9.20469 19.6144 10.7953 18.6567 11.8186L17.8274 12.7046C17.5937 12.9544 17.4586 13.2805 17.4473 13.6224L17.4072 14.8353C17.3608 16.2361 16.2361 17.3608 14.8353 17.4072L13.6223 17.4473C13.2805 17.4586 12.9544 17.5937 12.7046 17.8274L11.8186 18.6567C10.7953 19.6144 9.20469 19.6144 8.18144 18.6567L7.29538 17.8274C7.04563 17.5937 6.7195 17.4586 6.37766 17.4473L5.16469 17.4072C3.76394 17.3608 2.6392 16.2361 2.59285 14.8353L2.55272 13.6224C2.54141 13.2805 2.40632 12.9544 2.17259 12.7046L1.34328 11.8186C0.385573 10.7953 0.385573 9.20469 1.34328 8.18144L2.17259 7.29538C2.40632 7.04563 2.54141 6.7195 2.55272 6.37766L2.59285 5.16469C2.6392 3.76394 3.76394 2.6392 5.16469 2.59285L6.37766 2.55272C6.7195 2.54141 7.04563 2.40632 7.29538 2.17259L8.18144 1.34328ZM13.8938 7.92713C14.1297 7.67516 14.1166 7.27963 13.8646 7.04375C13.6127 6.80784 13.2171 6.82088 12.9813 7.07288L8.75666 11.5855L7.01875 9.72913C6.78288 9.47713 6.38734 9.46409 6.13538 9.7C5.88338 9.93588 5.87034 10.3314 6.10625 10.5834L8.30038 12.9271C8.41856 13.0534 8.58375 13.125 8.75666 13.125C8.92956 13.125 9.09475 13.0534 9.21291 12.9271L13.8938 7.92713Z"
+                            fill="url(#paint0_linear_0_98)"
+                          />
+                        </g>
+                        <defs>
+                          <linearGradient
+                            id="paint0_linear_0_98"
+                            x1="24.5762"
+                            y1="23.1634"
+                            x2="7.94531"
+                            y2="3.70719"
+                            gradientUnits="userSpaceOnUse"
+                          >
+                            <stop offset="0.00265844" stop-color="#FF37DF" />
+                            <stop offset="1" stop-color="#6E00FF" />
+                          </linearGradient>
+                          <clipPath id="clip0_0_98">
+                            <rect width="20" height="20" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                      <span>Effortless Bidding</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g clip-path="url(#clip0_0_98)">
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M8.18144 1.34328C9.20469 0.385573 10.7953 0.385573 11.8186 1.34328L12.7046 2.17259C12.9544 2.40632 13.2805 2.54141 13.6224 2.55272L14.8353 2.59285C16.2361 2.6392 17.3608 3.76394 17.4072 5.16469L17.4473 6.37766C17.4586 6.7195 17.5937 7.04563 17.8274 7.29538L18.6567 8.18144C19.6144 9.20469 19.6144 10.7953 18.6567 11.8186L17.8274 12.7046C17.5937 12.9544 17.4586 13.2805 17.4473 13.6224L17.4072 14.8353C17.3608 16.2361 16.2361 17.3608 14.8353 17.4072L13.6223 17.4473C13.2805 17.4586 12.9544 17.5937 12.7046 17.8274L11.8186 18.6567C10.7953 19.6144 9.20469 19.6144 8.18144 18.6567L7.29538 17.8274C7.04563 17.5937 6.7195 17.4586 6.37766 17.4473L5.16469 17.4072C3.76394 17.3608 2.6392 16.2361 2.59285 14.8353L2.55272 13.6224C2.54141 13.2805 2.40632 12.9544 2.17259 12.7046L1.34328 11.8186C0.385573 10.7953 0.385573 9.20469 1.34328 8.18144L2.17259 7.29538C2.40632 7.04563 2.54141 6.7195 2.55272 6.37766L2.59285 5.16469C2.6392 3.76394 3.76394 2.6392 5.16469 2.59285L6.37766 2.55272C6.7195 2.54141 7.04563 2.40632 7.29538 2.17259L8.18144 1.34328ZM13.8938 7.92713C14.1297 7.67516 14.1166 7.27963 13.8646 7.04375C13.6127 6.80784 13.2171 6.82088 12.9813 7.07288L8.75666 11.5855L7.01875 9.72913C6.78288 9.47713 6.38734 9.46409 6.13538 9.7C5.88338 9.93588 5.87034 10.3314 6.10625 10.5834L8.30038 12.9271C8.41856 13.0534 8.58375 13.125 8.75666 13.125C8.92956 13.125 9.09475 13.0534 9.21291 12.9271L13.8938 7.92713Z"
+                            fill="url(#paint0_linear_0_98)"
+                          />
+                        </g>
+                        <defs>
+                          <linearGradient
+                            id="paint0_linear_0_98"
+                            x1="24.5762"
+                            y1="23.1634"
+                            x2="7.94531"
+                            y2="3.70719"
+                            gradientUnits="userSpaceOnUse"
+                          >
+                            <stop offset="0.00265844" stop-color="#FF37DF" />
+                            <stop offset="1" stop-color="#6E00FF" />
+                          </linearGradient>
+                          <clipPath id="clip0_0_98">
+                            <rect width="20" height="20" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                      <span>Government Expertise</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g clip-path="url(#clip0_0_98)">
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M8.18144 1.34328C9.20469 0.385573 10.7953 0.385573 11.8186 1.34328L12.7046 2.17259C12.9544 2.40632 13.2805 2.54141 13.6224 2.55272L14.8353 2.59285C16.2361 2.6392 17.3608 3.76394 17.4072 5.16469L17.4473 6.37766C17.4586 6.7195 17.5937 7.04563 17.8274 7.29538L18.6567 8.18144C19.6144 9.20469 19.6144 10.7953 18.6567 11.8186L17.8274 12.7046C17.5937 12.9544 17.4586 13.2805 17.4473 13.6224L17.4072 14.8353C17.3608 16.2361 16.2361 17.3608 14.8353 17.4072L13.6223 17.4473C13.2805 17.4586 12.9544 17.5937 12.7046 17.8274L11.8186 18.6567C10.7953 19.6144 9.20469 19.6144 8.18144 18.6567L7.29538 17.8274C7.04563 17.5937 6.7195 17.4586 6.37766 17.4473L5.16469 17.4072C3.76394 17.3608 2.6392 16.2361 2.59285 14.8353L2.55272 13.6224C2.54141 13.2805 2.40632 12.9544 2.17259 12.7046L1.34328 11.8186C0.385573 10.7953 0.385573 9.20469 1.34328 8.18144L2.17259 7.29538C2.40632 7.04563 2.54141 6.7195 2.55272 6.37766L2.59285 5.16469C2.6392 3.76394 3.76394 2.6392 5.16469 2.59285L6.37766 2.55272C6.7195 2.54141 7.04563 2.40632 7.29538 2.17259L8.18144 1.34328ZM13.8938 7.92713C14.1297 7.67516 14.1166 7.27963 13.8646 7.04375C13.6127 6.80784 13.2171 6.82088 12.9813 7.07288L8.75666 11.5855L7.01875 9.72913C6.78288 9.47713 6.38734 9.46409 6.13538 9.7C5.88338 9.93588 5.87034 10.3314 6.10625 10.5834L8.30038 12.9271C8.41856 13.0534 8.58375 13.125 8.75666 13.125C8.92956 13.125 9.09475 13.0534 9.21291 12.9271L13.8938 7.92713Z"
+                            fill="url(#paint0_linear_0_98)"
+                          />
+                        </g>
+                        <defs>
+                          <linearGradient
+                            id="paint0_linear_0_98"
+                            x1="24.5762"
+                            y1="23.1634"
+                            x2="7.94531"
+                            y2="3.70719"
+                            gradientUnits="userSpaceOnUse"
+                          >
+                            <stop offset="0.00265844" stop-color="#FF37DF" />
+                            <stop offset="1" stop-color="#6E00FF" />
+                          </linearGradient>
+                          <clipPath id="clip0_0_98">
+                            <rect width="20" height="20" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                      <span>Fair Competition</span>
+                    </div>
                   </div>
-                  <div className="bg-[rgba(20,20,20,0.58)] w-full py-3 px-4 flex items-start rounded-xl mt-8">
+                  <div className="text-xl w-full flex items-center justify-center font-normal">
+                    <h4 className=" text-center w-[50%] ">
+                      A hassle-free, premium bidding experience specializing in
+                      government tenders, ensuring equal opportunities for
+                      businesses of all sizes.
+                    </h4>
+                  </div>
+                  <div className="py-8">
+                    <div className="bg-white w-max py-1.5 px-1.5 border flex items-center gap-3 rounded-2xl shadow-md">
+                      <button className="px-4 py-2 text-sm font-semibold rounded-xl bg-black text-white">
+                        Watch Demo
+                      </button>
+                      Get 3 Days Free Trial. No payment required
+                    </div>
+                  </div>
+                  <div className=" bg-[#141414] bg-opacity-50 py-3 px-4 flex items-center justify-between rounded-xl mt-8">
                     {sections.map((section, index) => (
                       <>
                         <div
@@ -373,6 +564,7 @@ export default function Home() {
                         </div>
                         {section.hasBorder && (
                           <svg
+                            className="relative z-50"
                             xmlns="http://www.w3.org/2000/svg"
                             width="30"
                             height="95"
@@ -384,11 +576,11 @@ export default function Home() {
                               y1="2.18557e-08"
                               x2="2.5"
                               y2="95"
-                              stroke="#757575"
+                              stroke="#F4F4F4"
                             />
                             <path
                               d="M10 48L2.5 54.9282L2.5 41.0718L10 48Z"
-                              fill="#757575"
+                              fill="#F4F4F4"
                               fill-opacity="0.78"
                             />
                           </svg>
@@ -397,14 +589,14 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-                <div className="flex text-gray-100  items-start  text-start justify-start z-50 gap-12  mt-auto  text-base">
+                {/* <div className="flex text-gray-100  items-center  text-center justify-center z-50 gap-12  mt-auto  text-base">
                   <Link href={"/terms"}>Terms & Conditions </Link>
                   <Link href={"/privacy-policy"}>Privacy Policy </Link>
-                  <Link href={"/"}>Cookie Policy </Link>
-                  <Link href={"/"}>Refund Policy</Link>
-                </div>
-                <div className="border-b w-full pt-4"></div>
-                <div className="flex item-center justify-between w-full pt-4 px-4">
+                  <Link href={"/cookie"}>Cookie Policy </Link>
+                  <Link href={"/refund-policy"}>Refund Policy</Link>
+                </div> */}
+                {/* <div className="border-b w-full pt-4"></div> */}
+                {/* <div className="flex item-center justify-between w-full pt-4 px-4">
                   <div className="flex item-center text-gray-300  mt-auto w-full">
                     <p>© TenderOnline 2024</p>
                   </div>
@@ -412,12 +604,27 @@ export default function Home() {
                     <Link href={"/blog"}>Blog</Link>
                     <Link href={"/support"}>Support</Link>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
+          {!isLoggedIn && (
+            <div className="w-full lg:w-[40%] flex items-start lg:items-center justify-center lg:justify-center">
+              {isLogin ? (
+                <LoginForm
+                  setLoading={setLoading}
+                  loading={loading}
+                  setIsLogin={setIsLogin}
+                />
+              ) : (
+                <Signup setIsLogin={setIsLogin} />
+              )}
+            </div>
+          )}
         </div>
       )}
+
+      <Footer />
     </main>
   );
 }

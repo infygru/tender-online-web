@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { toast } from "sonner";
 import Loading from "../ui/loading";
 import { useGoogleLogin } from "@react-oauth/google";
-const LoginForm = ({ setIsLogin, setLoading , loading }: any) => {
+const LoginForm = ({ setIsLogin, setLoading, loading }: any) => {
   const router = useRouter();
 
   const login = useGoogleLogin({
@@ -310,15 +310,14 @@ const LoginForm = ({ setIsLogin, setLoading , loading }: any) => {
           </div>
         </div>
       </div>
-      <div className="flex gap-2 text-xs items-end absolute bottom-20 right-5 mt-auto w-full justify-end">
+      {/* <div className="flex gap-2 text-xs items-end absolute bottom-20 right-5 mt-auto w-full justify-end">
         Follow us
         <div className="flex items-center gap-2">
           <img src="/twitter.png" alt="" className="w-6 h-6" />
           <img src="/linkedin.png" alt="" className="w-6 h-6" />
           <img src="/facebook.png" alt="" className="w-6 h-6" />
         </div>
-        {/* <p>© TenderOnline 2024</p> */}
-      </div>
+      </div> */}
     </div>
   );
 };
