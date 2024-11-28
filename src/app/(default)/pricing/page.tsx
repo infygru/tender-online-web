@@ -59,7 +59,7 @@ const page = () => {
       handler: async (response: any) => {
         try {
           const paymentId = response.razorpay_payment_id;
-          const apiUrl = `https://tender-online.vercel.app/api/auth/payment/success/executive`;
+          const apiUrl = `http://localhost:3000/api/auth/payment/success/executive`;
 
           const result = await fetch(apiUrl, {
             method: "POST",
@@ -1623,7 +1623,17 @@ const page = () => {
                 >
                   Buy Now
                 </button>
-                <button className="text-black px-6 py-3 text-xl border-[#8d1db8] rounded-xl border">
+                <button
+                  onClick={() =>
+                    handletoAddcart(
+                      "10 Tender Executive",
+                      7000,
+                      "10 Tender",
+                      "tender"
+                    )
+                  }
+                  className="text-black px-6 py-3 text-xl border-[#8d1db8] rounded-xl border"
+                >
                   Add to Cart
                 </button>
               </div>

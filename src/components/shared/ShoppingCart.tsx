@@ -7,6 +7,10 @@ const ShoppingCart = ({ carts, setCarts }: any) => {
     return carts.reduce((acc: any, item: any) => acc + item.total, 0);
   };
 
+  const calculatetotal = () => {
+    return calculateSubtotal() * 0.18;
+  };
+
   const formatCurrency = (amount: number): string => {
     return `₹${amount.toLocaleString("en-IN")}`;
   };
@@ -47,10 +51,13 @@ const ShoppingCart = ({ carts, setCarts }: any) => {
     }
 
     // Calculate total payment dynamically from the cart
-    const totalAmount = carts.reduce(
+    var totalAmount = carts.reduce(
       (sum: any, item: any) => sum + item.total,
       0
     );
+
+    // 18 gst
+    totalAmount += totalAmount * 0.18;
     const contentDescription = carts.map((item: any) => item.title).join(", ");
 
     const options = {
@@ -147,6 +154,7 @@ const ShoppingCart = ({ carts, setCarts }: any) => {
               <th className="px-6 py-3 border-b text-sm font-semibold text-gray-700">
                 Total
               </th>
+              {/* remove option */}
             </tr>
           </thead>
           <tbody>
@@ -164,6 +172,18 @@ const ShoppingCart = ({ carts, setCarts }: any) => {
                 <td className="px-6 py-4 border-b text-sm text-gray-800">
                   {formatCurrency(item.total)}
                 </td>
+                <td>
+                  <button
+                    onClick={() => {
+                      setCarts(
+                        carts.filter((cartItem: any) => cartItem !== item)
+                      );
+                    }}
+                    className="text-red-500"
+                  >
+                    Remove
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -173,9 +193,12 @@ const ShoppingCart = ({ carts, setCarts }: any) => {
       <div className="flex flex-col  items-end justify-end space-y-4 mt-6 px-6">
         <div className="text-lg font-semibold text-gray-800">
           Subtotal: {formatCurrency(calculateSubtotal())}
-        </div>{" "}
+        </div>
         <div className="text-lg font-semibold text-gray-800">
-          total: {formatCurrency(calculateSubtotal())}
+          Tax (18%): {formatCurrency(calculateSubtotal() * 0.18)}
+        </div>
+        <div className="text-lg font-semibold text-gray-800">
+          total: {formatCurrency(calculateSubtotal() + calculatetotal())}
         </div>
         <button
           onClick={handlePayment}
