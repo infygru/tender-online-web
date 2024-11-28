@@ -176,7 +176,7 @@ const Signup = ({ setIsLogin }: any) => {
 
   const handletosendemail = async () => {
     try {
-      const response = await fetch("https://tender-online.vercel.apptp", {
+      const response = await fetch("https://tender-online.vercel.app/api/auth/otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
