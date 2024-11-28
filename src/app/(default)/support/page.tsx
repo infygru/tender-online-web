@@ -1,55 +1,69 @@
 "use client";
-import React, { useState } from "react";
-import Joi from "joi";
+
+import { useState } from "react";
+import { Mail, Phone } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 import axios from "axios";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import Footer from "@/components/shared/footer";
+import Header from "@/components/ui/header";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
-interface FormValues {
-  firstName: string;
-  lastName: string;
-  email: string;
-  message: string;
-  type: string;
-}
-
-const formSchema = Joi.object({
-  firstName: Joi.string().min(3).required().messages({
-    "string.empty": "First Name is required",
-    "string.min": "First Name must be at least 3 characters long",
+const formSchema = z.object({
+  firstName: z.string().min(2, {
+    message: "First name must be at least 2 characters.",
   }),
-  lastName: Joi.string().min(3).required().messages({
-    "string.empty": "Last Name is required",
-    "string.min": "Last Name must be at least 3 characters long",
+  clientId: z.string().optional(),
+  email: z.string().email({
+    message: "Please enter a valid email address.",
   }),
-  email: Joi.string()
-    .email({ tlds: { allow: false } })
-    .required()
-    .messages({
-      "string.empty": "Email is required",
-      "string.email": "Please enter a valid email address",
-    }),
-  message: Joi.string().min(10).required().messages({
-    "string.empty": "Message is required",
-    "string.min": "Message must be at least 10 characters long",
+  phoneNumber: z.string().min(10, {
+    message: "Phone number must be at least 10 digits.",
   }),
+  subject: z.enum(
+    ["general-inquiry", "technical-issue", "tender-assistance", "payment"],
+    {
+      required_error: "Please select a subject.",
+    }
+  ),
+  message: z.string().min(10, {
+    message: "Message must be at least 10 characters.",
+  }),
+  type: z.literal("support"),
 });
 
-const ContactPage: React.FC = () => {
-  const [formData, setFormData] = useState<FormValues>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    message: "",
-    type: "support",
-  });
+export default function SupportPage() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [errors, setErrors] = useState<Partial<FormValues>>({});
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const queryClient = useQueryClient();
-  const postTodo = async (data: FormValues) => {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      firstName: "",
+      clientId: "",
+      email: "",
+      phoneNumber: "",
+      subject: "general-inquiry",
+      message: "",
+      type: "support",
+    },
+  });
+  const postTodo = async (data: any) => {
     await axios.post(
       "https://tender-online.vercel.app/api/tender/contact",
       data
@@ -57,169 +71,239 @@ const ContactPage: React.FC = () => {
   };
 
   const router = useRouter();
-  
-  // Mutations
-  const mutation = useMutation({
-    mutationFn: postTodo,
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["todos"] });
-      toast.success("Message sent successfully");
-      router.push("/");
-    },
-    onError: () => {
-      toast.error("An error occurred. Please try again later.");
-    },
-  });
 
-  // Handle form change
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
+    postTodo(values);
+    console.log(values);
 
-    const validation = formSchema.validate(formData, { abortEarly: false });
-    if (validation.error) {
-      const errorMessages: Partial<FormValues> = {};
-      validation.error.details.forEach((detail) => {
-        errorMessages[detail.path[0] as keyof FormValues] = detail.message;
-      });
-      setErrors(errorMessages);
-      setIsSubmitting(false);
-      return;
-    }
-
-    setErrors({});
-    await mutation.mutateAsync(formData);
-    setIsSubmitting(false);
-  };
+    toast.success("Message sent successfully");
+    form.reset();
+  }
 
   return (
-    <main>
-      <div className="relative min-h-screen  bg-gray-100 dark:bg-gray-900">
-        <section className="bg-white dark:bg-gray-900">
-          <div className="container px-6 py-12 mx-auto">
-            <div>
-              <p className="font-medium text-blue-500 dark:text-blue-400">
-                Contact us
-              </p>
-              <h1 className="mt-2 text-2xl font-semibold text-gray-800 md:text-3xl dark:text-white">
-                Chat to our friendly team
-              </h1>
-              <p className="mt-3 text-gray-500 dark:text-gray-400">
-                We’d love to hear from you. Please fill out this form or shoot
-                us an email.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 gap-12 mt-10 lg:grid-cols-2">
-              {/* Contact Info */}
-              <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
-                {/* Email, Phone, etc. */}
-                {/* ... */}
-              </div>
+    <div className="">
+      <Header />
+      <div className="container pt-44 mx-auto px-4 py-12">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold tracking-tight mb-4">
+            We&apos;re here to help!
+          </h1>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Whether you&apos;re new or experienced, our support team ensures a
+            smooth and hassle-free experience for all your queries.
+          </p>
+        </div>
 
-              {/* Contact Form */}
-              <div className="p-4 py-6 rounded-lg bg-gray-50 dark:bg-gray-800 md:p-8">
-                <form onSubmit={handleSubmit}>
-                  <div className="-mx-2 md:items-center md:flex">
-                    <div className="flex-1 px-2">
-                      <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
-                        First Name
-                      </label>
-                      <input
-                        name="firstName"
-                        type="text"
-                        placeholder="John"
-                        value={formData.firstName}
-                        onChange={handleChange}
-                        className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700"
-                      />
-                      {errors.firstName && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {errors.firstName}
-                        </p>
-                      )}
-                    </div>
+        <div className="grid bg-white px-4 py-4 border rounded-2xl lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="space-y-6">
+            <Card className="bg-black h-full relative flex items-center justify-center text-white">
+              <svg
+                className="absolute bottom-2 right-2"
+                width="182"
+                height="145"
+                viewBox="0 0 182 145"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g opacity="0.1" clip-path="url(#clip0_10_2)">
+                  <path
+                    d="M167.226 48.408L115.526 48.4177C107.069 48.4177 99.3858 51.8246 93.8377 57.3488C88.2896 62.8534 84.8521 70.4996 84.8521 78.8953L84.8912 78.9245V104.827H85.2879V106.307H84.8912V105.64H84.8716V129.922C84.8716 138.249 91.6635 145 100.037 145H135.133V144.966H151.336C159.783 144.966 167.466 141.54 173.005 136.025L172.975 135.996C178.513 130.477 181.961 122.884 181.961 114.527L182 114.488V63.0919C182 54.9834 175.384 48.408 167.226 48.408ZM152.453 114.479V114.488C152.453 114.819 152.32 115.063 152.125 115.262C151.904 115.476 151.625 115.598 151.326 115.598V115.608H119.389C116.642 115.598 114.419 113.388 114.419 110.663V105.64H114.355V78.8953C114.365 78.6082 114.522 78.321 114.728 78.1117C114.948 77.8976 115.227 77.7613 115.526 77.7613H147.277C150.146 77.7613 152.467 80.078 152.467 82.9204L152.453 114.479Z"
+                    fill="white"
+                  />
+                  <path
+                    d="M108.744 0H4.99965C2.23295 0 0 2.22425 0 4.97415V27.0464C0 29.7914 2.23295 32.0156 4.99965 32.0156H40.7562V139.748C40.7562 142.654 43.1165 145 46.0399 145H67.6985C70.6072 145 72.9675 142.654 72.9675 139.748V32.0156H108.744C111.51 32.0156 113.758 29.7914 113.758 27.0464V4.97415C113.758 2.22425 111.51 0 108.744 0Z"
+                    fill="white"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_10_2">
+                    <rect width="182" height="145" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
 
-                    <div className="flex-1 px-2 mt-4 md:mt-0">
-                      <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
-                        Last Name
-                      </label>
-                      <input
-                        name="lastName"
-                        type="text"
-                        placeholder="Doe"
-                        value={formData.lastName}
-                        onChange={handleChange}
-                        className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700"
-                      />
-                      {errors.lastName && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {errors.lastName}
-                        </p>
-                      )}
-                    </div>
-                  </div>
+              <CardContent className="p-6 space-y-8">
+                <div className="space-y-2">
+                  <h2 className="text-2xl font-semibold flex items-center gap-2">
+                    Email Support
+                  </h2>
+                  <p className="text-gray-300 flex items-center gap-4 text-sm">
+                    <Mail className="h-5 w-5" /> Reach us at
+                    support@tenderonline.in <br /> for detailed assistance
+                  </p>
+                </div>
 
-                  <div className="mt-4">
-                    <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
-                      Email address
-                    </label>
-                    <input
-                      name="email"
-                      type="email"
-                      placeholder="johndoe@example.com"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700"
-                    />
-                    {errors.email && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.email}
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="w-full mt-4">
-                    <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
-                      Message
-                    </label>
-                    <textarea
-                      name="message"
-                      placeholder="Message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      className="block w-full h-32 px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700"
-                    />
-                    {errors.message && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.message}
-                      </p>
-                    )}
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full px-6 py-3 mt-4 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
-                  >
-                    {isSubmitting ? "Sending..." : "Send message"}
-                  </button>
-                </form>
-              </div>
-            </div>
+                <div className="space-y-2">
+                  <h2 className="text-2xl font-semibold flex items-center gap-2">
+                    Call Support
+                  </h2>
+                  <p className="text-gray-300 flex items-center gap-3 text-sm">
+                    <Phone className="h-5 w-5" /> Call us at +91 9876543210
+                    <br />
+                    during our business hours for quick help.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
           </div>
-        </section>
-      </div>
-      <Footer />
-    </main>
-  );
-};
 
-export default ContactPage;
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-6 py-8"
+            >
+              <div className="grid sm:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>First Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your first name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="clientId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Client ID (Optional)</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your client ID" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your email"
+                          type="email"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="phoneNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone Number</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your phone number"
+                          type="tel"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <FormField
+                control={form.control}
+                name="subject"
+                render={({ field }) => (
+                  <FormItem className="space-y-3">
+                    <FormLabel>Select Subject?</FormLabel>
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="grid sm:grid-cols-4 gap-4"
+                      >
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="general-inquiry" />
+                          </FormControl>
+                          <FormLabel className="font-normal text-xs">
+                            General Inquiry
+                          </FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="technical-issue" />
+                          </FormControl>
+                          <FormLabel className="font-normal text-xs">
+                            Technical Issue
+                          </FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="tender-assistance" />
+                          </FormControl>
+                          <FormLabel className="font-normal text-xs">
+                            Tender Assistance
+                          </FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="payment" />
+                          </FormControl>
+                          <FormLabel className="font-normal text-xs">
+                            Payment
+                          </FormLabel>
+                        </FormItem>
+                      </RadioGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="message"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Message</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Write your message..."
+                        className="min-h-[120px] resize-none"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="flex items-end justify-end">
+                <Button
+                  type="submit"
+                  className="px-6 py-4"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Sending Message..." : "Send Message"}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
+        <Footer />
+      </div>
+    </div>
+  );
+}
