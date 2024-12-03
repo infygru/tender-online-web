@@ -1,0 +1,382 @@
+import React, { useCallback } from "react";
+import {
+  useReactTable,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+} from "@tanstack/react-table";
+import { useQuery } from "@tanstack/react-query";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useTenderFilters } from "@/components/hook/use-tender-filters";
+import TenderFilters, { FilterLabels } from "./tender-filters";
+import SearchTab from "./search-tab";
+import Loading from "../ui/loading";
+import TenderDetailsDialog from "../shared/TenderDetailsDialog";
+import TenderColumns from "./tender-columns";
+import { toast } from "sonner";
+import { getTenderValueCategory } from "@/utils/tender-value";
+
+export function DataTableTender({ setSearch, search, setTenderLength }: any) {
+  const columns = TenderColumns();
+  const [foryou, setForYou] = React.useState<any | null>(null);
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
+  const [selectedRowData, setSelectedRowData] = React.useState(null);
+  const [selectedRow, setSelectedRow] = React.useState<any>([]);
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const foryouValue = params.get("foryou");
+      if (foryouValue == "true") setForYou(true);
+      else setForYou(false);
+    }
+  }, []);
+
+  const {
+    districts,
+    departments,
+    selectedDistricts,
+    setSelectedDistricts,
+    industry,
+    setIndustry,
+    classification,
+    setClassification,
+    dateRange,
+    setDateRange,
+    clearFilters,
+    buildQueryParams,
+    filterIndustry,
+    filterSubIndustry,
+    searchList,
+    setSearchList,
+    suggestionIndustry,
+    suggestionClassification,
+  } = useTenderFilters();
+  const [selectedTenderValues, setSelectedTenderValues] = React.useState<any>(
+    []
+  );
+  const { data: tenders, isLoading } = useQuery({
+    queryKey: ["tenders", buildQueryParams().toString()],
+    queryFn: async () => {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_ENPOINT +
+          `/api/tender/all?${buildQueryParams().toString()}`
+      );
+      if (!response.ok) {
+        toast.error("Failed to fetch tenders");
+      }
+      return response.json();
+    },
+  });
+
+  const filteredData = React.useMemo(() => {
+    if (isLoading || !tenders?.result) return []; // Return an empty array if loading or no results
+    if (selectedTenderValues.length === 0) return tenders.result;
+    // console.log("Attempting to Filter", selectedTenderValues);
+    return tenders.result.filter((tender: { tenderValue: string }) => {
+      const category = getTenderValueCategory(tender.tenderValue);
+      // console.log("Filtering", tender.tenderValue);
+      return selectedTenderValues.includes(category.toString());
+    });
+  }, [tenders?.result, selectedTenderValues, isLoading]);
+
+  const handleRowClick = useCallback((rowData: any) => {
+    setSelectedRowData(rowData);
+  }, []);
+
+  const table = useReactTable({
+    data: filteredData || [],
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
+  });
+
+  React.useEffect(() => {
+    if (filteredData) {
+      setTenderLength(filteredData.length);
+    }
+  }, [filteredData]);
+
+  React.useEffect(() => {
+    if (rowSelection) {
+      const selectedRows = table?.getSelectedRowModel()?.rows;
+      const ids = selectedRows.map((row: any) => row.original._id);
+      setSelectedRow(ids);
+    }
+  }, [rowSelection, table]);
+
+  React.useEffect(() => {
+    if (foryou) {
+      setIndustry(suggestionIndustry);
+      setClassification(suggestionClassification);
+    } else {
+      clearFilters();
+    }
+  }, [foryou, suggestionIndustry, suggestionClassification]);
+
+  const handleToAddRequest = async () => {
+    try {
+      const promises = selectedRow.map(async (tenderId: string) => {
+        const response = await fetch(
+          process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/tender-mapping",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+            },
+            body: JSON.stringify({ tenderId }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to create tender mapping for tenderId: ${tenderId}`
+          );
+        }
+
+        return response.json();
+      });
+
+      await Promise.all(promises);
+      toast.success(
+        "Tender documents request sent successfully. We will reach out to you soon."
+      );
+    } catch (error) {
+      toast.error("Error sending tender mapping requests.");
+    }
+  };
+
+  if (isLoading) return <Loading />;
+
+  const isAnyRowSelected = Object.values(rowSelection).some(
+    (selected) => selected
+  );
+
+  const dropdownData: any = {
+    District: districts.map((district) => ({
+      value: district.toLowerCase().replace(/\s+/g, ""),
+      label: district,
+    })),
+    "Tender Value": [
+      { value: "1", label: "Less than ₹10L" },
+      { value: "2", label: "₹10L - ₹1Cr" },
+      { value: "3", label: "₹1Cr - ₹100Cr" },
+      { value: "4", label: "More than ₹100Cr" },
+    ],
+    Department: departments.map((department) => ({
+      value: department
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        .replace(/[^a-z0-9]/g, ""),
+      label: department,
+    })),
+    Industry: filterIndustry,
+    SubIndustry: filterSubIndustry,
+    Classification: [
+      { value: "goods", label: "Goods" },
+      { value: "services", label: "Services" },
+      { value: "works", label: "Works" },
+    ],
+  };
+
+  return (
+    <div className="w-full border rounded-xl">
+      <div className="flex items-start justify-between px-2 py-2">
+        <div className="flex-col w-full gap-10">
+          <SearchTab
+            refetch={() => {}}
+            setSearchList={setSearchList}
+            searchList={searchList}
+            search={search}
+            setSearch={setSearch}
+          />
+          <FilterLabels
+            selectedDistricts={selectedDistricts}
+            selectedTenderValues={selectedTenderValues}
+            industry={industry}
+            classification={classification}
+            dateRange={dateRange}
+            setSelectedDistricts={setSelectedDistricts}
+            setSelectedTenderValues={setSelectedTenderValues}
+            setIndustry={setIndustry}
+            setClassification={setClassification}
+            setDateRange={setDateRange}
+            clearFilters={clearFilters}
+            dropdownData={dropdownData}
+            foryou={foryou}
+          />
+        </div>
+        <div className="flex items-start gap-2">
+          <TenderFilters
+            selectedDistricts={selectedDistricts}
+            selectedTenderValues={selectedTenderValues}
+            industry={industry}
+            classification={classification}
+            dateRange={dateRange}
+            setSelectedDistricts={setSelectedDistricts}
+            setSelectedTenderValues={setSelectedTenderValues}
+            setIndustry={setIndustry}
+            setClassification={setClassification}
+            setDateRange={setDateRange}
+            clearFilters={clearFilters}
+            dropdownData={dropdownData}
+            foryou={foryou}
+          />
+          {isAnyRowSelected && (
+            <button
+              onClick={handleToAddRequest}
+              className="bg-[#1C1A1A] text-nowrap px-4 w-full py-2.5 rounded-md text-white text-xs"
+            >
+              Request For Documents
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className="w-full">
+        <ScrollArea>
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell
+                        key={cell.id}
+                        className="cursor-pointer"
+                        onClick={() => {
+                          if (cell.column.columnDef.id !== "select") {
+                            handleRowClick(row.original);
+                          }
+                        }}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </ScrollArea>
+        <TenderDetailsDialog
+          selectedRowData={selectedRowData}
+          setSelectedRowData={setSelectedRowData}
+        />
+      </div>
+
+      <div className="flex items-center justify-between px-4 py-4">
+        <div className="flex-1 text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getRowModel().rows.length} row(s) selected.
+        </div>
+        <div className="flex items-center space-x-6">
+          <div className="text-sm">
+            Page {table.getState().pagination.pageIndex + 1} of{" "}
+            {table.getPageCount()}
+          </div>
+          <div className="space-x-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.setPageIndex(0)}
+              disabled={!table.getCanPreviousPage()}
+              className="text-black/35 hover:text-black/100"
+            >
+              First
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+              disabled={!table.getCanNextPage()}
+              className="text-black/35 hover:text-black/100"
+            >
+              Last
+            </Button>
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
