@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogTrigger,
@@ -53,12 +54,12 @@ const Page = () => {
       {/* Hero */}
       <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
         {/* Grid */}
-        <div className="text-center flex pt-24 items-center justify-center gap-4 md:gap-8 xl:gap-20 md:items-center">
+        <div className="text-center flex pt-20 items-center justify-center gap-4 md:gap-8 xl:gap-20 md:items-center">
           <div>
-            <h1 className="block text-3xl font-bold text-gray-800 sm:text-4xl lg:text-3xl lg:leading-tight dark:text-white">
+            <h1 className="block text-3xl font-bold text-gray-800 sm:text-4xl lg:text-4xl lg:leading-tight dark:text-white">
               The People . The Government . The Business
             </h1>
-            <p className="mt-3 text-sm max-w-xl ml-12 w-full text-gray-800 dark:text-neutral-400">
+            <p className="mt-3 text-sm w-[650px] ml-12 text-gray-800 dark:text-neutral-400">
               Hassle free premium bidding experience to businesses in all
               categories and scale. We specialize in government tenders. Our
               main goal is to bring equal opportunity for businesses to compete
@@ -88,20 +89,22 @@ const Page = () => {
                     View Demo
                   </button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[903px]">
-                  <div className="grid gap-4">
+                <DialogContent className="sm:max-w-[903px] bg-white">
+                  <div className="grid gap-4 pt-4">
                     <iframe
                       width="853"
                       height="480"
                       src={`https://www.youtube.com/embed/rokGy0huYEA`}
-                      frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                       title="Embedded youtube"
+                      className="rounded-md"
                     />
                   </div>
                   <DialogFooter>
-                    <Button type="submit">Close</Button>
+                    <DialogClose asChild>
+                      <Button type="submit">Close</Button>
+                    </DialogClose>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
@@ -113,201 +116,74 @@ const Page = () => {
                 Pricing <ArrowRightIcon className="w-5 h-5" />
               </Link>
             </div>
-            {/* End Buttons */}
           </div>
-          {/* End Col */}
-          {/* <div className="relative ms-4">
-            <img
-              className="w-full lg:h-[600px] h-[400px] rounded-md"
-              src="/aboutus.png"
-              alt="Hero Image"
-            />
-            <div className="absolute inset-0 -z-[1] bg-gradient-to-tr from-gray-200 via-white/0 to-white/0 size-full rounded-md mt-4 -mb-4 me-4 -ms-4 lg:mt-6 lg:-mb-6 lg:me-6 lg:-ms-6 dark:from-neutral-800 dark:via-neutral-900/0 dark:to-neutral-900/0" />
-
-            <div className="absolute bottom-0 start-0">
-              <svg
-                className="w-2/3 ms-auto h-auto text-white dark:text-neutral-900"
-                width={630}
-                height={451}
-                viewBox="0 0 630 451"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  x={531}
-                  y={352}
-                  width={99}
-                  height={99}
-                  fill="currentColor"
-                />
-                <rect
-                  x={140}
-                  y={352}
-                  width={106}
-                  height={99}
-                  fill="currentColor"
-                />
-                <rect
-                  x={482}
-                  y={402}
-                  width={64}
-                  height={49}
-                  fill="currentColor"
-                />
-                <rect
-                  x={433}
-                  y={402}
-                  width={63}
-                  height={49}
-                  fill="currentColor"
-                />
-                <rect
-                  x={384}
-                  y={352}
-                  width={49}
-                  height={50}
-                  fill="currentColor"
-                />
-                <rect
-                  x={531}
-                  y={328}
-                  width={50}
-                  height={50}
-                  fill="currentColor"
-                />
-                <rect
-                  x={99}
-                  y={303}
-                  width={49}
-                  height={58}
-                  fill="currentColor"
-                />
-                <rect
-                  x={99}
-                  y={352}
-                  width={49}
-                  height={50}
-                  fill="currentColor"
-                />
-                <rect
-                  x={99}
-                  y={392}
-                  width={49}
-                  height={59}
-                  fill="currentColor"
-                />
-                <rect
-                  x={44}
-                  y={402}
-                  width={66}
-                  height={49}
-                  fill="currentColor"
-                />
-                <rect
-                  x={234}
-                  y={402}
-                  width={62}
-                  height={49}
-                  fill="currentColor"
-                />
-                <rect
-                  x={334}
-                  y={303}
-                  width={50}
-                  height={49}
-                  fill="currentColor"
-                />
-                <rect x={581} width={49} height={49} fill="currentColor" />
-                <rect x={581} width={49} height={64} fill="currentColor" />
-                <rect
-                  x={482}
-                  y={123}
-                  width={49}
-                  height={49}
-                  fill="currentColor"
-                />
-                <rect
-                  x={507}
-                  y={124}
-                  width={49}
-                  height={24}
-                  fill="currentColor"
-                />
-                <rect
-                  x={531}
-                  y={49}
-                  width={99}
-                  height={99}
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-          </div> */}
         </div>
-        {/* End Grid */}
       </div>
 
-      <div className="max-w-[85rem] w-full text-balance pt-24 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[85rem] w-full text-balance pt-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-3">
           <h2 className="text-xl text-center font-bold md:text-3xl dark:text-white">
             Birth Of The Vision
           </h2>
 
-          <p className="text-lg text-gray-800 text-justify mx-auto max-w-[55rem] dark:text-neutral-200">
-            The foundation of our company stems from the collaboration between
-            two visionary minds: Dr. J. Sai Shajan, a successful serial
-            entrepreneur, and K. Sanjay, an alumnus of IIM Kashipur. Their
-            shared mission was to create a streamlined platform that could
-            revolutionize the government tendering process. By leveraging their
-            combined expertise, they aimed to bridge the gap between businesses
-            and opportunities in public sector tenders, making it easier for
-            companies to apply, compete, and grow.
+          <p className="text-lg pt-4 text-gray-800 text-justify mx-auto max-w-[1000px] dark:text-neutral-200">
+            The foundation of our company and its vision emerged from the
+            collaboration of two minds: Dr. J. Sai Shajan, a successful serial
+            entrepreneur, and K. Sanjay, an alumnus of IIM Kashipur.
+            <br />
+            <br /> As part of our company's natural progression, we aimed to
+            apply for government tenders to expand and diversify our revenue
+            streams. However, during our efforts, we struggled to find anyone
+            with a smooth or systematic experience in applying for and executing
+            government tenders. Most could not create an effective system
+            without incurring high costs or expecting a share of the profits.
+            <br />
+            <br />
+            After researching the government tender process for some time, we
+            discovered that the challenges stemmed from the various technical
+            specifications mandated by different government departments and
+            entities for the same work. These complexities in the application
+            process are designed to filter out submissions, ensuring that only
+            qualified bids meet the requirements set by the teams overseeing
+            each entity.
+            <br />
+            <br />
+            The government plays a crucial role in managing the daily lives of
+            its citizens. Therefore, it is only logical that they impose
+            stringent entry requirements to ensure that only the best companies,
+            whether local or global, can compete to serve their communities.
+            <br />
+            <br />
+            This does not imply that other companies lack quality or fail to
+            meet standards. One significant barrier we observed was the
+            hesitation of many firms to even attempt the process, largely due to
+            the stigma surrounding it. Once a company meets all the requirements
+            and we establish a systematic approach to bid applications, it
+            becomes only a matter of time before they are selected for a tender.
+            <br />
+            <br />
+            The government consistently requires high-quality vendors to deliver
+            excellent services to its citizens.
+            <br />
+            <br /> By addressing this gap through our platform, we realized we
+            could offer individuals more quality options and provide businesses
+            with opportunities to generate additional revenue.
+            <br />
+            <br /> Thus, Tender Online was founded to fulfill this mission.
           </p>
         </div>
       </div>
-      <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="space-y-3">
-          <h2 className="text-xl text-center font-bold md:text-3xl dark:text-white">
-            Overcoming Challenges in Government Tenders
-          </h2>
-
-          <p className="text-lg text-gray-800 text-justify mx-auto max-w-[55rem] dark:text-neutral-200">
-            While exploring government tenders to diversify revenue, we realized
-            many businesses struggle with the complex requirements set by
-            various departments. Companies often face high costs or profit
-            sharing demands from intermediaries. These strict guidelines ensure
-            only the best vendors qualify, but they discourage many capable
-            firms from even attempting the process.
-          </p>
-        </div>
+      <div className="pt-16">
+        <Testimonial />
       </div>
-      <div className="max-w-[85rem] pt-24 mx-auto px-4 text-justify sm:px-6 lg:px-8">
-        <div className="space-y-3">
-          <h2 className="text-xl text-center font-bold md:text-3xl dark:text-white">
-            Creating Opportunities for Businesses
-          </h2>
-
-          <p className="text-lg text-gray-800 mx-auto text-justify max-w-[55rem] dark:text-neutral-200">
-            Our goal is to bridge the gap between businesses and public sector
-            tenders by providing a clear, systematic approach. With the right
-            structure, companies can confidently bid and meet government
-            standards. Through our platform, we empower firms to unlock new
-            revenue streams while ensuring the government gains access to top
-            tier service providers benefiting both businesses and communities
-            alike.
-          </p>
-        </div>
-      </div>
-
-      <Testimonial />
-      <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="isolate flex lg:flex-row flex-col gap-5 items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+      <div className="max-w-[85rem] pt-16 mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="isolate flex lg:flex-row flex-col gap-5 items-center bg-white px-6 sm:py-0 lg:px-8">
           <div className="flex-1">
             <div className="mx-auto  text-start">
               <h2 className="text-xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 Get in touch
               </h2>
-              <p className="mt-2 text-sm leading-8 text-gray-600">
+              <p className="text-sm leading-8 text-gray-600">
                 Our friendly team would love to hear from you.
               </p>
             </div>
@@ -355,24 +231,26 @@ export default Page;
 
 const Testimonial = () => {
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold text-center mb-6">
+    <div className="w-full max-w-6xl mx-auto">
+      <h2 className="text-4xl font-bold text-center mb-6">
         What Our Clients Say
       </h2>
       <Carousel className="w-full">
         <CarouselContent>
           {testimonials.map((testimonial, index) => (
-            <CarouselItem key={index} className="p-4 basis-0 lg:basis-1/2">
-              <Card className="shadow-lg">
-                <CardContent className="p-6">
-                  <p className="text-lg text-gray-700 h-[250px] italic mb-4">
+            <CarouselItem key={index} className="p-4 basis-0 lg:basis-1/3 ">
+              <Card className="shadow-lg h-[55vh] border border-black border-">
+                <CardContent className="p-6 h-full flex-col">
+                  <p className="text-lg text-gray-700 h-[250px] italic mb-10">
                     "{testimonial.text}"
                   </p>
-                  <div className="text-sm font-semibold text-gray-900">
-                    — {testimonial.author}
-                  </div>
-                  <div className="text-sm text-gray-500">
-                    {testimonial.position}
+                  <div>
+                    <div className="text-sm font-semibold text-gray-900">
+                      — {testimonial.author}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {testimonial.position}
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -488,9 +366,9 @@ const ContactPage: React.FC = () => {
 
   return (
     <main>
-      <div className="relative  dark:bg-gray-900">
+      <div className="relative dark:bg-gray-900">
         {/* Contact Form */}
-        <div className="p-4 py-6 rounded-lg  dark:bg-gray-800 md:p-8">
+        <div className="p-4 py-6 rounded-lg dark:bg-gray-800 md:py-8">
           <form onSubmit={handleSubmit}>
             <div className="-mx-2 md:items-center md:flex">
               <div className="flex-1 px-2">
