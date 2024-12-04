@@ -338,7 +338,7 @@ export default function Home() {
                       Get 3 Days Free Trial. No payment required
                     </div>
                   </div>
-                  <div className=" bg-[#141414] flex items-start py-[33px] justify-between rounded-xl mt-5 w-[589px] h-[145px]">
+                  <div className=" bg-black flex items-start py-[33px] justify-between rounded-xl mt-5 w-[589px] h-[145px]">
                     {sections.map((section, index) => (
                       <>
                         <div
@@ -548,7 +548,7 @@ export default function Home() {
                       Get 3 Days Free Trial. No payment required
                     </div>
                   </div>
-                  <div className=" bg-[#141414] bg-opacity-50 py-3 px-4 flex items-center justify-between rounded-xl mt-8">
+                  <div className=" bg-black py-3 px-4 flex items-center justify-between rounded-xl mt-8">
                     {sections.map((section, index) => (
                       <>
                         <div

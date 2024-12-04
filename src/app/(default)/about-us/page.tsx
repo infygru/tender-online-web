@@ -208,16 +208,26 @@ const Page = () => {
                   Call us (08:00 - 20:00)
                 </span>
               </div>
-              <span className="text-gray-500 ml-8">+91 91761 33695</span>
-              <span className="text-gray-500 ml-8">+91 91761 33695</span>
+              <Link
+                href={"https://wa.me/+919003326686"}
+                target="_blank"
+                className="text-gray-500 ml-8 hover:text-black"
+              >
+                +91 90033 26686
+              </Link>
             </div>{" "}
             <hr className="border-t pt-4" />
-            <div className="space-y-2 flex items-start flex-col gap-3">
+            <div className="space-y-2 flex items-start flex-col gap-2">
               <div className="flex items-center gap-3">
                 <Mail />
                 <span className="text-xl font-bold">Mail Us</span>
               </div>
-              <span className="text-gray-500 ml-8">sales@tenderonline.in</span>
+              <Link
+                href={"mailto:sales@tenderonline.in"}
+                className="text-gray-500 ml-8 hover:text-black"
+              >
+                sales@tenderonline.in
+              </Link>
             </div>{" "}
           </div>
         </div>
