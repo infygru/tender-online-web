@@ -112,7 +112,7 @@ export default function TenderColumns() {
                 {/* {department} */}
               </span>
               <span
-                className="text-xs line-clamp-3 font-bold text-gray-900"
+                className="text-xs line-clamp-2 whitespace-break-spaces font-bold text-gray-900"
                 title="Tender Title"
               >
                 {tenderName}

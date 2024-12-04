@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/collapsible";
 import { ChevronsUpDown, ChevronUp } from "lucide-react";
 import React, { useEffect } from "react";
+import Image from "next/image";
 export interface TenderDocument {
   tenderName: string;
   description?: string;
@@ -377,20 +378,35 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
               </div>
             </div>
           </div>
-          <div className="flex text-black justify-center items-center gap-2 py-4 border-b">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10.0001 0C6.32412 0 3.33337 2.99074 3.33337 6.66668C3.33337 7.7702 3.60927 8.86434 4.13376 9.8348L9.63548 19.7852C9.70873 19.9178 9.8483 20 10.0001 20C10.1518 20 10.2914 19.9178 10.3646 19.7852L15.8684 9.83152C16.3908 8.86434 16.6667 7.77016 16.6667 6.66664C16.6667 2.99074 13.676 0 10.0001 0ZM10.0001 10C8.16208 10 6.66673 8.50465 6.66673 6.66668C6.66673 4.82871 8.16208 3.33336 10.0001 3.33336C11.838 3.33336 13.3334 4.82871 13.3334 6.66668C13.3334 8.50465 11.838 10 10.0001 10Z"
-                fill="black"
+          <div className="flex justify-between">
+            <div className="flex text-black justify-center items-center gap-2 py-4 border-b">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10.0001 0C6.32412 0 3.33337 2.99074 3.33337 6.66668C3.33337 7.7702 3.60927 8.86434 4.13376 9.8348L9.63548 19.7852C9.70873 19.9178 9.8483 20 10.0001 20C10.1518 20 10.2914 19.9178 10.3646 19.7852L15.8684 9.83152C16.3908 8.86434 16.6667 7.77016 16.6667 6.66664C16.6667 2.99074 13.676 0 10.0001 0ZM10.0001 10C8.16208 10 6.66673 8.50465 6.66673 6.66668C6.66673 4.82871 8.16208 3.33336 10.0001 3.33336C11.838 3.33336 13.3334 4.82871 13.3334 6.66668C13.3334 8.50465 11.838 10 10.0001 10Z"
+                  fill="black"
+                />
+              </svg>
+              <p className="lg:text-sm text-[10px]">
+                {selectedRowData?.address}
+              </p>
+            </div>
+            <div className="flex text-black justify-center items-center gap-2 py-4 border-b">
+              <Image
+                src="/district.png"
+                width={28}
+                height={26}
+                alt="District"
               />
-            </svg>
-            <p className="lg:text-sm text-[10px]">{selectedRowData?.address}</p>
+              <p className="lg:text-sm text-[10px]">
+                {selectedRowData?.district}
+              </p>
+            </div>
           </div>
           <div className="flex text-black items-center justify-center py-2 w-full">
             <div className="lg:px-4 px-1 border-r w-full text-center py-1 lg:py-3 space-y-2">
