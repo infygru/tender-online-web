@@ -75,12 +75,22 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
   const [selectedTenderValues, setSelectedTenderValues] = React.useState<any>(
     []
   );
-  const { data: tenders, isLoading } = useQuery({
-    queryKey: ["tenders", buildQueryParams().toString()],
+  const [page, setPage] = React.useState(0);
+
+  const {
+    data: tenders,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["tenders", buildQueryParams().toString(), page],
     queryFn: async () => {
+      const params = buildQueryParams();
+      params.append("limit", "10");
+      params.append("offset", (page * 10).toString());
+
       const response = await fetch(
         process.env.NEXT_PUBLIC_API_ENPOINT +
-          `/api/tender/all?${buildQueryParams().toString()}`
+          `/api/tender/all?${params.toString()}`
       );
       if (!response.ok) {
         toast.error("Failed to fetch tenders");
@@ -124,10 +134,10 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
   });
 
   React.useEffect(() => {
-    if (filteredData) {
-      setTenderLength(filteredData.length);
+    if (tenders?.count !== undefined) {
+      setTenderLength(tenders.count);
     }
-  }, [filteredData]);
+  }, [tenders?.count]);
 
   React.useEffect(() => {
     if (rowSelection) {
@@ -332,19 +342,18 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
       <div className="flex items-center justify-between px-4 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getRowModel().rows.length} row(s) selected.
+          {tenders?.count || 0} total
         </div>
         <div className="flex items-center space-x-6">
           <div className="text-sm">
-            Page {table.getState().pagination.pageIndex + 1} of{" "}
-            {table.getPageCount()}
+            Page {page + 1} of {Math.ceil((tenders?.count || 0) / 10)}
           </div>
           <div className="space-x-2">
             <Button
               variant="outline"
               size="sm"
-              onClick={() => table.setPageIndex(0)}
-              disabled={!table.getCanPreviousPage()}
+              onClick={() => setPage(0)}
+              disabled={page === 0}
               className="text-black/35 hover:text-black/100"
             >
               First
@@ -352,8 +361,8 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-              disabled={!table.getCanNextPage()}
+              onClick={() => setPage(Math.ceil((tenders?.count || 0) / 10) - 1)}
+              disabled={page >= Math.ceil((tenders?.count || 0) / 10) - 1}
               className="text-black/35 hover:text-black/100"
             >
               Last
@@ -361,16 +370,16 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
             <Button
               variant="default"
               size="sm"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
+              onClick={() => setPage((p) => p - 1)}
+              disabled={page === 0}
             >
               Previous
             </Button>
             <Button
               variant="default"
               size="sm"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
+              onClick={() => setPage((p) => p + 1)}
+              disabled={page >= Math.ceil((tenders?.count || 0) / 10) - 1}
             >
               Next
             </Button>
