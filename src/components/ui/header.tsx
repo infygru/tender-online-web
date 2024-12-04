@@ -93,7 +93,12 @@ export function DropdownMenuDemo() {
   );
 }
 
-const Header = () => {
+interface HeaderProps {
+  isLogin1: boolean;
+  setIsLogin1: (value: boolean) => void;
+}
+
+const Header = ({ isLogin1, setIsLogin1 }: HeaderProps) => {
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
@@ -168,9 +173,22 @@ const Header = () => {
               {!isLogin && (
                 <div className="hidden lg:block">
                   <div>
-                    <button className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-sm">
-                      Sign Up
-                    </button>
+                    {isLogin1 && (
+                      <button
+                        className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-sm"
+                        onClick={() => setIsLogin1(false)}
+                      >
+                        Sign Up
+                      </button>
+                    )}
+                    {!isLogin1 && (
+                      <button
+                        className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-sm"
+                        onClick={() => setIsLogin1(true)}
+                      >
+                        Sign In
+                      </button>
+                    )}
                   </div>
                 </div>
               )}

@@ -201,7 +201,7 @@ export default function Home() {
         </>
       )}
 
-      <Header />
+      <Header isLogin1={isLogin} setIsLogin1={setIsLogin} />
       {!isLoggedIn ? (
         <div className="flex h-fit">
           {/* Left Pane */}
