@@ -106,7 +106,7 @@ export default function TenderColumns() {
         const classification = row.original.classification;
 
         return (
-          <div className="flex items-center min-w-60 gap-3">
+          <div className="flex items-center justify-between min-w-60 gap-3">
             <div className="flex flex-col">
               <span className="font-bold text-gray-900" title="Department">
                 {/* {department} */}
@@ -120,7 +120,7 @@ export default function TenderColumns() {
             </div>
 
             <span
-              className="bg-[#ECFDF3] text-[#027A48] gap-1 border rounded-full flex items-center w-max px-2 text-[9px] font-bold"
+              className="bg-[#ECFDF3] text-[#027A48] gap-1 border rounded-full flex items-center w-max px-2 text-[9px] font-bold whitespace-nowrap"
               title="Classification"
             >
               <div className="bg-green-500 rounded-full w-1 h-1" />

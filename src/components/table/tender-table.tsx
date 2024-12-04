@@ -271,7 +271,7 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
+                <TableRow key={headerGroup.id} className="hover:bg-transparent">
                   {headerGroup.headers.map((header) => (
                     <TableHead key={header.id}>
                       {header.isPlaceholder
@@ -295,7 +295,7 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
                         key={cell.id}
-                        className="cursor-pointer"
+                        className="cursor-pointer font-roboto"
                         onClick={() => {
                           if (cell.column.columnDef.id !== "select") {
                             handleRowClick(row.original);
