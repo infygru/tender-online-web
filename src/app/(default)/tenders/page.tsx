@@ -55,10 +55,10 @@ export default function Page() {
   }
 
   return (
-    <main className="w-full px-2 lg:px-4">
+    <main className="w-full">
       <TenderHeader tenderLength={tenderLength} />
       <CheckSuggestion />
-      <div className="w-full ">
+      <div className="w-full px-4">
         {userStatus?.isTendersVisible ? (
           <>
             {!isMobile ? (
