@@ -47,7 +47,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <ColorSchemeScript defaultColorScheme="auto" />
+        <ColorSchemeScript defaultColorScheme="auto" />{" "}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <body>
         <MantineProvider theme={theme}>

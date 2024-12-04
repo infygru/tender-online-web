@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        roboto: ["Roboto", "sans-serif"],
+      },
       colors: {
         purpleGradientStart: "#8D1DB8",
         purpleGradientEnd: "#1B3BF1",
