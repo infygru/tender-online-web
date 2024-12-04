@@ -27,6 +27,13 @@ interface TenderFiltersProps {
   dropdownData: any;
   foryou: boolean;
 }
+type DistrictMapping = {
+  [key: string]: string[];
+};
+const districtMapping: DistrictMapping = {
+  tiruvallur: ["Tiruvallur", "Thiruvallur"],
+  thiruvallur: ["Tiruvallur", "Thiruvallur"],
+};
 
 export default function TenderFilters({
   selectedDistricts,
@@ -46,7 +53,10 @@ export default function TenderFilters({
   const handleMultiSelectChange = (label: string, value: any) => {
     switch (label) {
       case "District":
-        setSelectedDistricts(value);
+        const newDistricts = value.flatMap((district: string) => {
+          return districtMapping[district] || [district];
+        });
+        setSelectedDistricts(newDistricts);
         break;
       case "Industry":
         setIndustry(value);
