@@ -1,95 +1,123 @@
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 
 const Footer = () => {
   return (
-    <div>
-      <footer className="mt-[0vh]">
-        <div className="w-full mx-auto p-4 md:py-8">
-          <div className="sm:flex sm:items-center sm:justify-between">
-            <div className="flex items-start flex-col">
-              <Link
-                href="/"
-                className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
-              >
-                <img src="/logo.png" className="h-12" alt="Flowbite Logo" />
-              </Link>
-              <span>The People. The Government. The Business</span>
-            </div>
-            <div className="">
-              <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
-                <li>
-                  <Link
-                    href="/about-us"
-                    className="hover:underline me-4 md:me-6"
-                  >
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/pricing"
-                    className="hover:underline me-4 md:me-6"
-                  >
-                    Pricing
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/support"
-                    className="hover:underline me-4 md:me-6"
-                  >
-                    Support
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/blog" className="hover:underline">
-                    Blog
-                  </Link>
-                </li>
-              </ul>{" "}
-            </div>
+    <footer className="mt-4">
+      <div className="w-full mx-auto p-0 md:py-0">
+        <div className="sm:flex sm:items-center sm:justify-between px-6">
+          <div className="flex justify-between flex-col">
+            <Link
+              href="/"
+              className="flex items-center sm:mb-0 space-x-3 rtl:space-x-reverse"
+            >
+              <Image
+                src={"/logo.png"}
+                alt="TenderOnline"
+                width={280}
+                height={95}
+              />
+            </Link>
+            <span>The People. The Government. The Business</span>
           </div>
-          <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-          <div className="flex items-center justify-between">
-            <div className="">
-              <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
-                © 2024{" "}
-                <a href="/" className="hover:underline">
-                  TenderOnline{" "}
-                </a>
-              </span>
+          <div className="">
+            <div className="text-right flex-col">
+              <p className="text-[18px] font-bold uppercase text-[#4A4A4A]">
+                Find us Online
+              </p>
+              <div className="flex gap-2 justify-end mt-1">
+                <Link href={"https://linkedin.com/in"} target="_blank">
+                  <Image
+                    src="/linkedin1.png"
+                    width="29"
+                    height={29}
+                    alt="Linkedin Handle"
+                  />
+                </Link>
+                <Link href={"https://x.com/in"} target="_blank">
+                  {" "}
+                  <Image
+                    src="/twitter1.png"
+                    width="29"
+                    height={29}
+                    alt="X Handle"
+                  />
+                </Link>
+                <Link href={"https://facebook.com/in"} target="_blank">
+                  {" "}
+                  <Image
+                    src="/facebook1.png"
+                    width="29"
+                    height={29}
+                    alt="Facebook Handle"
+                  />
+                </Link>
+              </div>
             </div>
-            <div className="">
-              <ul className="flex text-xs items-center gap-3">
-                <li>
-                  <Link href="/terms" className="hover:underline">
-                    Terms & Conditions
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/privacy-policy" className="hover:underline">
-                    Privacy Policy
-                  </Link>
-                </li>
-
-                <li>
-                  <Link href="/cookie" className="hover:underline">
-                    Cookie Policy
-                  </Link>
-                </li>
-
-                <li>
-                  <Link href="/refund-policy" className="hover:underline">
-                    Refund Policy
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            <ul className="flex flex-wrap gap-4 items-center mb-6 text-[16px] sm:mb-0 mt-4">
+              <li>
+                <Link href="/about-us" className="hover:underline">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/pricing" className="hover:underline">
+                  Pricing
+                </Link>
+              </li>
+              <li>
+                <Link href="/support" className="hover:underline">
+                  Support
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="hover:underline">
+                  Blog
+                </Link>
+              </li>
+            </ul>{" "}
           </div>
         </div>
-      </footer>
-    </div>
+        <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-3" />
+        <div className="flex items-center justify-between bg-[#202020] h-[70px] px-10">
+          <div className="">
+            <span className="block text-[16px] text-[#D9D9D9] sm:text-center">
+              © 2024{" "}
+              <a href="/" className="hover:underline">
+                TenderOnline{" "}
+              </a>
+            </span>
+          </div>
+          <div className="">
+            <ul className="flex text-[14px] text-white items-center gap-5">
+              <li>
+                <Link href="/terms" className="hover:underline">
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy-policy" className="hover:underline">
+                  Privacy Policy
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/cookie" className="hover:underline">
+                  Cookie Policy
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/refund-policy" className="hover:underline">
+                  Refund Policy
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 };
 
