@@ -76,6 +76,27 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
     []
   );
   const [page, setPage] = React.useState(0);
+  const [inputPage, setInputPage] = React.useState(1);
+
+  const handlePageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Only allow numeric input
+    setInputPage(value === "" ? 1 : Math.max(1, parseInt(value)));
+  };
+
+  const handleGoToPage = () => {
+    // Adjust for zero-based indexing and ensure within bounds
+    const targetPage = Math.min(
+      Math.max(0, inputPage - 1),
+      Math.ceil((tenders?.count || 0) / 10) - 1
+    );
+    setPage(targetPage);
+  };
+
+  // Update inputPage when page changes
+  React.useEffect(() => {
+    setInputPage(page + 1);
+  }, [page]);
 
   const {
     data: tenders,
@@ -345,8 +366,27 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
           {tenders?.count || 0} total
         </div>
         <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-2">
+            <span className="text-sm">Page</span>
+            <input
+              type="number"
+              value={inputPage}
+              onChange={handlePageInputChange}
+              min="1"
+              max={Math.ceil((tenders?.count || 0) / 10)}
+              className="w-16 px-2 py-1 border rounded text-sm"
+            />
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleGoToPage}
+              className="text-black/35 hover:text-black/100"
+            >
+              Go
+            </Button>
+          </div>
           <div className="text-sm">
-            Page {page + 1} of {Math.ceil((tenders?.count || 0) / 10)}
+            of {Math.ceil((tenders?.count || 0) / 10)}
           </div>
           <div className="space-x-2">
             <Button
