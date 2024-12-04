@@ -365,28 +365,26 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {tenders?.count || 0} total
         </div>
-        <div className="flex items-center space-x-6">
-          <div className="flex items-center space-x-2">
-            <span className="text-sm">Page</span>
-            <input
-              type="number"
-              value={inputPage}
-              onChange={handlePageInputChange}
-              min="1"
-              max={Math.ceil((tenders?.count || 0) / 10)}
-              className="w-16 px-2 py-1 border rounded text-sm"
-            />
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleGoToPage}
-              className="text-black/35 hover:text-black/100"
-            >
-              Go
-            </Button>
-          </div>
-          <div className="text-sm">
-            of {Math.ceil((tenders?.count || 0) / 10)}
+        <div className="flex items-center space-x-8">
+          <div className="flex gap-2 items-center">
+            <div className="flex items-center space-x-2">
+              <span className="text-sm">Page</span>
+              <input
+                type="number"
+                value={inputPage}
+                onChange={handlePageInputChange}
+                min="1"
+                max={Math.ceil((tenders?.count || 0) / 10)}
+                className="w-16 px-2 py-1 border rounded text-sm"
+              />
+              <Button variant="default" size="sm" onClick={handleGoToPage}>
+                Go
+              </Button>
+            </div>
+
+            <div className="text-sm">
+              of {Math.ceil((tenders?.count || 0) / 10)}
+            </div>
           </div>
           <div className="space-x-2">
             <Button
