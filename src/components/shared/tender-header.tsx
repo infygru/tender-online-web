@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { DropdownMenuDemo } from "../ui/header";
 import { cn } from "@/lib/utils";
 import { useUserContext } from "../hook/length";
+import Image from "next/image";
 
 const TenderHeader = ({ tenderLength }: { tenderLength: number | null }) => {
   const [isClicked, setIsClicked] = React.useState(false);
@@ -34,7 +35,7 @@ const TenderHeader = ({ tenderLength }: { tenderLength: number | null }) => {
     <div className="flex items-center w-full px-1 lg:px-8 py-2 lg:py-6">
       <div className="">
         <Link href={"/"}>
-          <img src="/logo.png" className=" w-44 lg:w-[96%]" alt="logo" />
+          <Image src="/logo.png" width={250} height={29} alt="TenderOnline" />
         </Link>
       </div>
       <div className="flex items-center gap-3 w-full">

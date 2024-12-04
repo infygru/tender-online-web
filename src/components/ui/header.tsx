@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Signup from "@/app/(auth)/signup/page";
+import Image from "next/image";
 
 export function DropdownMenuDemo() {
   const router = useRouter();
