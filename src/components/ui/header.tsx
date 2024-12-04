@@ -113,7 +113,7 @@ const Header = ({ isLogin1, setIsLogin1 }: HeaderProps) => {
   return (
     <div>
       <div className="absolute z-40 top-8 right-0 px-2 lg:px-24 left-0">
-        <div className="border bg-white rounded-xl px-6 py-2 w-full shadow-xl">
+        <div className="border bg-white rounded-xl px-6 py-2 w-full shadow-lg">
           <div className="flex justify-between">
             <div className="text-2xl flex items-center gap-2 font-bold">
               <Link href={"/"}>
