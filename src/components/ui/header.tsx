@@ -113,7 +113,7 @@ const Header = ({ isLogin1, setIsLogin1 }: HeaderProps) => {
   return (
     <div>
       <div className="absolute z-40 top-8 right-0 px-2 lg:px-24 left-0">
-        <div className="border bg-white rounded-xl px-6 py-2 w-full">
+        <div className="border bg-white rounded-xl px-6 py-2 w-full shadow-xl">
           <div className="flex justify-between">
             <div className="text-2xl flex items-center gap-2 font-bold">
               <Link href={"/"}>
@@ -175,7 +175,7 @@ const Header = ({ isLogin1, setIsLogin1 }: HeaderProps) => {
                   <div>
                     {isLogin1 && (
                       <button
-                        className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-sm"
+                        className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-[16px]"
                         onClick={() => {
                           console.log(isLogin1, setIsLogin1);
 
@@ -191,7 +191,7 @@ const Header = ({ isLogin1, setIsLogin1 }: HeaderProps) => {
                     )}
                     {!isLogin1 && (
                       <button
-                        className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-sm"
+                        className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-[16px]"
                         onClick={() => {
                           console.log(isLogin1, setIsLogin1);
 
