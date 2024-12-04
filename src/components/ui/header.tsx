@@ -177,7 +177,11 @@ const Header = ({ isLogin1, setIsLogin1 }: HeaderProps) => {
                     {isLogin1 && (
                       <button
                         className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-sm"
-                        onClick={() => setIsLogin1(false)}
+                        onClick={() => {
+                          if (window.location.pathname !== "/") {
+                            window.location.href = "/";
+                          } else setIsLogin1(false);
+                        }}
                       >
                         Sign Up
                       </button>
@@ -185,7 +189,11 @@ const Header = ({ isLogin1, setIsLogin1 }: HeaderProps) => {
                     {!isLogin1 && (
                       <button
                         className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-sm"
-                        onClick={() => setIsLogin1(true)}
+                        onClick={() => {
+                          if (window.location.pathname !== "/") {
+                            window.location.href = "/";
+                          } else setIsLogin1(true);
+                        }}
                       >
                         Sign In
                       </button>
