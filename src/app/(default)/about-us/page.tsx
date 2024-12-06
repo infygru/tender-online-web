@@ -176,7 +176,10 @@ const Page = () => {
       <div className="pt-16">
         <Testimonial />
       </div>
-      <div className="max-w-[85rem] pt-16 mx-auto px-4 sm:px-6 lg:px-8">
+      <div
+        className="max-w-[85rem] pt-16 mx-auto px-4 sm:px-6 lg:px-8"
+        id="contact"
+      >
         <div className="isolate flex lg:flex-row flex-col gap-5 items-center bg-white px-6 sm:py-0 lg:px-8">
           <div className="flex-1">
             <div className="mx-auto  text-start">
@@ -332,6 +335,15 @@ const ContactPage: React.FC = () => {
     );
   };
   const router = useRouter();
+  React.useEffect(() => {
+    const hashId = window.location.hash.replace("#", "");
+    if (hashId) {
+      const element = document.getElementById(hashId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, []);
   // Mutations
   const mutation = useMutation({
     mutationFn: postTodo,

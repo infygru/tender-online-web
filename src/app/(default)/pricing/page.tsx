@@ -5,6 +5,7 @@ import CollapsibleWrapper, {
 import Footer from "@/components/shared/footer";
 import ShoppingCart from "@/components/shared/ShoppingCart";
 import Header from "@/components/ui/header";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -2984,8 +2985,13 @@ const page = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-gradient-to-r rounded-md px-4 text-sm text-white from-[#8d1db8] font-semibold to-[#0c1073] py-4">
-              <p>For More details Kindly Contact Us</p>
+            <div className="bg-gradient-to-r rounded-md px-4 text-sm text-white from-[#8d1db8] font-semibold to-[#0c1073] py-4 text-center">
+              <p>
+                For More details Kindly{" "}
+                <Link href="/about-us#contact" className="hover:underline">
+                  Contact Us
+                </Link>
+              </p>
             </div>
           </div>
         </div>
