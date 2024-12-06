@@ -9,6 +9,14 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import Signup from "@/app/(auth)/signup/page";
 import Image from "next/image";
 
@@ -174,36 +182,84 @@ const Header = ({ isLogin1, setIsLogin1 }: HeaderProps) => {
                 <div className="hidden lg:block">
                   <div>
                     {isLogin1 && (
-                      <button
-                        className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-[16px]"
-                        onClick={() => {
-                          console.log(isLogin1, setIsLogin1);
+                      <div className="flex gap-2">
+                        <button className="px-4 py-2 text-sm font-semibold rounded-xl bg-black text-white">
+                          <Dialog>
+                            <DialogTrigger>Watch Demo</DialogTrigger>
+                            <DialogContent className="sm:max-w-[903px] bg-white">
+                              <DialogHeader>
+                                <DialogTitle>Watch Demo</DialogTitle>
+                                <DialogDescription>
+                                  Get 3 Days Free Trial. No payment required
+                                </DialogDescription>
+                              </DialogHeader>
+                              <iframe
+                                width="853"
+                                height="480"
+                                src={`https://www.youtube.com/embed/rokGy0huYEA`}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                title="Embedded youtube"
+                                className="rounded-md"
+                              />
+                            </DialogContent>
+                          </Dialog>
+                        </button>
+                        <button
+                          className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-[16px]"
+                          onClick={() => {
+                            console.log(isLogin1, setIsLogin1);
 
-                          if (window.location.pathname !== "/") {
-                            window.location.href = "/";
-                          } else if (setIsLogin1 !== undefined) {
-                            setIsLogin1(false);
-                          }
-                        }}
-                      >
-                        Sign Up
-                      </button>
+                            if (window.location.pathname !== "/") {
+                              window.location.href = "/";
+                            } else if (setIsLogin1 !== undefined) {
+                              setIsLogin1(false);
+                            }
+                          }}
+                        >
+                          Sign Up
+                        </button>
+                      </div>
                     )}
                     {!isLogin1 && (
-                      <button
-                        className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-[16px]"
-                        onClick={() => {
-                          console.log(isLogin1, setIsLogin1);
+                      <div className="flex gap-2">
+                        <button className="px-4 py-2 text-sm font-semibold rounded-xl bg-black text-white">
+                          <Dialog>
+                            <DialogTrigger>Watch Demo</DialogTrigger>
+                            <DialogContent className="sm:max-w-[903px] bg-white">
+                              <DialogHeader>
+                                <DialogTitle>Watch Demo</DialogTitle>
+                                <DialogDescription>
+                                  Get 3 Days Free Trial. No payment required
+                                </DialogDescription>
+                              </DialogHeader>
+                              <iframe
+                                width="853"
+                                height="480"
+                                src={`https://www.youtube.com/embed/rokGy0huYEA`}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                title="Embedded youtube"
+                                className="rounded-md"
+                              />
+                            </DialogContent>
+                          </Dialog>
+                        </button>
+                        <button
+                          className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-[16px]"
+                          onClick={() => {
+                            console.log(isLogin1, setIsLogin1);
 
-                          if (window.location.pathname !== "/") {
-                            window.location.href = "/";
-                          } else if (setIsLogin1 !== undefined) {
-                            setIsLogin1(true);
-                          }
-                        }}
-                      >
-                        Sign In
-                      </button>
+                            if (window.location.pathname !== "/") {
+                              window.location.href = "/";
+                            } else if (setIsLogin1 !== undefined) {
+                              setIsLogin1(true);
+                            }
+                          }}
+                        >
+                          Sign In
+                        </button>
+                      </div>
                     )}
                   </div>
                 </div>
