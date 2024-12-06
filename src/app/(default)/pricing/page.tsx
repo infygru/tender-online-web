@@ -5,20 +5,16 @@ import CollapsibleWrapper, {
 import Footer from "@/components/shared/footer";
 import ShoppingCart from "@/components/shared/ShoppingCart";
 import Header from "@/components/ui/header";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { title } from "process";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const page = () => {
   const [isRazorpayLoaded, setIsRazorpayLoaded] = useState<boolean>(false);
-  // Change handler for tabs
 
   const [carts, setCarts] = useState<any[]>([]);
 
   const router = useRouter();
-  // Ensure Razorpay is loaded
   useEffect(() => {
     if (typeof window !== "undefined" && window.Razorpay) {
       setIsRazorpayLoaded(true);
@@ -1585,12 +1581,6 @@ const page = () => {
         subTitle={"Executive Tender Processing Service"}
       >
         <div className="lg:px-0 px-4">
-          <div className="flex items-center  justify-between py-6 text-xs lg:text-xl font-semibold">
-            <p>Tender Bidding</p>
-            <p>Tender Result Update</p>
-            <p>Tender result Analysis</p>
-          </div>
-
           <div className="lg:flex grid grid-cols-1 items-center  justify-around">
             <div className="flex items-center justify-center text-[#0c1073] flex-col py-8 pt-12">
               <h2>
@@ -2409,27 +2399,6 @@ const page = () => {
                     </li>
                   </ul>
                 </div>
-
-                <div className="bg-gradient-to-r rounded-md px-4 text-sm text-white from-[#8d1db8] font-semibold to-[#0c1073] py-4 mt-12">
-                  <p>For More details Kindly Contact Us</p>
-                </div>
-                {/* <div className="flex items-center justify-center">
-                  <div className="h-full w-max space-y-2  lg:mt-px lg:py-5 px-8 dark:bg-neutral-900">
-                    <span className="mt-7 flex flex-col font-bold text-2xl text-[#1075FF] dark:text-neutral-200">
-                      ₹150
-                    </span>
-                    <span>Per Registration</span>
-                  </div>
-                </div> */}
-
-                {/* <div className="flex pb-8 text-xs items-center px-4 justify-center gap-6 mt-2">
-                  <button className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-4 py-2 rounded-xl">
-                    Buy Now
-                  </button>
-                  <button className="text-black px-4 py-2 border-[#8d1db8] rounded-xl border">
-                    Add to Cart
-                  </button>
-                </div> */}
               </div>
               <div className="flex flex-col lg:py-0 py-8  rounded-lg bg-blue-100/20  lg:border-t-0 border-t h-full text-center">
                 <div className=" flex items-center justify-center pt-8 pb-5 px-8 dark:bg-neutral-900">
@@ -2587,7 +2556,7 @@ const page = () => {
                   </svg>
                 </div>
 
-                <div className=" flex justify-center h-[140px] lg:mt-px pt-7 px-8 dark:bg-neutral-900">
+                <div className=" flex justify-center h-[200px] lg:mt-px pt-7 px-8 dark:bg-neutral-900">
                   <ul className="mt-7 space-y-2.5 text-sm">
                     <li className="flex gap-x-2">
                       <svg
@@ -2628,9 +2597,6 @@ const page = () => {
                       </span>
                     </li>
                   </ul>
-                </div>
-                <div className="bg-gradient-to-r rounded-md px-4 text-sm text-white from-[#8d1db8] font-semibold to-[#0c1073] py-4 mt-12">
-                  <p>For More details Kindly Contact Us</p>
                 </div>
               </div>
               <div className="flex flex-col lg:py-0 py-8  rounded-lg bg-blue-100/20  lg:border-t-0 border-t h-full text-center">
@@ -2869,7 +2835,7 @@ const page = () => {
                   </svg>
                 </div>
 
-                <div className=" flex justify-center  h-[140px] lg:mt-px pt-7 px-8 dark:bg-neutral-900">
+                <div className=" flex justify-center  h-[200px] lg:mt-px pt-7 px-8 dark:bg-neutral-900">
                   <ul className="mt-7 space-y-2.5 text-sm">
                     <li className="flex gap-x-2">
                       <svg
@@ -2892,9 +2858,6 @@ const page = () => {
                       </span>
                     </li>
                   </ul>
-                </div>
-                <div className="bg-gradient-to-r rounded-md px-4 text-sm text-white from-[#8d1db8] font-semibold to-[#0c1073] py-4 mt-12">
-                  <p>For More details Kindly Contact Us</p>
                 </div>
               </div>
               <div className="flex flex-col lg:py-0 py-8  rounded-lg bg-blue-100/20  lg:border-t-0 border-t h-full text-center">
@@ -2977,7 +2940,7 @@ const page = () => {
                   </svg>
                 </div>
 
-                <div className=" flex justify-center  h-[140px] lg:mt-px pt-7 px-8 dark:bg-neutral-900">
+                <div className=" flex justify-center  h-[200px] lg:mt-px pt-7 px-8 dark:bg-neutral-900">
                   <ul className="mt-7 space-y-2.5 text-sm">
                     <li className="flex gap-x-2">
                       <svg
@@ -3019,10 +2982,10 @@ const page = () => {
                     </li>
                   </ul>
                 </div>
-                <div className="bg-gradient-to-r rounded-md px-4 text-sm text-white from-[#8d1db8] font-semibold to-[#0c1073] py-4 mt-12">
-                  <p>For More details Kindly Contact Us</p>
-                </div>
               </div>
+            </div>
+            <div className="bg-gradient-to-r rounded-md px-4 text-sm text-white from-[#8d1db8] font-semibold to-[#0c1073] py-4">
+              <p>For More details Kindly Contact Us</p>
             </div>
           </div>
         </div>
