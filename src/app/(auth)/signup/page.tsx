@@ -282,7 +282,7 @@ const Signup = ({ setIsLogin }: any) => {
     return data;
   }
   return (
-    <main className="flex pt-36 w-full items-center mt-6 justify-center">
+    <main className="flex pt-[15vh] w-full items-center justify-center pr-[5vw]">
       {loading && (
         <div className="absolute inset-0  flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
@@ -343,11 +343,16 @@ const Signup = ({ setIsLogin }: any) => {
           </svg>
         </div>
       )}
-      <div className="w-[80%]">
+      <div className="w-[100%]">
         <div className="bg-white border border-gray-200 rounded-3xl shadow-sm">
-          <ScrollArea className="lg:h-[58vh] xl:h-[73vh] h-[58vh] min-h-auto w-full">
-            <div className="p-8">
-              <h1 className="text-2xl text-center font-bold mb-4">Register</h1>
+          <ScrollArea className="lg:h-[58vh] xl:h-[78vh] h-[58vh] min-h-auto w-full">
+            <div className="px-8 pt-4">
+              <h1 className="text-2xl text-center font-bold mb-1">Register</h1>
+              <p className="text-center mb-4 font-semibold">
+                Get 3 Days
+                <span className="text-[#8D1DB8]"> Free Trial</span>. No payment
+                required
+              </p>
               <form onSubmit={handleSubmit}>
                 {/* Registration form fields */}
                 {Object.keys(formData).map((key) => (
