@@ -4,9 +4,9 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="mt-12 border-b-0 border-r-0 border-l-0 border pt-2 bg-slate-50 border-slate-300">
+    <footer className="mt-12 pt-2 bg-slate-50/50">
       <div className="w-full mx-auto p-0 md:py-0">
-        <div className="sm:flex sm:items-center sm:justify-between px-6">
+        <div className="sm:flex sm:items-center sm:justify-between px-10">
           <div className="flex justify-between flex-col">
             <Link
               href="/"
@@ -23,7 +23,7 @@ const Footer = () => {
           </div>
           <div className="">
             <div className="text-right flex-col">
-              <p className="text-[16px] font-bold uppercase text-[#4A4A4A]">
+              <p className="text-[14px] font-bold uppercase text-[#4A4A4A]">
                 Find us Online
               </p>
               <div className="flex gap-2 justify-end mt-1">
