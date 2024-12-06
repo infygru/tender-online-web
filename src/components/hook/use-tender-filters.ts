@@ -177,15 +177,6 @@ export function useTenderFilters() {
     dateRange,
   ]);
 
-  const clearFilters = useCallback(() => {
-    setSelectedDistricts([]);
-    setSelectedTenderValues([]);
-    setIndustry([]);
-    setClassification([]);
-    setDateRange(null);
-    setSearchList([]);
-  }, []);
-
   return {
     districts,
     departments,
@@ -204,7 +195,6 @@ export function useTenderFilters() {
     filterIndustry,
     filterSubIndustry,
     buildQueryParams,
-    clearFilters,
     isLoadingIndustries,
     isLoadingSubIndustries,
     suggestionIndustry,

@@ -29,6 +29,7 @@ import TenderDetailsDialog from "../shared/TenderDetailsDialog";
 import TenderColumns from "./tender-columns";
 import { toast } from "sonner";
 import { getTenderValueCategory } from "@/utils/tender-value";
+import { clear } from "console";
 
 export function DataTableTender({ setSearch, search, setTenderLength }: any) {
   const columns = TenderColumns();
@@ -63,7 +64,6 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
     setClassification,
     dateRange,
     setDateRange,
-    clearFilters,
     buildQueryParams,
     filterIndustry,
     filterSubIndustry,
@@ -103,9 +103,19 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["tenders", buildQueryParams().toString(), page],
+    queryKey: [
+      "tenders",
+      buildQueryParams().toString(),
+      page,
+      selectedTenderValues,
+    ],
     queryFn: async () => {
       const params = buildQueryParams();
+      if (selectedTenderValues.length > 0) {
+        selectedTenderValues.forEach((value: string) =>
+          params.append("tenderValue", value)
+        );
+      }
       params.append("limit", "10");
       params.append("offset", (page * 10).toString());
 
@@ -120,23 +130,25 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
     },
   });
 
-  const filteredData = React.useMemo(() => {
-    if (isLoading || !tenders?.result) return []; // Return an empty array if loading or no results
-    if (selectedTenderValues.length === 0) return tenders.result;
-    // console.log("Attempting to Filter", selectedTenderValues);
-    return tenders.result.filter((tender: { tenderValue: string }) => {
-      const category = getTenderValueCategory(tender.tenderValue);
-      // console.log("Filtering", tender.tenderValue);
-      return selectedTenderValues.includes(category.toString());
-    });
-  }, [tenders?.result, selectedTenderValues, isLoading]);
+  const clearFilters = useCallback(() => {
+    // Reset all state variables to their initial values
+    setSelectedDistricts([]);
+    setSelectedTenderValues([]);
+    setIndustry([]);
+    setClassification([]);
+    setDateRange(null);
+    setSearchList([]);
+
+    // Trigger a refetch to reset the data
+    refetch();
+  }, [refetch]); // Add refetch to dependency array
 
   const handleRowClick = useCallback((rowData: any) => {
     setSelectedRowData(rowData);
   }, []);
 
   const table = useReactTable({
-    data: filteredData || [],
+    data: tenders?.result || [],
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
