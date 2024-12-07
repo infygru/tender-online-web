@@ -218,6 +218,16 @@ export default function TenderColumns() {
           {formatIndianRupeePrice(row.getValue("tenderValue"))}
         </div>
       ),
+      sortingFn: (rowA, rowB, columnId) => {
+        const valueA = Number(
+          String(rowA.getValue(columnId)).replace(/,/g, "")
+        );
+        const valueB = Number(
+          String(rowB.getValue(columnId)).replace(/,/g, "")
+        );
+
+        return valueA - valueB;
+      },
     },
   ];
 

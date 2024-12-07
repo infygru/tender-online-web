@@ -108,9 +108,18 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
       buildQueryParams().toString(),
       page,
       selectedTenderValues,
+      sorting,
     ],
     queryFn: async () => {
       const params = buildQueryParams();
+
+      if (sorting.length > 0) {
+        const sortColumn = sorting[0].id;
+        const sortDirection = sorting[0].desc ? "desc" : "asc";
+        params.append("sortBy", sortColumn);
+        params.append("sortOrder", sortDirection);
+      }
+
       if (selectedTenderValues.length > 0) {
         selectedTenderValues.forEach((value: string) =>
           params.append("tenderValue", value)
