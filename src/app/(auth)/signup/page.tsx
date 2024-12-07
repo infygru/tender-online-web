@@ -282,9 +282,9 @@ const Signup = ({ setIsLogin }: any) => {
     return data;
   }
   return (
-    <main className="flex pt-[15vh] w-full items-center justify-center pr-[5vw]">
+    <main className="flex pt-[20vh] w-full items-center justify-center pr-[5vw]">
       {loading && (
-        <div className="absolute inset-0  flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
             <circle
               fill="#FF156D"
@@ -482,7 +482,7 @@ const Signup = ({ setIsLogin }: any) => {
               </div>
               <button
                 onClick={() => login()}
-                className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg  border-gray-200 bg-gray-100/50 text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                className="w-full py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg  border-gray-200 bg-gray-100/50 text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
               >
                 <svg
                   className="w-4 h-auto"
@@ -523,13 +523,6 @@ const Signup = ({ setIsLogin }: any) => {
               </p>
             </div>
           </ScrollArea>
-          {/* <DialogFooter className="flex justify-center">
-            <DialogOpen
-              title="Login"
-              description="Already have an account? Log in here."
-              setIsLogin={setIsLogin}
-            />
-          </DialogFooter> */}
         </div>
       </div>
     </main>
