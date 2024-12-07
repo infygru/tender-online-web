@@ -371,7 +371,13 @@ const ContactPage: React.FC = () => {
       );
       toast.info("Details submitted successfully");
       // Reset form
-      setFormData({ firstName: "", lastName: "", email: "", message: "" });
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        message: "",
+        type: "get-in-touch",
+      });
     } catch (error) {
       alert("Failed to send message. Please try again.");
     } finally {
