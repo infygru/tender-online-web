@@ -339,35 +339,8 @@ export default function Home() {
                       businesses of all sizes.
                     </h4>
                   </div>
-                  <div className="py-8">
-                    <div className="bg-white w-max py-1.5 px-1.5 border flex items-center gap-3 rounded-2xl shadow-md">
-                      <button className="px-4 py-2 text-sm font-semibold rounded-xl bg-black text-white">
-                        <Dialog>
-                          <DialogTrigger>Watch Demo</DialogTrigger>
-                          <DialogContent className="sm:max-w-[903px] bg-white">
-                            <DialogHeader>
-                              <DialogTitle>Watch Demo</DialogTitle>
-                              <DialogDescription>
-                                Get 3 Days Free Trial. No payment required
-                              </DialogDescription>
-                            </DialogHeader>
-                            <iframe
-                              width="853"
-                              height="480"
-                              src={`https://www.youtube.com/embed/rokGy0huYEA`}
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                              title="Embedded youtube"
-                              className="rounded-md"
-                            />
-                          </DialogContent>
-                        </Dialog>
-                      </button>
-                      Get 3 Days Free Trial. No payment required
-                    </div>
-                  </div>
 
-                  <div className=" bg-black flex items-start py-[33px] justify-between rounded-xl mt-5 w-[589px] h-[145px]">
+                  <div className=" bg-black flex items-start py-[33px] justify-between rounded-xl mt-12 w-[589px] h-[145px]">
                     {sections.map((section, index) => (
                       <>
                         <div
