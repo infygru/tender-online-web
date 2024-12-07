@@ -133,8 +133,17 @@ export default function Home() {
               <p className="me-2 inline-block text-sm text-gray-800 dark:text-neutral-200">
                 {banner}
               </p>
-              {isSignup && (
-                <span className="group-hover:underline group-focus:underline decoration-2 inline-flex justify-center items-center gap-x-2 font-semibold text-blue-600 text-sm dark:text-blue-500">
+              {isSignup && !isLoggedIn && (
+                <span
+                  className="group-hover:underline group-focus:underline decoration-2 inline-flex justify-center items-center gap-x-2 font-semibold text-blue-600 text-sm dark:text-blue-500"
+                  onClick={() => {
+                    if (window.location.pathname !== "/") {
+                      window.location.href = "/";
+                    } else if (setIsLogin !== undefined) {
+                      setIsLogin(false);
+                    }
+                  }}
+                >
                   Sign up
                   <svg
                     className="shrink-0 size-4"
