@@ -30,7 +30,7 @@ const Footer = () => {
                 <Link href={"https://linkedin.com/in"} target="_blank">
                   <Image
                     src="/linkedin1.png"
-                    width="29"
+                    width="26"
                     height={29}
                     alt="Linkedin Handle"
                   />
@@ -39,7 +39,7 @@ const Footer = () => {
                   {" "}
                   <Image
                     src="/twitter1.png"
-                    width="29"
+                    width="26"
                     height={29}
                     alt="X Handle"
                   />
@@ -48,7 +48,7 @@ const Footer = () => {
                   {" "}
                   <Image
                     src="/facebook1.png"
-                    width="29"
+                    width="26"
                     height={29}
                     alt="Facebook Handle"
                   />
