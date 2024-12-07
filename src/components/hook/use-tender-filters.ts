@@ -90,6 +90,7 @@ export function useTenderFilters() {
   const [dateRange, setDateRange] = useState<any>(null);
   const [searchList, setSearchList] = useState<string[]>([]);
   const [filterIndustry, setFilterIndustry] = useState<any>([]);
+  const [filterClassification, setFilterClassification] = useState<any>([]);
   const [filterSubIndustry, setFilterSubIndustry] = useState<any>([]);
   const [suggestionIndustry, setSuggestionIndustry] = useState<string[]>([]);
   const [suggestionClassification, setSuggestionClassification] = useState<
@@ -126,6 +127,18 @@ export function useTenderFilters() {
       return response.data.industries;
     },
   });
+
+  const { data: classifications, isLoading: isLoadingClassifications } =
+    useQuery({
+      queryKey: ["classifications"],
+      queryFn: async () => {
+        const response = await axios.get(
+          process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/classifications"
+        );
+        setFilterClassification(response.data.classifications);
+        return response.data.classifications;
+      },
+    });
 
   // Fetch sub-industries
   const { data: subIndustries, isLoading: isLoadingSubIndustries } = useQuery({
@@ -201,5 +214,8 @@ export function useTenderFilters() {
     suggestionClassification,
     setSuggestionIndustry,
     setSuggestionClassification,
+    setFilterClassification,
+    filterClassification,
+    isLoadingClassifications,
   };
 }

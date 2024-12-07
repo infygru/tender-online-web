@@ -61,6 +61,8 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
     industry,
     setIndustry,
     classification,
+    setFilterClassification,
+    filterClassification,
     setClassification,
     dateRange,
     setDateRange,
@@ -257,11 +259,7 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
     })),
     Industry: filterIndustry,
     SubIndustry: filterSubIndustry,
-    Classification: [
-      { value: "goods", label: "Goods" },
-      { value: "services", label: "Services" },
-      { value: "works", label: "Works" },
-    ],
+    Classification: filterClassification,
   };
 
   return (
