@@ -105,10 +105,10 @@ export default function SupportPage() {
   };
 
   return (
-    <div className="">
+    <div className="w-full">
       <Header />
-      <div className="container pt-36 mx-auto px-4">
-        <div className="text-center mb-12">
+      <div className="container pt-36">
+        <div className="text-center mt-6 mb-12">
           <h1 className="text-4xl font-bold tracking-tight mb-4">
             We&apos;re here to help!
           </h1>
@@ -325,9 +325,9 @@ export default function SupportPage() {
             </form>
           </Form>
         </div>
-        <div className="pt-[10vh]">
-          <Footer />
-        </div>
+      </div>
+      <div className="pt-[10vh]">
+        <Footer />
       </div>
     </div>
   );
