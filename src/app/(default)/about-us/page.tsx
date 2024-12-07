@@ -316,389 +316,136 @@ const formSchema = Joi.object({
   }),
 });
 
+interface ContactFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  message: string;
+  type?: string;
+}
+
 const ContactPage: React.FC = () => {
-  const [formData, setFormData] = useState<FormValues>({
+  const [formData, setFormData] = useState<ContactFormData>({
     firstName: "",
     lastName: "",
     email: "",
     message: "",
-    type: "contacted",
+    type: "get-in-touch",
   });
 
-  const [errors, setErrors] = useState<Partial<FormValues>>({});
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const queryClient = useQueryClient();
-  const postTodo = async (data: FormValues) => {
-    await axios.post(
-      process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/contact",
-      data
-    );
-  };
-  const router = useRouter();
-  React.useEffect(() => {
-    const hashId = window.location.hash.replace("#", "");
-    if (hashId) {
-      const element = document.getElementById(hashId);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  }, []);
-  // Mutations
-  const mutation = useMutation({
-    mutationFn: postTodo,
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["todos"] });
-      toast.success("Message sent successfully");
-      router.push("/");
-    },
-    onError: () => {
-      toast.error("An error occurred. Please try again later.");
-    },
-  });
+  const [errors, setErrors] = useState<Partial<ContactFormData>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Handle form change
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submission
+  const validateForm = (): boolean => {
+    const newErrors: Partial<ContactFormData> = {};
+
+    if (!formData.firstName.trim())
+      newErrors.firstName = "First name is required";
+    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
+    if (!formData.email.trim()) newErrors.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(formData.email))
+      newErrors.email = "Email is invalid";
+    if (!formData.message.trim()) newErrors.message = "Message is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateForm()) return;
+
     setIsSubmitting(true);
-
-    const validation = formSchema.validate(formData, { abortEarly: false });
-    if (validation.error) {
-      const errorMessages: Partial<FormValues> = {};
-      validation.error.details.forEach((detail) => {
-        errorMessages[detail.path[0] as keyof FormValues] = detail.message;
-      });
-      setErrors(errorMessages);
+    try {
+      await axios.post(
+        process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/contact",
+        formData
+      );
+      toast.info("Details submitted successfully");
+      // Reset form
+      setFormData({ firstName: "", lastName: "", email: "", message: "" });
+    } catch (error) {
+      alert("Failed to send message. Please try again.");
+    } finally {
       setIsSubmitting(false);
-      return;
     }
-
-    setErrors({});
-    await mutation.mutateAsync(formData);
-    setIsSubmitting(false);
   };
 
   return (
-    <main>
-      <div className="relative dark:bg-gray-900">
-        {/* Contact Form */}
-        <div className="p-4 py-6 rounded-lg dark:bg-gray-800 md:py-8">
-          <form onSubmit={handleSubmit}>
-            <div className="-mx-2 md:items-center md:flex">
-              <div className="flex-1 px-2">
-                <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
-                  First Name
-                </label>
-                <input
-                  name="firstName"
-                  type="text"
-                  placeholder="John"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700"
-                />
-                {errors.firstName && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.firstName}
-                  </p>
-                )}
-              </div>
-
-              <div className="flex-1 px-2 mt-4 md:mt-0">
-                <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
-                  Last Name
-                </label>
-                <input
-                  name="lastName"
-                  type="text"
-                  placeholder="Doe"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700"
-                />
-                {errors.lastName && (
-                  <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>
-                )}
-              </div>
-            </div>
-
-            <div className="mt-4">
-              <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
-                Email address
-              </label>
-              <input
-                name="email"
-                type="email"
-                placeholder="johndoe@example.com"
-                value={formData.email}
-                onChange={handleChange}
-                className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700"
-              />
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-              )}
-            </div>
-
-            <div className="w-full mt-4">
-              <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
-                Message
-              </label>
-              <textarea
-                name="message"
-                placeholder="Message"
-                value={formData.message}
-                onChange={handleChange}
-                className="block w-full h-32 px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700"
-              />
-              {errors.message && (
-                <p className="text-red-500 text-sm mt-1">{errors.message}</p>
-              )}
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full px-6 py-3 mt-4 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
-            >
-              {isSubmitting ? "Sending..." : "Send message"}
-            </button>
-          </form>
+    <div className="mx-auto p-4">
+      <form onSubmit={handleSubmit}>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block mb-2">First Name</label>
+            <input
+              type="text"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+            />
+            {errors.firstName && (
+              <p className="text-red-500 text-sm">{errors.firstName}</p>
+            )}
+          </div>
+          <div>
+            <label className="block mb-2">Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+            />
+            {errors.lastName && (
+              <p className="text-red-500 text-sm">{errors.lastName}</p>
+            )}
+          </div>
         </div>
-      </div>
-    </main>
+
+        <div className="mt-4">
+          <label className="block mb-2">Email</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email}</p>
+          )}
+        </div>
+
+        <div className="mt-4">
+          <label className="block mb-2">Message</label>
+          <textarea
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            className="w-full p-2 border rounded h-32"
+          />
+          {errors.message && (
+            <p className="text-red-500 text-sm">{errors.message}</p>
+          )}
+        </div>
+
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full mt-4 p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          {isSubmitting ? "Sending..." : "Send Message"}
+        </button>
+      </form>
+    </div>
   );
 };
-
-//  <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
-//         {/* Features */}
-//         <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-//           {/* Grid */}
-//           <div className="md:grid md:grid-cols-2 md:items-center md:gap-12 xl:gap-32">
-//             <div>
-//               <img
-//                 className="rounded-xl"
-//                 src="https://images.unsplash.com/photo-1648737963503-1a26da876aca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=900&q=80"
-//                 alt="Features Image"
-//               />
-//             </div>
-//             {/* End Col */}
-//             <div className="mt-5 sm:mt-10 lg:mt-0">
-//               <div className="space-y-6 sm:space-y-8">
-//                 {/* Title */}
-//                 <div className="space-y-2 md:space-y-4">
-//                   <h2 className="font-bold text-3xl lg:text-2xl text-gray-800 dark:text-neutral-200">
-//                     How did our “Birth of the Vision” evolve into our Vision-
-//                     The People, the Government, Business
-//                   </h2>
-//                   <p className="text-gray-500 dark:text-neutral-500">
-//                     At Tenderonline, we have a team of efficient executives with
-//                     experience in applying tenders listed by various government
-//                     departments with diversified documentation requirement &
-//                     processing. We aim to act as a catalyst for business
-//                     entities striving to achieve greater scale, while also
-//                     enhancing their products or services to benefit the public,
-//                     with the assistance of government support.
-//                   </p>
-//                 </div>
-//                 {/* End Title */}
-//                 {/* List */}
-//                 <ul className="space-y-2 sm:space-y-4">
-//                   <li className="flex gap-x-3">
-//                     <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-500">
-//                       <svg
-//                         className="shrink-0 size-3.5"
-//                         xmlns="http://www.w3.org/2000/svg"
-//                         width={24}
-//                         height={24}
-//                         viewBox="0 0 24 24"
-//                         fill="none"
-//                         stroke="currentColor"
-//                         strokeWidth={2}
-//                         strokeLinecap="round"
-//                         strokeLinejoin="round"
-//                       >
-//                         <polyline points="20 6 9 17 4 12" />
-//                       </svg>
-//                     </span>
-//                     <div className="grow">
-//                       <span className="text-sm sm:text-base text-gray-500 dark:text-neutral-500">
-//                         <span className="font-bold">Easy &amp; fast</span>{" "}
-//                         designing
-//                       </span>
-//                     </div>
-//                   </li>
-//                   <li className="flex gap-x-3">
-//                     <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-500">
-//                       <svg
-//                         className="shrink-0 size-3.5"
-//                         xmlns="http://www.w3.org/2000/svg"
-//                         width={24}
-//                         height={24}
-//                         viewBox="0 0 24 24"
-//                         fill="none"
-//                         stroke="currentColor"
-//                         strokeWidth={2}
-//                         strokeLinecap="round"
-//                         strokeLinejoin="round"
-//                       >
-//                         <polyline points="20 6 9 17 4 12" />
-//                       </svg>
-//                     </span>
-//                     <div className="grow">
-//                       <span className="text-sm sm:text-base text-gray-500 dark:text-neutral-500">
-//                         Powerful <span className="font-bold">features</span>
-//                       </span>
-//                     </div>
-//                   </li>
-//                   <li className="flex gap-x-3">
-//                     <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-500">
-//                       <svg
-//                         className="shrink-0 size-3.5"
-//                         xmlns="http://www.w3.org/2000/svg"
-//                         width={24}
-//                         height={24}
-//                         viewBox="0 0 24 24"
-//                         fill="none"
-//                         stroke="currentColor"
-//                         strokeWidth={2}
-//                         strokeLinecap="round"
-//                         strokeLinejoin="round"
-//                       >
-//                         <polyline points="20 6 9 17 4 12" />
-//                       </svg>
-//                     </span>
-//                     <div className="grow">
-//                       <span className="text-sm sm:text-base text-gray-500 dark:text-neutral-500">
-//                         User Experience Design
-//                       </span>
-//                     </div>
-//                   </li>
-//                 </ul>
-//                 {/* End List */}
-//               </div>
-//             </div>
-//             {/* End Col */}
-//           </div>
-//           {/* End Grid */}
-//         </div>
-//         {/* End Features */}
-//       </div>
-//       <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
-//         <div className=" px-2 py-10">
-//           <div id="features" className="mx-auto max-w-6xl">
-//             <p className="text-center  text-4xl font-semibold leading-7 text-primary-500">
-//               Why Choose Us
-//             </p>
-//             <h2 className="text-center font-display pt-4 text-[#667085] text-sm font-bold tracking-tight ">
-//               Reliable service provider committed to helping you achieve
-//               procurement excellence.
-//             </h2>
-//             <ul className="mt-16 grid grid-cols-1 gap-6 text-center text-slate-700 md:grid-cols-3">
-//               <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
-//                 <img
-//                   src="https://www.svgrepo.com/show/530438/ddos-protection.svg"
-//                   alt=""
-//                   className="mx-auto h-10 w-10"
-//                 />
-//                 <h3 className="my-3 font-display font-medium">
-//                   Expertise and Experience
-//                 </h3>
-//                 <p className="mt-1.5 text-sm leading-6 text-secondary-500">
-//                   With years of experience in the tendering and procurement
-//                   industry, Tender Online has the expertise to deliver tailored
-//                   solutions that meet your specific needs.
-//                 </p>
-//               </li>
-//               <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
-//                 <img
-//                   src="https://www.svgrepo.com/show/530442/port-detection.svg"
-//                   alt=""
-//                   className="mx-auto h-10 w-10"
-//                 />
-//                 <h3 className="my-3 font-display font-medium">
-//                   Comprehensive Solutions
-//                 </h3>
-//                 <p className="mt-1.5 text-sm leading-6 text-secondary-500">
-//                   We offer a complete suite of tendering services, from bid
-//                   management and document preparation to supplier evaluation and
-//                   contract management, ensuring a seamless experience.
-//                 </p>
-//               </li>
-//               <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
-//                 <img
-//                   src="https://www.svgrepo.com/show/530444/availability.svg"
-//                   alt=""
-//                   className="mx-auto h-10 w-10"
-//                 />
-//                 <h3 className="my-3 font-display font-medium">
-//                   User-Friendly Platform
-//                 </h3>
-//                 <p className="mt-1.5 text-sm leading-6 text-secondary-500">
-//                   Our intuitive platform is designed to be user-friendly, making
-//                   it easy for you to manage tenders, track progress, and
-//                   collaborate with stakeholders
-//                 </p>
-//               </li>
-//               <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
-//                 <a href="/pricing" className="group">
-//                   <img
-//                     src="https://www.svgrepo.com/show/530440/machine-vision.svg"
-//                     alt=""
-//                     className="mx-auto h-10 w-10"
-//                   />
-//                   <h3 className="my-3 font-display font-medium group-hover:text-primary-500">
-//                     Transparent Processes
-//                   </h3>
-//                   <p className="mt-1.5 text-sm leading-6 text-secondary-500">
-//                     We prioritize transparency in all our processes, providing
-//                     you with clear insights and detailed reports to make
-//                     informed decisions.
-//                   </p>
-//                 </a>
-//               </li>
-//               <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
-//                 <a href="/templates" className="group">
-//                   <img
-//                     src="https://www.svgrepo.com/show/530450/page-analysis.svg"
-//                     alt=""
-//                     className="mx-auto h-10 w-10"
-//                   />
-//                   <h3 className="my-3 font-display font-medium group-hover:text-primary-500">
-//                     Dedicated Support
-//                   </h3>
-//                   <p className="mt-1.5 text-sm leading-6 text-secondary-500">
-//                     Our dedicated support team is available to assist you at
-//                     every step, ensuring that your experience with Tender Online
-//                     is smooth and efficient.
-//                   </p>
-//                 </a>
-//               </li>
-//               <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
-//                 <a href="/download" className="group">
-//                   <img
-//                     src="https://www.svgrepo.com/show/530453/mail-reception.svg"
-//                     alt=""
-//                     className="mx-auto h-10 w-10"
-//                   />
-//                   <h3 className="my-3 font-display font-medium group-hover:text-primary-500">
-//                     Cost-Effective
-//                   </h3>
-//                   <p className="mt-1.5 text-sm leading-6 text-secondary-500">
-//                     Our solutions are designed to save you time and money,
-//                     improving your procurement efficiency and reducing
-//                     operational costs.
-//                   </p>
-//                 </a>
-//               </li>
-//             </ul>
-//           </div>
-//         </div>
-//       </div>
