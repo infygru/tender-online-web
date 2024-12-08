@@ -2988,7 +2988,7 @@ const page = () => {
             <div className="bg-gradient-to-r rounded-md px-4 text-sm text-white from-[#8d1db8] font-semibold to-[#0c1073] py-4 text-center">
               <p>
                 For More details Kindly{" "}
-                <Link href="/about-us#contact" className="hover:underline">
+                <Link href="/about-us#contact" className="underline">
                   Contact Us
                 </Link>
               </p>

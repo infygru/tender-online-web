@@ -111,7 +111,7 @@ const Page = () => {
 
               <Link
                 className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-[#F7CE46] text-black shadow-sm hover:bg-[#F7CE46] focus:outline-none  disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                href="/support"
+                href="/pricing"
               >
                 Pricing <ArrowRightIcon className="w-5 h-5" />
               </Link>
