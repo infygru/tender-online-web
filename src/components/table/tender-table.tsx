@@ -109,7 +109,7 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
       "tenders",
       buildQueryParams().toString(),
       page,
-      selectedTenderValues,
+      selectedTenderValues.join(","),
       sorting,
     ],
     queryFn: async () => {
@@ -140,7 +140,9 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
       return response.json();
     },
   });
-
+  React.useEffect(() => {
+    refetch();
+  }, [selectedTenderValues, refetch]);
   const clearFilters = useCallback(() => {
     // Reset all state variables to their initial values
     setSelectedDistricts([]);
