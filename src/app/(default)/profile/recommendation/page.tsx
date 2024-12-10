@@ -7,23 +7,25 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Modal, MultiSelect } from "@mantine/core";
 import { toast } from "sonner";
+import { useTenderFilters } from "@/components/hook/use-tender-filters";
 
 function CheckSuggestion() {
+  const { filterIndustry } = useTenderFilters();
   const [classification, setClassification] = useState([]);
   const [industry, setIndustry] = useState([]);
   const [state, setState] = useState(["tamil-nadu"]);
-  const [filterIndustry, setFilterIndustry] = React.useState<any>([]);
-  const fetchIndustry = async () => {
-    const response = await axios.get(
-      process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/industries"
-    );
-    setFilterIndustry(response.data.industries);
-    return response.data.industries;
-  };
+  // const [filterIndustry, setFilterIndustry] = React.useState<any>([]);
+  // const fetchIndustry = async () => {
+  //   const response = await axios.get(
+  //     process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/industries"
+  //   );
+  //   setFilterIndustry(response.data.industries);
+  //   return response.data.industries;
+  // };
 
-  React.useEffect(() => {
-    fetchIndustry();
-  }, []);
+  // React.useEffect(() => {
+  //   fetchIndustry();
+  // }, []);
 
   // Fetch suggestions to check if the user has already added them
   const fetchSuggestions = async () => {
