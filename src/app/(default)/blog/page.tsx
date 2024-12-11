@@ -34,9 +34,7 @@ export default function Page() {
         <Header />
       </div>
       <div className="pt-36 px-12">
-        <BlogHero />
         <BlogTrending title={"Trending Blogs"} blog={blog} />
-        <BlogTrending title={"Related Topics"} blog={blog} />
       </div>
       <Footer />
     </div>
