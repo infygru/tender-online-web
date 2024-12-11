@@ -19,6 +19,7 @@ import { EyeClosedIcon } from "@radix-ui/react-icons";
 import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { useGoogleLogin } from "@react-oauth/google";
+import { Button } from "@/components/ui/button";
 const Signup = ({ setIsLogin }: any) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -175,6 +176,36 @@ const Signup = ({ setIsLogin }: any) => {
   };
 
   const handletosendemail = async () => {
+    // Get stored OTP attempts from localStorage
+    const otpAttempts1 = localStorage.getItem("otpAttempts");
+
+    const otpAttempts = JSON.parse(otpAttempts1 !== null ? otpAttempts1 : "{}");
+    const email = formData.email;
+    const now = new Date().getTime();
+
+    Object.keys(otpAttempts).forEach((key) => {
+      if (now - otpAttempts[key].timestamp > 24 * 60 * 60 * 1000) {
+        delete otpAttempts[key];
+      }
+    });
+
+    const userAttempts = otpAttempts[email] || { count: 0, timestamp: now };
+
+    if (now - userAttempts.timestamp > 24 * 60 * 60 * 1000) {
+      // Reset attempts if 24 hours have passed
+      userAttempts.count = 0;
+      userAttempts.timestamp = now;
+    }
+
+    if (userAttempts.count >= 3) {
+      const timeLeft =
+        24 - Math.floor((now - userAttempts.timestamp) / (60 * 60 * 1000));
+      toast.error(
+        `Maximum OTP requests reached. Please try again in ${timeLeft} hours.`
+      );
+      return;
+    }
+
     try {
       const response = await fetch(
         process.env.NEXT_PUBLIC_API_ENPOINT + "/api/auth/otp",
@@ -193,7 +224,17 @@ const Signup = ({ setIsLogin }: any) => {
 
       const data = await response.json();
       setOtp(data);
-      toast.success("OTP sent successfully");
+
+      userAttempts.count += 1;
+      userAttempts.timestamp = userAttempts.timestamp || now;
+      otpAttempts[email] = userAttempts;
+
+      localStorage.setItem("otpAttempts", JSON.stringify(otpAttempts));
+
+      const remainingAttempts = 3 - userAttempts.count;
+      toast.success(
+        `OTP sent successfully. ${remainingAttempts} attempts remaining for today.`
+      );
     } catch (error) {
       console.error("Failed to send OTP:", error);
       setErrors({
@@ -380,28 +421,9 @@ const Signup = ({ setIsLogin }: any) => {
                     />
                     {key === "email" && formData["email"] && (
                       <div className="w-max">
-                        <DialogOpen
-                          button={
-                            <div className="flex items-end justify-end">
-                              <button
-                                onClick={handletosendemail}
-                                className="px-6 py-3 w-max rounded-xl border text-sm font-semibold bg-gray-100 mt-2"
-                              >
-                                send otp
-                              </button>
-                            </div>
-                          }
-                        >
-                          <div className="">
-                            <DialogHeader>
-                              <DialogTitle>
-                                Enter code sent on your email
-                              </DialogTitle>
-                              <DialogDescription>
-                                {formData.email}
-                              </DialogDescription>
-                            </DialogHeader>
-                            <div className="grid gap-4 py-4 ">
+                        <div className="">
+                          <div className="flex gap-2 items-center">
+                            <div className="grid gap-4 py-4">
                               <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="name" className="text-right">
                                   OTP
@@ -419,27 +441,35 @@ const Signup = ({ setIsLogin }: any) => {
                                   }}
                                 />
                               </div>
-                            </div>
-                            <div className="flex items-center justify-between w-full">
-                              <p className="mt-3 text-sm text-gray-500">
-                                Haven’t received the OTP
-                              </p>
-                              <div onClick={handletosendemail}>
-                                <span className="text-base cursor-pointer text-red-500 underline">
-                                  Resend
-                                </span>
-                              </div>
-                            </div>
-                            <DialogFooter>
-                              <Close
-                                className="px-6 py-3 rounded-2xl border text-sm font-semibold bg-gray-100 mt-2"
-                                onClick={handletootpverify}
+                            </div>{" "}
+                            <div className="flex items-end justify-end">
+                              <button
+                                onClick={handletosendemail}
+                                className="px-6 py-3 w-max rounded-xl border text-sm font-semibold bg-gray-100"
                               >
-                                Save changes
-                              </Close>
-                            </DialogFooter>
+                                send otp
+                              </button>
+                            </div>
                           </div>
-                        </DialogOpen>
+                          <div className="flex items-center justify-around w-full">
+                            <p className=" text-sm text-gray-500">
+                              Haven't received the OTP
+                            </p>
+                            <div onClick={handletosendemail}>
+                              <span className="text-base cursor-pointer text-red-500 underline">
+                                Resend
+                              </span>
+                            </div>
+                          </div>
+                          <div className="flex justify-center mt-4">
+                            <Button
+                              variant={"default"}
+                              onClick={handletootpverify}
+                            >
+                              submit
+                            </Button>
+                          </div>
+                        </div>
                       </div>
                     )}
                     {key === "password" && (
