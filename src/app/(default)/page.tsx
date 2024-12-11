@@ -126,11 +126,11 @@ export default function Home() {
       {isVisible && (
         <div className="relative">
           <Link
-            className="group relative z-50 block bg-gray-100 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 py-2 rounded-lg text-center transition duration-300 dark:bg-white/10 dark:hover:bg-white/10 dark:focus:bg-white/10"
+            className="group relative z-50 block bg-black/90 hover:bg-black focus:outline-none  py-2 text-center transition duration-300 dark:bg-white/10 dark:hover:bg-white/10 dark:focus:bg-white/10"
             href="/"
           >
             <div className="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto">
-              <p className="me-2 inline-block text-sm text-gray-800 dark:text-neutral-200">
+              <p className="me-2 inline-block text-sm text-white dark:text-neutral-200">
                 {banner}
               </p>
               {isSignup && !isLoggedIn && (
@@ -151,7 +151,7 @@ export default function Home() {
                     width={24}
                     height={24}
                     viewBox="0 0 24 24"
-                    fill="none"
+                    fill="white"
                     stroke="currentColor"
                     strokeWidth={2}
                     strokeLinecap="round"
