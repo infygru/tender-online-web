@@ -422,37 +422,37 @@ const Signup = ({ setIsLogin }: any) => {
                     {key === "email" && formData["email"] && (
                       <div className="w-max">
                         <div className="">
-                          <div className="flex gap-2 items-center">
-                            <div className="grid gap-4 py-4">
+                          <div className="flex gap-2 items-start">
+                            <div className="grid gap-4 py-4 justify-start">
                               <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="name" className="text-right">
                                   OTP
                                 </Label>
-                                <Input
-                                  onChange={(e) => setTypeOtp(e.target.value)}
-                                  placeholder="Enter OTP"
-                                  type="text"
-                                  id="otp"
-                                  className="col-span-3"
-                                  onKeyDown={(e) => {
-                                    if (e.key === "Enter") {
-                                      handletootpverify();
-                                    }
-                                  }}
-                                />
+                                <div className="col-span-3 relative">
+                                  <Input
+                                    onChange={(e) => setTypeOtp(e.target.value)}
+                                    placeholder="Enter OTP"
+                                    type="text"
+                                    id="otp"
+                                    className="pr-24" // Add padding to make room for the button
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter") {
+                                        handletootpverify();
+                                      }
+                                    }}
+                                  />
+                                  <button
+                                    onClick={handletosendemail}
+                                    className="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-1 w-max rounded-lg border text-xs font-semibold bg-gray-100 hover:bg-black hover:text-white"
+                                  >
+                                    send otp
+                                  </button>
+                                </div>
                               </div>
-                            </div>{" "}
-                            <div className="flex items-end justify-end">
-                              <button
-                                onClick={handletosendemail}
-                                className="px-6 py-3 w-max rounded-xl border text-sm font-semibold bg-gray-100"
-                              >
-                                send otp
-                              </button>
                             </div>
                           </div>
-                          <div className="flex items-center justify-around w-full">
-                            <p className=" text-sm text-gray-500">
+                          <div className="flex items-center justify-around w-full mt-2">
+                            <p className="text-sm text-gray-500">
                               Haven't received the OTP
                             </p>
                             <div onClick={handletosendemail}>
