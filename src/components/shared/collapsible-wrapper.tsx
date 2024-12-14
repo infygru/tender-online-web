@@ -78,7 +78,7 @@ interface SubscriptionTabOption {
   value: string;
   price: number;
   period: string;
-  planId: string;
+  planId?: string;
 }
 
 export const SubscriptionPricingTabs = ({ handletoAddcart }: any) => {
@@ -88,21 +88,21 @@ export const SubscriptionPricingTabs = ({ handletoAddcart }: any) => {
       value: "Per Month",
       price: 400,
       period: "/ Per Month",
-      planId: "plan_PWyPDadgkLKodi",
+      planId: process.env.NEXT_PUBLIC_RAZOR_PLAN_ID_1,
     },
     {
       label: "Half Year",
       value: "Per Half Year",
       price: 2400,
       period: "/ Per Half Year",
-      planId: "plan_PWyQGQuljL4XrL",
+      planId: process.env.NEXT_PUBLIC_RAZOR_PLAN_ID_2,
     },
     {
       label: "Annual",
       value: "Per Year",
       price: 4000,
       period: "/ Per Year",
-      planId: "plan_PWyQi2hrlZrJrC",
+      planId: process.env.NEXT_PUBLIC_RAZOR_PLAN_ID_3,
     },
   ];
 
@@ -114,8 +114,6 @@ export const SubscriptionPricingTabs = ({ handletoAddcart }: any) => {
   };
 
   const handleSubscription = async (selectedTab: SubscriptionTabOption) => {
-    console.log(sessionStorage.getItem("accessToken"));
-
     const isLogin =
       typeof window !== "undefined" && sessionStorage.getItem("accessToken");
 
