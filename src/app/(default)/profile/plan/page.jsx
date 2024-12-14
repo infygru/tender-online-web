@@ -1,0 +1,157 @@
+"use client";
+import { useEffect, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { CalendarIcon, CreditCardIcon } from "lucide-react";
+
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
+
+const getUserStatusVariant = (status) => {
+  switch (status) {
+    case "active":
+      return "default";
+    case "cancelled":
+      return "destructive";
+    case "pending":
+      return "outline";
+    default:
+      return "secondary";
+  }
+};
+
+const PlanPage = () => {
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    console.log(sessionStorage.getItem("accessToken"));
+    const fetchUserDetails = async () => {
+      try {
+        const userDataReq = await fetch(
+          process.env.NEXT_PUBLIC_API_ENPOINT + "/api/auth/me",
+          {
+            headers: {
+              Authorization: "Bearer " + sessionStorage.getItem("accessToken"),
+            },
+          }
+        );
+        const userData = await userDataReq.json();
+        setUserData(userData);
+      } catch (error) {}
+    };
+    fetchUserDetails();
+  }, []);
+
+  if (!userData) return null;
+
+  return (
+    <div className="container mx-auto px-4 py-8 space-y-6">
+      <h1 className="text-3xl font-bold text-center mb-6 text-foreground">
+        Subscription Details
+      </h1>
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <CreditCardIcon className="w-6 h-6" />
+            Current Subscription
+          </CardTitle>
+          <CardDescription>Details of your active plan</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground">Status</span>
+                <Badge
+                  variant={getUserStatusVariant(
+                    userData.paymentStatus.toLowerCase()
+                  )}
+                >
+                  {userData.paymentStatus}
+                </Badge>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground">Plan Amount</span>
+                <span className="font-semibold">
+                  ₹{userData.subscriptionAmount}
+                </span>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground">Valid Until</span>
+                <div className="flex items-center gap-2">
+                  <CalendarIcon className="w-4 h-4 text-muted-foreground" />
+                  <span>{formatDate(userData.subscriptionValidity)}</span>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground">Duration</span>
+                <span>
+                  {userData.subscriptionHistory.length > 0 &&
+                    userData.subscriptionHistory[
+                      userData.subscriptionHistory.length - 1
+                    ].duration}
+                </span>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Subscription History</CardTitle>
+          <CardDescription>Previous subscription details</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Plan</TableHead>
+                <TableHead>Start Date</TableHead>
+                <TableHead>End Date</TableHead>
+                <TableHead className="text-right">Duration</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {userData.subscriptionHistory.length > 0 &&
+                userData.subscriptionHistory.slice(0, -1).map((item, index) => (
+                  <TableRow key={item.subscriptionId}>
+                    <TableCell className="font-medium">
+                      ₹{item.amount}
+                    </TableCell>
+                    <TableCell>{formatDate(item.subscriptionDate)}</TableCell>
+                    <TableCell>{formatDate(item.validUntil)}</TableCell>
+                    <TableCell className="text-right">
+                      {item.duration}
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default PlanPage;
