@@ -5,12 +5,10 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ChevronUp } from "lucide-react";
-
-import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-
 interface CollapsibleWrapperProps {
   children?: React.ReactNode;
   title: string;
@@ -75,115 +73,124 @@ const CollapsibleWrapper: React.FC<CollapsibleWrapperProps> = ({
 
 export default CollapsibleWrapper;
 
-interface TabOption {
+interface SubscriptionTabOption {
   label: string;
   value: string;
   price: number;
   period: string;
+  planId: string;
 }
 
-export const PricingTabs = ({ handletoAddcart }: any) => {
-  // Define tab options dynamically
-  const tabs: TabOption[] = [
-    { label: "Month", value: "Per Month", price: 400, period: "/ Per Month" },
+export const SubscriptionPricingTabs = ({ handletoAddcart }: any) => {
+  const tabs: SubscriptionTabOption[] = [
+    {
+      label: "Month",
+      value: "Per Month",
+      price: 400,
+      period: "/ Per Month",
+      planId: "plan_PWyPDadgkLKodi",
+    },
     {
       label: "Half Year",
       value: "Per Half Year",
       price: 2400,
       period: "/ Per Half Year",
+      planId: "plan_PWyQGQuljL4XrL",
     },
-    { label: "Annual", value: "Per Year", price: 4000, period: "/ Per Year" },
+    {
+      label: "Annual",
+      value: "Per Year",
+      price: 4000,
+      period: "/ Per Year",
+      planId: "plan_PWyQi2hrlZrJrC",
+    },
   ];
 
-  // State for active tab
   const [activeTab, setActiveTab] = useState<string>(tabs[0].value);
+  const router = useRouter();
 
-  const [isRazorpayLoaded, setIsRazorpayLoaded] = useState<boolean>(false);
-  // Change handler for tabs
   const handleTabChange = (value: string) => {
     setActiveTab(value);
   };
-  const router = useRouter();
-  // Ensure Razorpay is loaded
-  useEffect(() => {
-    if (typeof window !== "undefined" && window.Razorpay) {
-      setIsRazorpayLoaded(true);
-    } else {
-      // Load Razorpay if it's not already loaded
-      const script = document.createElement("script");
-      script.src = "https://checkout.razorpay.com/v1/checkout.js";
-      script.onload = () => {
-        setIsRazorpayLoaded(true);
-      };
-      script.onerror = () => {
-        toast.error("Failed to load Razorpay SDK. Please try again.");
-      };
-      document.body.appendChild(script);
-    }
-  }, []);
 
-  // Razorpay payment handler
-  const handlePayment = (duration: any, price: any) => {
-    const paymentAmount = price;
+  const handleSubscription = async (selectedTab: SubscriptionTabOption) => {
+    const isLogin =
+      typeof window !== "undefined" && sessionStorage.getItem("accessToken");
+
     if (!isLogin) {
       router.push("/");
       return;
     }
-    if (!isRazorpayLoaded) {
-      toast.error("Razorpay SDK is not loaded yet. Please wait.");
-      return;
-    }
 
-    const options = {
-      key: "rzp_test_ujFOlA5t7s0E09", // Use NEXT_PUBLIC for env vars in Next.js
-      amount: paymentAmount * 100, // Razorpay amount is in paise
-      currency: "INR",
-      name: "Subscription Payment",
-      description: `Pay ₹${paymentAmount} for ${duration}`,
-      handler: async (response: any) => {
-        try {
-          const paymentId = response.razorpay_payment_id;
-          const apiUrl =
-            process.env.NEXT_PUBLIC_API_ENPOINT + `/api/auth/success/payment`;
-
-          const result = await fetch(apiUrl, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-            },
-            body: JSON.stringify({
-              paymentId,
-              amount: paymentAmount,
-              duration: duration,
-            }),
-          });
-
-          if (result.ok) {
-            toast.success("Payment Successful!");
-            router.push("/tenders");
-          } else {
-            toast.error("Payment Failed");
-          }
-        } catch (error) {
-          toast.error("Payment failed. Please try again.");
-          console.error(error);
+    try {
+      const createResponse = await fetch(
+        process.env.NEXT_PUBLIC_API_ENPOINT + "/api/auth/create-subscription",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+          },
+          body: JSON.stringify({
+            planId: selectedTab.planId,
+            duration: selectedTab.value,
+          }),
         }
-      },
-      prefill: {
-        name: "John Doe", // Replace with dynamic user details
-        email: "john@example.com", // Replace with dynamic user email
-      },
-      theme: {
-        color: "#F37254",
-      },
-    };
+      );
 
-    const razorpay = new window.Razorpay(options);
-    razorpay.open();
+      if (!createResponse.ok) {
+        throw new Error("Failed to create subscription");
+      }
+      const { subscriptionId, shortUrl } = await createResponse.json();
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZOR_API_KEY,
+        subscription_id: subscriptionId,
+        handler: async (response: any) => {
+          try {
+            const result = await fetch(
+              process.env.NEXT_PUBLIC_API_ENPOINT +
+                "/api/auth/subscribe/newsletter",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${sessionStorage.getItem(
+                    "accessToken"
+                  )}`,
+                },
+                body: JSON.stringify({
+                  subscriptionId: response.razorpay_subscription_id,
+                  amount: selectedTab.price,
+                  duration: selectedTab.value,
+                  planId: selectedTab.planId,
+                  payment_id: response.razorpay_payment_id,
+                  signature: response.razorpay_signature,
+                }),
+              }
+            );
+
+            if (result.ok) {
+              toast.success("Subscription Successful!");
+              router.push("/tenders");
+            } else {
+              toast.error("Subscription Failed");
+            }
+          } catch (error) {
+            toast.error("Subscription failed. Please try again.");
+            console.error(error);
+          }
+        },
+      };
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      toast.error("Failed to create subscription. Please try again.");
+      console.error(error);
+    }
   };
-  const isLogin =
-    typeof window !== "undefined" && sessionStorage.getItem("accessToken");
+
   return (
     <div className="flex items-center justify-center py-6">
       {/* Tabs */}
@@ -217,25 +224,10 @@ export const PricingTabs = ({ handletoAddcart }: any) => {
                 </h2>
                 <div className="flex pt-6 items-center justify-center gap-6 mt-4">
                   <button
-                    onClick={() => {
-                      handlePayment(tab.value, tab.price);
-                    }}
+                    onClick={() => handleSubscription(tab)}
                     className="bg-gradient-to-r from-[#8d1db8] to-[#0c1073] text-white px-6 py-3 text-xl rounded-xl"
                   >
-                    Buy Now
-                  </button>
-                  <button
-                    onClick={() =>
-                      handletoAddcart(
-                        "NewsLetter Package",
-                        tab.price,
-                        tab.value,
-                        "newsletter"
-                      )
-                    }
-                    className="text-black px-6 py-3 text-xl border-[#8d1db8] rounded-xl border"
-                  >
-                    Add to Cart
+                    Subscribe Now
                   </button>
                 </div>
               </div>

@@ -1,6 +1,6 @@
 "use client";
 import CollapsibleWrapper, {
-  PricingTabs,
+  SubscriptionPricingTabs,
 } from "@/components/shared/collapsible-wrapper";
 import Footer from "@/components/shared/footer";
 import ShoppingCart from "@/components/shared/ShoppingCart";
@@ -349,7 +349,7 @@ const page = () => {
         title={"Newsletter Package"}
         subTitle={"Tender information updated every day"}
       >
-        <PricingTabs handletoAddcart={handletoAddcart} />
+        <SubscriptionPricingTabs handletoAddcart={handletoAddcart} />
       </CollapsibleWrapper>
       <CollapsibleWrapper
         id="package"
