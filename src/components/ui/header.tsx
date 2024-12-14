@@ -183,7 +183,7 @@ const Header = ({ isLogin1, setIsLogin1 }: HeaderProps) => {
                   <div>
                     {isLogin1 && (
                       <div className="flex gap-2">
-                        <button className="px-4 py-2 text-sm font-semibold rounded-xl bg-black text-white">
+                        <div className="px-4 py-2 text-sm font-semibold rounded-xl bg-black text-white">
                           <Dialog>
                             <DialogTrigger>Watch Demo</DialogTrigger>
                             <DialogContent className="sm:max-w-[903px] bg-white">
@@ -204,7 +204,7 @@ const Header = ({ isLogin1, setIsLogin1 }: HeaderProps) => {
                               />
                             </DialogContent>
                           </Dialog>
-                        </button>
+                        </div>
                         <button
                           className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-[16px]"
                           onClick={() => {
@@ -223,7 +223,7 @@ const Header = ({ isLogin1, setIsLogin1 }: HeaderProps) => {
                     )}
                     {!isLogin1 && (
                       <div className="flex gap-2">
-                        <button className="px-4 py-2 text-sm font-semibold rounded-xl bg-black text-white">
+                        <div className="px-4 py-2 text-sm font-semibold rounded-xl bg-black text-white">
                           <Dialog>
                             <DialogTrigger>Watch Demo</DialogTrigger>
                             <DialogContent className="sm:max-w-[903px] bg-white">
@@ -244,7 +244,7 @@ const Header = ({ isLogin1, setIsLogin1 }: HeaderProps) => {
                               />
                             </DialogContent>
                           </Dialog>
-                        </button>
+                        </div>
                         <button
                           className="rounded-xl px-4 py-2 bg-black text-white font-semibold text-[16px]"
                           onClick={() => {
