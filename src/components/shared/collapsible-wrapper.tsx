@@ -114,6 +114,8 @@ export const SubscriptionPricingTabs = ({ handletoAddcart }: any) => {
   };
 
   const handleSubscription = async (selectedTab: SubscriptionTabOption) => {
+    console.log(sessionStorage.getItem("accessToken"));
+
     const isLogin =
       typeof window !== "undefined" && sessionStorage.getItem("accessToken");
 
@@ -161,18 +163,15 @@ export const SubscriptionPricingTabs = ({ handletoAddcart }: any) => {
                 },
                 body: JSON.stringify({
                   subscriptionId: response.razorpay_subscription_id,
-                  amount: selectedTab.price,
-                  duration: selectedTab.value,
-                  planId: selectedTab.planId,
-                  payment_id: response.razorpay_payment_id,
-                  signature: response.razorpay_signature,
                 }),
               }
             );
 
             if (result.ok) {
-              toast.success("Subscription Successful!");
-              router.push("/tenders");
+              toast.success(
+                "Subscription Successful!. It could take few minutes to update"
+              );
+              setTimeout(() => router.push("/tenders"), 5000);
             } else {
               toast.error("Subscription Failed");
             }
