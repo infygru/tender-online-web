@@ -48,7 +48,7 @@ const page = () => {
     }
 
     const options = {
-      key: "rzp_test_ujFOlA5t7s0E09", // Use NEXT_PUBLIC for env vars in Next.js
+      key: process.env.NEXT_PUBLIC_RAZOR_API_KEY, // Use NEXT_PUBLIC for env vars in Next.js
       amount: paymentAmount * 100, // Razorpay amount is in paise
       currency: "INR",
       name: "Subscription Payment",
