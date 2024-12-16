@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { useTenderFilters } from "@/components/hook/use-tender-filters";
 
 function CheckSuggestion() {
-  const { filterIndustry } = useTenderFilters();
+  const { filterIndustry, filterClassification } = useTenderFilters();
   const [classification, setClassification] = useState([]);
   const [industry, setIndustry] = useState([]);
   const [state, setState] = useState(["tamil-nadu"]);
@@ -57,11 +57,7 @@ function CheckSuggestion() {
   const dropdownData: any = {
     Industry: filterIndustry,
     State: [{ value: "tamil-nadu", label: "Tamil Nadu" }],
-    Classification: [
-      { value: "Good", label: "Goods" },
-      { value: "service", label: "Service" },
-      { value: "work", label: "Works" },
-    ],
+    Classification: filterClassification,
   };
 
   const handleMultiSelectChange = (label: string, value: any) => {
