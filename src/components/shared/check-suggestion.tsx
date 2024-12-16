@@ -4,23 +4,13 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useState } from "react";
 import { Modal, MultiSelect } from "@mantine/core";
+import { useTenderFilters } from "../hook/use-tender-filters";
 
 export function CheckSuggestion() {
   const [classification, setClassification] = useState([]);
   const [industry, setIndustry] = useState([]);
   const [state, setState] = useState(["tamil-nadu"]);
-  const [filterIndustry, setFilterIndustry] = React.useState<any>([]);
-  const fetchIndustry = async () => {
-    const response = await axios.get(
-      process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/industries"
-    );
-    setFilterIndustry(response.data.industries);
-    return response.data.industries;
-  };
-
-  React.useEffect(() => {
-    fetchIndustry();
-  }, []);
+  const { filterIndustry, filterClassification } = useTenderFilters();
 
   // Fetch suggestions to check if the user has already added them
   const fetchSuggestions = async () => {
@@ -44,16 +34,10 @@ export function CheckSuggestion() {
   const dropdownData: any = {
     Industry: filterIndustry,
     State: [{ value: "tamil-nadu", label: "Tamil Nadu" }],
-    Classification: [
-      { value: "Good", label: "Goods" },
-      { value: "service", label: "Service" },
-      { value: "work", label: "Works" },
-    ],
+    Classification: filterClassification,
   };
 
   const handleMultiSelectChange = (label: string, value: any) => {
-    console.log(value, "selected");
-
     switch (label) {
       case "Industry":
         setIndustry(value);
