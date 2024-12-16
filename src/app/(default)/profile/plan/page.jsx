@@ -105,7 +105,7 @@ const PlanPage = () => {
                 </div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Duration</span>
+                <span className="text-muted-foreground">Period</span>
                 <span>
                   {userData.subscriptionHistory.length > 0 &&
                     userData.subscriptionHistory[

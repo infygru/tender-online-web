@@ -41,9 +41,6 @@ export interface TenderDocument {
 }
 
 const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
-  useEffect(() => {
-    console.log("selectedRowData", selectedRowData);
-  }, [selectedRowData]); //2024_PWD_504115_10
   const handleToSendTender = async (tenderId: string) => {
     const url =
       process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/tender-mapping"; // Adjust the URL as needed

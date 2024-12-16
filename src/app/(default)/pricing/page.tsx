@@ -90,10 +90,6 @@ const page = () => {
           console.error(error);
         }
       },
-      prefill: {
-        name: "John Doe", // Replace with dynamic user details
-        email: "john@example.com", // Replace with dynamic user email
-      },
       theme: {
         color: "#F37254",
       },
