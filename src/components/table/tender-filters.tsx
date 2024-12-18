@@ -179,7 +179,7 @@ export const FilterLabels = ({
         classification) && (
         <button
           onClick={clearFilters}
-          className="px-4 rounded-md border py-2 text-xs"
+          className="px-4 rounded-md border py-2 text-xs bg-white hover:bg-gray-100"
         >
           Reset All
         </button>
