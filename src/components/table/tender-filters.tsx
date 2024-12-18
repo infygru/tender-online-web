@@ -118,6 +118,7 @@ export default function TenderFilters({
             <div className="grid gap-4">
               <MultiSelect
                 label={label}
+                searchable
                 placeholder={`Pick ${label}`}
                 data={uniqueOptions}
                 value={getSelectedValues(label)}

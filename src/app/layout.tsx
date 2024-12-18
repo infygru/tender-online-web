@@ -20,6 +20,18 @@ export default function RootLayout({
 }>) {
   const theme = createTheme({
     white: "#F5F8FF",
+    components: {
+      MultiSelect: {
+        styles: {
+          input: {
+            backgroundColor: "white",
+          },
+          dropdown: {
+            backgroundColor: "white",
+          },
+        },
+      },
+    },
   });
   const queryClient = new QueryClient();
   const navigate = useRouter();
