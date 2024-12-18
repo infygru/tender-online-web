@@ -38,7 +38,20 @@ const getUserStatusVariant = (status) => {
       return "secondary";
   }
 };
-
+const getUserStatusColour = (status) => {
+  switch (status) {
+    case "active":
+      return "bg-[#28A745] text-white";
+    case "cancelled":
+      return "bg-[#DC3545] text-white";
+    case "free trial":
+      return "bg-[#007BFF] text-white";
+    case "free trial expired":
+      return "bg-[#FFA500] text-white";
+    default:
+      return "bg-[#6C757D] text-white";
+  }
+};
 const PlanPage = () => {
   const [userData, setUserData] = useState(null);
 
@@ -68,7 +81,9 @@ const PlanPage = () => {
       <h1 className="text-3xl font-bold text-center mb-6 text-foreground">
         Subscription Details
       </h1>
-      <Card>
+      <Card
+        className={getUserStatusColour(userData.paymentStatus.toLowerCase())}
+      >
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CreditCardIcon className="w-6 h-6" />
@@ -77,7 +92,7 @@ const PlanPage = () => {
           <CardDescription>Details of your active plan</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Status</span>
