@@ -67,7 +67,7 @@ const SearchTab: FC<SearchTabProps> = ({
         value={search}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
-        className="max-w-xl"
+        className="max-w-xl custom-search-border !outline-none border-transparent focus:border-transparent focus:ring-0"
       />
       {searchList.length > 0 && (
         <div className="flex flex-wrap mt-4 gap-2">
