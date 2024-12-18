@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { DateRangePicker } from "@matharumanpreet00/react-daterange-picker";
+import { X } from "lucide-react";
+import { Button } from "../ui/button";
 
 // Type definition for the component
 export const DatePickerWithRange: React.FC<any> = ({
@@ -19,7 +21,7 @@ export const DatePickerWithRange: React.FC<any> = ({
         buttonRef.current &&
         !buttonRef.current.contains(event.target as Node) // Ensure the button is excluded
       ) {
-        // setOpen(false);
+        setOpen(false);
       }
     };
 
@@ -67,6 +69,9 @@ export const DatePickerWithRange: React.FC<any> = ({
           ref={pickerRef} // Attach ref to the date picker container
           className="absolute z-50 lg:w-auto w-[500px] border rounded-xl px-4 py-4 top-12 right-0 bg-white display-shadow "
         >
+          <button onClick={() => setOpen(false)}>
+            <X />
+          </button>
           <DateRangePicker
             minDate={new Date()}
             open={open}
@@ -84,15 +89,15 @@ export const DatePickerWithRange: React.FC<any> = ({
                 </h3>
               </div>
             )}
-            <button
-              className="px-2 mt-6  py-2 border rounded-xl"
+            <Button
+              className="ml-auto mr-2"
               onClick={() => {
                 setOpen(false);
                 setDateRange(newdDateRange);
               }}
             >
-              Submit
-            </button>
+              submit
+            </Button>
           </div>
         </div>
       )}
