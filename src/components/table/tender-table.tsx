@@ -20,7 +20,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useTenderFilters } from "@/components/hook/use-tender-filters";
 import TenderFilters, { FilterLabels } from "./tender-filters";
 import SearchTab from "./search-tab";
@@ -320,7 +320,7 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
 
       <div className="w-full">
         <ScrollArea>
-          <Table>
+          <Table className="overflow-hidden">
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id} className="hover:bg-transparent">
@@ -343,6 +343,7 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
+                    className="hover:scale-[1.01] transition-all"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
