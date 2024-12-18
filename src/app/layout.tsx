@@ -18,7 +18,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const theme = createTheme({});
+  const theme = createTheme({
+    white: "#F5F8FF",
+  });
   const queryClient = new QueryClient();
   const navigate = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);

@@ -33,7 +33,7 @@ const Page = () => {
   };
 
   return (
-    <div className="p-6 w-full min-h-screen flex flex-col items-center justify-center bg-white">
+    <div className="p-6 w-full min-h-screen flex flex-col items-center justify-center">
       <div className="w-full max-w-3xl bg-white rounded-3xl p-6 space-y-4">
         <h2 className="text-2xl font-semibold text-gray-700 text-center">
           Room for Improvement

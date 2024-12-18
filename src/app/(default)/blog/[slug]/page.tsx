@@ -21,7 +21,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="bg-gray-50">
+    <div className="">
       <Header />
       <div className="pt-36 px-4 md:px-12 lg:px-20 font-roboto">
         {/* Blog Title Section */}

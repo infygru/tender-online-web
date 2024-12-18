@@ -223,7 +223,7 @@ export default function Home() {
       {!isLoggedIn ? (
         <div className="flex h-fit">
           {/* Left Pane */}
-          <div className="hidden lg:flex relative w-full h-fit items-start mt-[20vh] justify-center flex-1 bg-white text-black">
+          <div className="hidden lg:flex relative w-full h-fit items-start mt-[20vh] justify-center flex-1 text-black">
             <div className=" text-center  w-full relative">
               {/* <div className="fill-black bg-black opacity-50 absolute inset-0"></div> */}
               <div className="object-cover w-full h-fit" />
@@ -426,7 +426,7 @@ export default function Home() {
       ) : (
         <div className="flex h-screen w-full items-center justify-center">
           {/* Left Pane */}
-          <div className="hidden w-full lg:flex h-screen relative items-center justify-center flex-1 bg-white text-black">
+          <div className="hidden w-full lg:flex h-screen relative items-center justify-center flex-1 text-black">
             <div className=" text-center  w-full relative">
               {/* <div className="fill-black bg-black opacity-50 absolute inset-0"></div> */}
               <div className="object-cover  w-full h-screen" />
