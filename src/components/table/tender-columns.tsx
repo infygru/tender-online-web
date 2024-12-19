@@ -8,8 +8,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 // Your format functions (unchanged)
 export const formatDate = (isoDateString: string): string => {
+  console.log(isoDateString);
   const date = new Date(isoDateString);
-  const year = date.getFullYear().toString().slice(-2);
+  const year = date.getUTCFullYear().toString().slice(-2);
   const monthNames = [
     "Jan",
     "Feb",
@@ -24,10 +25,10 @@ export const formatDate = (isoDateString: string): string => {
     "Nov",
     "Dec",
   ];
-  const month = monthNames[date.getMonth()];
-  const day = date.getDate().toString().padStart(2, "0");
-  let hours = date.getHours();
-  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const month = monthNames[date.getUTCMonth()];
+  const day = date.getUTCDate().toString().padStart(2, "0");
+  let hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes().toString().padStart(2, "0");
   const ampm = hours >= 12 ? "PM" : "AM";
   hours = hours % 12 || 12;
 
