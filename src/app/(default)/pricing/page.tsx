@@ -36,7 +36,21 @@ const page = () => {
   const isLogin =
     typeof window !== "undefined" && sessionStorage.getItem("accessToken");
 
-  const handlePayment = (paymentAmount: any, duration: any) => {
+  useEffect(() => {});
+  const userDetails = async () => {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_ENPOINT + "/api/auth/me",
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  };
+
+  const handlePayment = async (paymentAmount: any, duration: any) => {
     if (!isLogin) {
       toast.error("Please login to continue");
       router.push("/");
@@ -45,6 +59,16 @@ const page = () => {
     if (!isRazorpayLoaded) {
       toast.error("Razorpay SDK is not loaded yet. Please wait.");
       return;
+    }
+    const { email, phone } = await userDetails();
+    if (email === "" || phone === "") {
+      toast.warning(
+        "Please complete your profile first. Redirecting to profile in 5 seconds"
+      );
+
+      return setTimeout(() => {
+        router.push("/profile/edit");
+      }, 5000);
     }
 
     const options = {

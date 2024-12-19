@@ -113,6 +113,19 @@ export const SubscriptionPricingTabs = ({ handletoAddcart }: any) => {
     setActiveTab(value);
   };
 
+  const userDetails = async () => {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_ENPOINT + "/api/auth/me",
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  };
+
   const handleSubscription = async (selectedTab: SubscriptionTabOption) => {
     const isLogin =
       typeof window !== "undefined" && sessionStorage.getItem("accessToken");
@@ -122,6 +135,18 @@ export const SubscriptionPricingTabs = ({ handletoAddcart }: any) => {
       return;
     }
 
+    const { email, phone } = await userDetails();
+    if (email === "" || phone === "") {
+      toast.warning(
+        "Please complete your profile first. Redirecting to profile in 5 seconds"
+      );
+
+      return setTimeout(() => {
+        router.push("/profile/edit");
+      }, 5000);
+    }
+
+    toast.info("Redirecing to payment Gateway. Hold on.");
     try {
       const createResponse = await fetch(
         process.env.NEXT_PUBLIC_API_ENPOINT + "/api/auth/create-subscription",
