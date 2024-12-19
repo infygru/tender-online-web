@@ -4087,6 +4087,7 @@ export function useTenderFilters() {
       setSuggestionClassification(suggestion?.classification || []);
       return suggestion;
     },
+    staleTime: Infinity,
   });
 
   // Fetch industries
@@ -4111,6 +4112,7 @@ export function useTenderFilters() {
         setFilterClassification(response.data.classifications);
         return response.data.classifications;
       },
+      staleTime: Infinity,
     });
 
   // Fetch sub-industries
