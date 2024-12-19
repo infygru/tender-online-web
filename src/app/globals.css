@@ -29,4 +29,14 @@
     background-clip: padding-box, border-box;
     background-size: 100% 100%, 100% 100%;
   }
+
+  .custom-tenders-border {
+    border: 5px solid transparent;
+    border-radius: 0.5rem;
+    background-image: linear-gradient(white, white),
+      linear-gradient(to right, #3158d4, #7954f3, #bb46c1, #7b44af, #1c5edf);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    background-size: 100% 100%, 100% 100%;
+  }
 }
