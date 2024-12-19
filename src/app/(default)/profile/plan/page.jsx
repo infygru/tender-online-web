@@ -32,8 +32,8 @@ const getUserStatusVariant = (status) => {
       return "default";
     case "cancelled":
       return "destructive";
-    case "pending":
-      return "outline";
+    case "completed":
+      return "default";
     default:
       return "secondary";
   }
@@ -41,7 +41,7 @@ const getUserStatusVariant = (status) => {
 const getUserStatusColour = (status) => {
   switch (status) {
     case "active":
-      return "bg-[#28A745] text-white";
+      return "bg-[#00b300] text-white";
     case "cancelled":
       return "bg-[#DC3545] text-white";
     case "free trial":
@@ -54,9 +54,9 @@ const getUserStatusColour = (status) => {
 };
 const PlanPage = () => {
   const [userData, setUserData] = useState(null);
+  const [otherTransactions, setOtherTransactions] = useState(null);
 
   useEffect(() => {
-    console.log(sessionStorage.getItem("accessToken"));
     const fetchUserDetails = async () => {
       try {
         const userDataReq = await fetch(
@@ -71,8 +71,30 @@ const PlanPage = () => {
         setUserData(userData);
       } catch (error) {}
     };
+
     fetchUserDetails();
   }, []);
+
+  useEffect(() => {
+    const fetchOtherTransactions = async () => {
+      try {
+        const otherTransactionsReq = await fetch(
+          process.env.NEXT_PUBLIC_API_ENPOINT + "/api/auth/payment/transcation",
+
+          {
+            method: "POST",
+            body: JSON.stringify({ clientId: userData.clientId }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await otherTransactionsReq.json();
+        setOtherTransactions(data);
+      } catch {}
+    };
+    fetchOtherTransactions();
+  }, [userData]);
 
   if (!userData) return null;
 
@@ -92,7 +114,7 @@ const PlanPage = () => {
           <CardDescription>Details of your active plan</CardDescription>
         </CardHeader>
         <CardContent>
-          <div>
+          <div className="grid-cols-2 gap-4">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Status</span>
@@ -161,6 +183,42 @@ const PlanPage = () => {
                     </TableCell>
                   </TableRow>
                 ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Other Transactions</CardTitle>
+          <CardDescription>Other Transaction Details</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Transaction ID</TableHead>
+                <TableHead>Transaction Amount</TableHead>
+                <TableHead>Transaction Date</TableHead>
+                <TableHead>Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {otherTransactions?.reverse().map((transaction, index) => (
+                <TableRow key={transaction.userId.clientId}>
+                  <TableCell>{transaction._id}</TableCell>
+                  <TableCell>₹{transaction.amount_received}</TableCell>
+                  <TableCell>{formatDate(transaction.payment_date)}</TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={getUserStatusVariant(
+                        transaction.transaction_status.toLowerCase()
+                      )}
+                    >
+                      {transaction.transaction_status}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </CardContent>
