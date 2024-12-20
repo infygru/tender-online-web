@@ -55,7 +55,7 @@ export default function Page() {
   }
 
   return (
-    <main className="w-full">
+    <main className="w-full bg-white">
       <TenderHeader tenderLength={tenderLength} />
       <CheckSuggestion />
       <div className="w-full px-4">
