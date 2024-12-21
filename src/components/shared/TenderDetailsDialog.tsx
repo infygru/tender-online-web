@@ -41,31 +41,53 @@ export interface TenderDocument {
 }
 
 const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
-  const handleToSendTender = async (tenderId: string) => {
-    const url =
-      process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/tender-mapping"; // Adjust the URL as needed
+  const handleToSendTender = async (rowData: any) => {
+    // const url =
+    //   process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/tender-mapping"; // Adjust the URL as needed
 
-    try {
-      const response = await fetch(url, {
+    // try {
+    //   const response = await fetch(url, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+    //     },
+    //     body: JSON.stringify({ tenderId }),
+    //   });
+
+    //   if (response.ok) {
+    //     toast.success(
+    //       "Tender documents request sended successfully. we will reach out soon to you."
+    //     );
+    //     setSelectedRowData(null);
+    //   } else {
+    //     const data = await response.json();
+    //     console.log(data);
+    //     toast.error("Some error occurred");
+    //   }
+    // } catch (error) {}
+
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/tenderRequest",
+      {
         method: "POST",
+        body: JSON.stringify({ data: rowData }),
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
-        body: JSON.stringify({ tenderId }),
-      });
-
-      if (response.ok) {
-        toast.success(
-          "Tender documents request sended successfully. we will reach out soon to you."
-        );
-        setSelectedRowData(null);
-      } else {
-        const data = await response.json();
-        console.log(data);
-        toast.error("Some error occurred");
       }
-    } catch (error) {}
+    );
+    if (response.ok) {
+      toast.success(
+        "Tender documents request sended successfully. we will reach out soon to you."
+      );
+      setSelectedRowData(null);
+    } else {
+      const data = await response.json();
+      console.log(data);
+      toast.error("Some error occurred");
+    }
   };
   const [desOpen, setDesOpen] = React.useState(false);
 
@@ -469,7 +491,7 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
           </div>
           <div className="flex justify-center pt-6 items-center w-full">
             <button
-              onClick={() => handleToSendTender(selectedRowData._id)}
+              onClick={() => handleToSendTender(selectedRowData)}
               className="bg-[#1C1A1A] px-4 py-2.5 rounded-md text-white text-xs"
             >
               Request For Documents
