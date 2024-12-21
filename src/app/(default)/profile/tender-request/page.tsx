@@ -6,18 +6,19 @@ import React from "react";
 // Type definition for tender and user data structure
 type TenderData = {
   _id: string;
-  tenderId: {
-    tenderName: string;
-    epublishedDate: string;
-    bidSubmissionDate: string;
-    tenderValue: string;
-    refNo: string;
-    district: string;
-    state: string;
-    department: string;
-    industry: string;
-    address: string;
-  };
+
+  tenderTitle: string;
+  tenderId: string;
+  epublishedDate: string;
+  bidSubmissionDate: string;
+  tenderValue: string;
+  refNo: string;
+  district: string;
+  state: string;
+  department: string;
+  industry: string;
+  address: string;
+
   userId: {
     name: string;
     email: string;
@@ -31,7 +32,7 @@ const Page: React.FC = () => {
     queryKey: ["user-tender"],
     queryFn: async () => {
       const response = await axios.get(
-        process.env.NEXT_PUBLIC_API_ENPOINT + "/api/auth/me/tender",
+        process.env.NEXT_PUBLIC_API_ENPOINT + "/api/auth/me/tenderRequest",
         {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
@@ -81,38 +82,34 @@ const Page: React.FC = () => {
                 </div>
               </div>
               <h3 className="text-xl font-bold text-blue-600">
-                {tender.tenderId?.tenderName}
+                {tender?.tenderTitle}
               </h3>
-              <p className="text-gray-600 text-sm mb-2">
-                {tender.tenderId?.department}
-              </p>
+              <p className="text-gray-600 text-sm mb-2">{tender?.department}</p>
               <p className="text-gray-500 text-sm mb-4">
-                Location: {tender.tenderId?.district}, {tender.tenderId?.state}
+                Location: {tender?.district}, {tender?.state}
               </p>
               <div className="text-gray-700 mb-2">
                 <p>
                   <span className="font-semibold">Bid Submission:</span>{" "}
-                  {new Date(
-                    tender.tenderId?.bidSubmissionDate
-                  ).toLocaleDateString()}
+                  {new Date(tender?.bidSubmissionDate).toLocaleDateString()}
                 </p>
                 <p>
                   <span className="font-semibold">Tender Value:</span> ₹
-                  {tender.tenderId?.tenderValue}
+                  {tender?.tenderValue}
                 </p>
               </div>
               <div className="text-gray-500 text-sm">
                 <p>
                   <span className="font-semibold">Reference No:</span>{" "}
-                  {tender.tenderId?.refNo}
+                  {tender?.refNo}
                 </p>
                 <p>
                   <span className="font-semibold">Industry:</span>{" "}
-                  {tender.tenderId?.industry}
+                  {tender?.industry}
                 </p>
                 <p>
                   <span className="font-semibold">Address:</span>{" "}
-                  {tender.tenderId?.address}
+                  {tender?.address}
                 </p>
               </div>
             </div>
