@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -7,9 +7,26 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { type CarouselApi } from "@/components/ui/carousel";
 import Link from "next/link";
 
 const AdsImage = () => {
+  const [api, setApi] = useState<CarouselApi>();
+
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (!api) return;
+
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [api]);
+
   const { data: ads } = useQuery<any>({
     queryKey: ["Ads"],
     queryFn: () =>
@@ -20,7 +37,11 @@ const AdsImage = () => {
 
   return (
     <div className="pt-6 px-4 lg:px-4 pb-8">
-      <Carousel className="w-full">
+      <Carousel
+        className="w-full"
+        setApi={setApi}
+        opts={{ loop: true, align: "start" }}
+      >
         <CarouselContent>
           {ads?.map((ads: any, index: number) => (
             <CarouselItem key={index} className="lg:basis-1/2 basis-full">
