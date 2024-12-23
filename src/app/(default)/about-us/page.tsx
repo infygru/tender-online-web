@@ -52,14 +52,14 @@ const Page = () => {
     <div>
       <Header />
       {/* Hero */}
-      <div className="max-w-[85rem] pt-24 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[85rem] pt-6 lg:pt-24 mx-auto px-4 sm:px-6 lg:px-8">
         {/* Grid */}
         <div className="text-center flex pt-20 items-center justify-center gap-4 md:gap-8 xl:gap-20 md:items-center">
           <div>
-            <h1 className="block text-3xl font-bold text-gray-800 sm:text-4xl lg:text-4xl lg:leading-tight dark:text-white">
+            <h1 className="block text-2xl text-pretty md:text-3xl font-bold text-gray-800 sm:text-4xl lg:text-4xl lg:leading-tight dark:text-white">
               The People . The Government . The Business
             </h1>
-            <p className="mt-3 text-sm w-[650px] ml-12 text-gray-800 dark:text-neutral-400">
+            <p className="mt-4 lg:mt-3 text-sm lg:w-[650px] lg:ml-12 text-gray-800 dark:text-neutral-400 text-justify lg:text-center">
               Hassle free premium bidding experience to businesses in all
               categories and scale. We specialize in government tenders. Our
               main goal is to bring equal opportunity for businesses to compete
@@ -69,7 +69,7 @@ const Page = () => {
             <div className="mt-7 justify-center flex gap-3 items-center">
               <Dialog>
                 <DialogTrigger asChild>
-                  <button className="py-3 px-0 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-blue-600 disabled:opacity-50 disabled:pointer-events-none">
+                  <button className="lg:py-3 px-0 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-blue-600 disabled:opacity-50 disabled:pointer-events-none">
                     <svg
                       width="52"
                       height="52"
@@ -122,11 +122,11 @@ const Page = () => {
 
       <div className="max-w-[85rem] w-full text-balance pt-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-3">
-          <h2 className="text-xl text-center font-bold md:text-3xl dark:text-white">
+          <h2 className="text-2xl text-center font-bold md:text-3xl dark:text-white">
             Birth Of The Vision
           </h2>
 
-          <p className="text-lg pt-4 text-gray-800 text-justify mx-auto max-w-[1000px] dark:text-neutral-200">
+          <p className="text-lg lg:pt-4 text-gray-800 text-justify mx-auto max-w-[1000px] dark:text-neutral-200 px-2 lg:px-0">
             The foundation of our company and its vision emerged from the
             collaboration of two minds: Dr. J. Sai Shajan, a successful serial
             entrepreneur, and K. Sanjay, an alumnus of IIM Kashipur.
@@ -173,17 +173,17 @@ const Page = () => {
           </p>
         </div>
       </div>
-      <div className="pt-16">
+      <div className="lg:pt-16 pt-10">
         <Testimonial />
       </div>
       <div
-        className="max-w-[85rem] pt-16 mx-auto px-4 sm:px-6 lg:px-8"
+        className="max-w-[85rem] mt-10 lg:pt-16 mx-auto px-4 sm:px-6 lg:px-8"
         id="contact"
       >
-        <div className="isolate flex lg:flex-row flex-col gap-5 items-center bg-white px-6 sm:py-0 lg:px-8">
+        <div className="isolate flex lg:flex-row flex-col gap-5 items-center bg-white px-6 py-4 sm:py-0 lg:px-8 lg:py-6">
           <div className="flex-1">
             <div className="mx-auto  text-start">
-              <h2 className="text-xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              <h2 className="text-2xl font-bold tracking-tight text-gray-900 lg:text-xl">
                 Get in touch
               </h2>
               <p className="text-sm leading-8 text-gray-600">
@@ -245,14 +245,14 @@ export default Page;
 const Testimonial = () => {
   return (
     <div className="w-full max-w-6xl mx-auto">
-      <h2 className="text-4xl font-bold text-center mb-6">
+      <h2 className="text-2xl lg:text-4xl font-bold text-center lg:mb-6 mb-4">
         What Our Clients Say
       </h2>
-      <Carousel className="w-full">
+      <Carousel className="w-[90%] lg:w-full mx-auto">
         <CarouselContent>
           {testimonials.map((testimonial, index) => (
-            <CarouselItem key={index} className="p-4 basis-0 lg:basis-1/3 ">
-              <Card className="shadow-lg h-[55vh] border border-black border-">
+            <CarouselItem key={index} className="lg:p-4 lg:basis-1/3">
+              <Card className="shadow-lg lg:h-[55vh] h-[50vh]">
                 <CardContent className="p-6 h-full flex-col">
                   <p className="text-lg text-gray-700 h-[250px] italic mb-10">
                     "{testimonial.text}"
