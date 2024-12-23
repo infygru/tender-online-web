@@ -173,8 +173,8 @@ const page = () => {
   return (
     <main>
       <Header />
-      <div className="max-w-6xl pt-24 mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl px-4 sm:px-6 py-12 md:py-2 mt-20 lg:px-8 mx-auto">
+      <div className="max-w-6xl pt-4 lg:pt-12 mx-auto px-4 sm:px-6 lg:px-8 mb-6 lg:mb-0">
+        <div className="max-w-6xl px-4 sm:px-6 lg:py-12 md:py-2 mt-20 lg:px-8 mx-auto">
           <div className="mb-5 sm:mb-10 text-center">
             <h2 className="text-2xl font-bold lg:text-4xl lg:leading-tight dark:text-white">
               Get the Latest Tender Documents

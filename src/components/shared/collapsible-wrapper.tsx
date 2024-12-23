@@ -31,18 +31,18 @@ const CollapsibleWrapper: React.FC<CollapsibleWrapperProps> = ({
   return (
     <div
       id={id}
-      className="max-w-[1050px] lg:px-0 px-6 pt-6 lg:pt-8 mx-auto flex items-center"
+      className="max-w-[1050px] lg:px-0 px-4 pt-0 lg:pt-8 mx-auto flex items-center"
     >
       <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
         <CollapsibleTrigger className="w-full">
-          <div className="w-full bg-black px-6 py-4 rounded-xl">
+          <div className="w-full bg-black px-4 lg:px-6 py-4 rounded-xl">
             <div className="w-full flex items-center justify-between text-white">
               <div className="flex items-start flex-col">
                 <h3 className="lg:text-xl text-sm font-semibold">{title}</h3>
                 <p className="lg:text-sm text-xs">{subTitle}</p>
               </div>
               <div className="flex lg:text-sm text-xs items-center gap-3">
-                More details{" "}
+                <span className="md:block hidden"> More details </span>
                 <ChevronUp
                   className={cn(
                     "transition-transform duration-300",
@@ -214,7 +214,7 @@ export const SubscriptionPricingTabs = ({ handletoAddcart }: any) => {
   };
 
   return (
-    <div className="flex items-center justify-center py-6">
+    <div className="flex items-center justify-center py-0">
       {/* Tabs */}
       <div className="py-1 rounded-lg">
         <div className="border px-2 rounded-lg items-center gap-4 w-max py-2 flex">
