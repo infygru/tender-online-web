@@ -41,15 +41,15 @@ const getUserStatusVariant = (status) => {
 const getUserStatusColour = (status) => {
   switch (status) {
     case "active":
-      return "bg-[#00b300] text-white";
+      return "bg-[#0fc000] text-white";
     case "cancelled":
-      return "bg-[#DC3545] text-white";
+      return "bg-[#b5b5b5]";
     case "free trial":
-      return "bg-[#007BFF] text-white";
+      return "bg-[#2838ff] text-white";
     case "free trial expired":
-      return "bg-[#FFA500] text-white";
+      return "bg-[#fd0947] text-white";
     default:
-      return "bg-[#6C757D] text-white";
+      return "bg-[#b5b5b5] text-white";
   }
 };
 const PlanPage = () => {
