@@ -9,7 +9,9 @@ const BlogTrending = ({ title, blog, isLoading }: any) => {
   return (
     <div>
       <div className="w-full">
-        <h1 className="text-3xl mt-12 font-bold text-start">{title}</h1>
+        <h1 className="text-2xl text-center lg:text-left lg:text-3xl mt-12 font-bold">
+          {title}
+        </h1>
         <div className="w-full">
           <>
             <div className="w-full">

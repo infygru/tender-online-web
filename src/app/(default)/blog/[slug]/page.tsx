@@ -23,7 +23,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   return (
     <div className="">
       <Header />
-      <div className="pt-36 px-4 md:px-12 lg:px-20 font-roboto">
+      <div className="pt-24 lg:pt-36 px-4 md:px-12 lg:px-20 font-roboto">
         {/* Blog Title Section */}
         <section className="bg-white shadow-md rounded-lg p-6 mb-8">
           <div className="space-y-4">
