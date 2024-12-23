@@ -389,9 +389,29 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
               <div
                 onClick={() => handleRowClick(tender)}
                 key={tender._id}
-                className="bg-white shadow-lg rounded-lg mb-4 p-4 hover:scale-[1.01] transition-all cursor-pointer flex flex-col gap-2 h-auto"
+                className="bg-white shadow-md rounded-lg mb-4 p-4 hover:scale-[1.01] transition-all cursor-pointer flex flex-col gap-2 h-auto"
               >
-                <div className="flex items-center text-[#4B0082] text-[10px] justify-between font-semibold">
+                <div>
+                  <p className="text-[#667085] text-[10px] font-semibold">
+                    Reference No:{" "}
+                    <span className="font-normal">{tender.refNo}</span>
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <p className="text-[12px] font-bold">{tender.tenderName}</p>
+                </div>
+
+                <div className="flex items-center gap-2 font-bold text-[#667085] text-[12px]">
+                  Tender Value:
+                  <div className="text-[14px] text-[#500187] font-bold">
+                    {tender.tenderValue
+                      ? tender.tenderValue
+                      : "Refer the Document"}
+                  </div>
+                </div>
+
+                <div className="flex items-center text-[#4B0082] text-[10px] justify-between font-semibold pt-1">
                   <p className="flex gap-1">
                     Opening Date:
                     <span className="font-normal">
@@ -403,27 +423,6 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
                     <span className="font-normal">
                       {formatDate(tender.bidSubmissionDate)}
                     </span>
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="text-[20px] text-[#500187] font-bold">
-                    {tender.tenderValue
-                      ? tender.tenderValue
-                      : "Refer the Document"}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <p className="text-[#667085] w-[60%] text-[12px] font-bold">
-                    {tender.tenderName}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-[#667085] text-[10px] font-semibold">
-                    Reference No:{" "}
-                    <span className="font-normal">{tender.refNo}</span>
                   </p>
                 </div>
               </div>
