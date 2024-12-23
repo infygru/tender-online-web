@@ -60,7 +60,7 @@ const Page: React.FC = () => {
           tender.tenderId ? (
             <div
               key={tender._id}
-              className="bg-white cursor-pointer rounded-3xl p-6"
+              className="bg-white cursor-pointer rounded-3xl p-6 shadow-md"
             >
               <div className="flex items-center space-x-4 mb-4">
                 {tender.userId.profile_image ? (

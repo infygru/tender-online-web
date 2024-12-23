@@ -30,7 +30,7 @@ const KeywordSuggestion: React.FC = () => {
   return (
     <div className="p-6 w-full min-h-screen flex items-center justify-center">
       <div className="w-full max-w-lg bg-white rounded-lg p-6 space-y-4">
-        <h2 className="text-2xl font-bold text-gray-800 text-center">
+        <h2 className="text-2xl font-bold text-gray-800 text-center pb-2">
           Keyword Suggestions
         </h2>
 
