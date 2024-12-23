@@ -26,7 +26,7 @@ import TenderFilters, { FilterLabels } from "./tender-filters";
 import SearchTab from "./search-tab";
 import Loading from "../ui/loading";
 import TenderDetailsDialog from "../shared/TenderDetailsDialog";
-import TenderColumns from "./tender-columns";
+import TenderColumns, { formatDate } from "./tender-columns";
 import { toast } from "sonner";
 import { getTenderValueCategory } from "@/utils/tender-value";
 import { clear } from "console";
@@ -266,8 +266,8 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
 
   return (
     <div className="w-full border rounded-xl">
-      <div className="flex items-start justify-between px-2 py-2">
-        <div className="flex-col w-full gap-10">
+      <div className="flex flex-col-reverse gap-6 lg:gap-0 lg:flex-row lg:items-start lg:justify-between px-2 py-2">
+        <div className="lg:flex-col w-full gap-10">
           <SearchTab
             refetch={() => {}}
             setSearchList={setSearchList}
@@ -318,7 +318,7 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
         </div>
       </div>
 
-      <div className="w-full">
+      <div className="w-full hidden lg:block">
         <ScrollArea>
           <Table className="overflow-hidden">
             <TableHeader>
@@ -381,13 +381,66 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
           setSelectedRowData={setSelectedRowData}
         />
       </div>
+      <div className="w-full sm:hidden flex flex-col gap-2">
+        {table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row) => {
+            const tender = row.original;
+            return (
+              <div
+                onClick={() => handleRowClick(tender)}
+                key={tender._id}
+                className="bg-white shadow-lg rounded-lg mb-4 p-4 hover:scale-[1.01] transition-all cursor-pointer flex flex-col gap-2 h-auto"
+              >
+                <div className="flex items-center text-[#4B0082] text-[10px] justify-between font-semibold">
+                  <p className="flex gap-1">
+                    Opening Date:
+                    <span className="font-normal">
+                      {formatDate(tender.bidOpeningDate)}
+                    </span>
+                  </p>
+                  <p className="flex gap-1">
+                    Closing Date:
+                    <span className="font-normal">
+                      {formatDate(tender.bidSubmissionDate)}
+                    </span>
+                  </p>
+                </div>
 
-      <div className="flex items-center justify-between px-4 py-4">
+                <div className="flex items-center justify-between">
+                  <div className="text-[20px] text-[#500187] font-bold">
+                    {tender.tenderValue
+                      ? tender.tenderValue
+                      : "Refer the Document"}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <p className="text-[#667085] w-[60%] text-[12px] font-bold">
+                    {tender.tenderName}
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-[#667085] text-[10px] font-semibold">
+                    Reference No:{" "}
+                    <span className="font-normal">{tender.refNo}</span>
+                  </p>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <div className="text-center py-6 bg-white rounded-lg shadow">
+            No results.
+          </div>
+        )}
+      </div>
+      <div className="flex flex-col gap-2 lg:gap-0 lg:flex-row items-center justify-between px-4 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {tenders?.count || 0} total
         </div>
-        <div className="flex items-center space-x-8">
+        <div className="flex lg:flex-row lg:gap-0 gap-6 flex-col items-center space-x-8">
           <div className="flex gap-2 items-center">
             <div className="flex items-center space-x-2">
               <span className="text-sm">Page</span>

@@ -109,7 +109,7 @@ export default function TenderFilters({
     };
 
     return (
-      <div className="w-full">
+      <div className="w-fit mx-auto">
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline">{label}</Button>
@@ -142,7 +142,7 @@ export default function TenderFilters({
   ];
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 flex-wrap lg:flex-nowrap">
         {dropdownLabels.map((label) => renderMultiSelect(label))}
         <div className="">
           <DatePickerWithRange

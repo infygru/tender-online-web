@@ -1,106 +1,102 @@
-import React, { useEffect, useRef } from "react";
-import { DateRangePicker } from "@matharumanpreet00/react-daterange-picker";
-import { X } from "lucide-react";
-import { Button } from "../ui/button";
+import React from "react";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Calendar as CalendarIcon, X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { addDays, differenceInDays } from "date-fns";
 
-// Type definition for the component
-export const DatePickerWithRange: React.FC<any> = ({
-  dateRange,
-  setDateRange,
-}: any) => {
-  const [open, setOpen] = React.useState<boolean>(false);
-  const pickerRef = useRef<HTMLDivElement>(null); // Ref for the date picker container
-  const buttonRef = useRef<HTMLButtonElement>(null); // Ref for the button
-
-  // Handle click outside to close the date picker
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        pickerRef.current &&
-        !pickerRef.current.contains(event.target as Node) &&
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target as Node) // Ensure the button is excluded
-      ) {
-        setOpen(false);
-      }
-    };
-
-    if (open) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+export const DatePickerWithRange = ({ dateRange, setDateRange }: any) => {
+  const [date, setDate] = React.useState(
+    dateRange || {
+      from: undefined,
+      to: undefined,
     }
+  );
+  const [isOpen, setIsOpen] = React.useState(false);
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [open]);
-  const [newdDateRange, setNewDateRange] = React.useState<any>(null);
   const calculateDays = () => {
-    if (newdDateRange.startDate && newdDateRange.endDate) {
-      const start = new Date(newdDateRange.startDate);
-      const end = new Date(newdDateRange.endDate);
-
-      // Calculate the difference in time (in milliseconds)
-      const timeDiff = Math.abs(end.getTime() - start.getTime());
-
-      // Convert time difference from milliseconds to days
-      const diffDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-      return diffDays;
+    if (date.from && date.to) {
+      return differenceInDays(date.to, date.from);
     }
     return 0;
   };
 
   return (
-    <div className="relative lg:w-full">
-      {/* Button to toggle the date picker */}
-      <button
-        ref={buttonRef} // Attach ref to the button
-        className="px-3 text-sm py-2 w-max bg-blue-500 text-white rounded hover:bg-blue-600  transition"
-        onClick={() => setOpen(!open)}
-      >
-        Bid - Submission Date
-      </button>
-
-      {/* Date Range Picker */}
-      {open && (
-        <div
-          ref={pickerRef} // Attach ref to the date picker container
-          className="absolute z-50 lg:w-auto w-[500px] border rounded-xl px-4 py-4 top-12 right-0 bg-white display-shadow "
-        >
-          <button onClick={() => setOpen(false)}>
-            <X />
-          </button>
-          <DateRangePicker
-            minDate={new Date()}
-            open={open}
-            onChange={(range) => setNewDateRange(range)}
-          />
-          <div className="flex items-center justify-between">
-            {newdDateRange && (
-              <div className="  py-2 px-5 flex items-center justify-center  text-center border rounded">
-                <h3>
-                  No. of days selected:{" "}
-                  {newdDateRange?.startDate && newdDateRange?.endDate
-                    ? calculateDays()
-                    : 0}{" "}
-                  days
-                </h3>
-              </div>
+    <div className="relative w-full">
+      <Popover open={isOpen} onOpenChange={setIsOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="default"
+            className={cn(
+              "w-max justify-start text-left font-normal text-white",
+              !date
             )}
-            <Button
-              className="ml-auto mr-2"
-              onClick={() => {
-                setOpen(false);
-                setDateRange(newdDateRange);
-              }}
-            >
-              submit
-            </Button>
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {date?.from ? (
+              date.to ? (
+                <>
+                  {format(date.from, "LLL dd, y")} -{" "}
+                  {format(date.to, "LLL dd, y")}
+                </>
+              ) : (
+                format(date.from, "LLL dd, y")
+              )
+            ) : (
+              <span>Bid - Submission Date</span>
+            )}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0 bg-white" align="start">
+          <div className="p-4 space-y-4">
+            <div className="flex justify-between items-center">
+              <h3 className="font-medium">Select Range</h3>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsOpen(false)}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+
+            <Calendar
+              mode="range"
+              defaultMonth={date?.from}
+              selected={date}
+              onSelect={setDate}
+              disabled={(date) => date < new Date()}
+              className="bg-white"
+            />
+
+            <div className="flex items-center justify-between">
+              {(date?.from || date?.to) && (
+                <div className="px-4 py-2 border rounded text-sm">
+                  Days selected: {calculateDays()} days
+                </div>
+              )}
+
+              <Button
+                className="ml-auto"
+                onClick={() => {
+                  setDateRange(date);
+                  setIsOpen(false);
+                }}
+              >
+                Submit
+              </Button>
+            </div>
           </div>
-        </div>
-      )}
+        </PopoverContent>
+      </Popover>
     </div>
   );
 };
+
+export default DatePickerWithRange;

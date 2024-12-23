@@ -8,7 +8,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 // Your format functions (unchanged)
 export const formatDate = (isoDateString: string): string => {
-  console.log(isoDateString);
   const date = new Date(isoDateString);
   const year = date.getUTCFullYear().toString().slice(-2);
   const monthNames = [

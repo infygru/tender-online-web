@@ -569,10 +569,6 @@ const MobileTenderList: React.FC = () => {
             <p>Closing Date: {formatDate(tender.bidSubmissionDate)}</p>
           </div>
           <div className="flex items-center justify-between">
-            {/* <div className="bg-[#F8DD4E] text-[#500187] px-0.5 py-0.5 rounded font-semibold text-[10px]">
-              <p>{tender.department}</p>
-            </div> */}
-            <div className=""></div>
             <div className="text-[20px]  text-[#500187] font-bold">
               {formatIndianRupeePrice(tender.tenderValue)}
             </div>
@@ -583,41 +579,6 @@ const MobileTenderList: React.FC = () => {
             </p>
             <p className="text-[#667085] text-[10px]">{tender.TenderId}</p>
           </div>
-          {/* <h3 className="font-bold text-lg mb-2">{tender.tenderName}</h3>
-          <div className="text-sm text-gray-500">
-            <p>
-              <span className="font-semibold">Published Date: </span>
-              {formatDate(tender.epublishedDate)}
-            </p>
-            <p>
-              <span className="font-semibold">Submission Date: </span>
-              {formatDate(tender.bidSubmissionDate)}
-            </p>
-            <p>
-              <span className="font-semibold">Opening Date: </span>
-              {formatDate(tender.bidOpeningDate)}
-            </p>
-            <p>
-              <span className="font-semibold">Tender Value: </span>
-              {tender.tenderValue || "N/A"}
-            </p>
-            <p>
-              <span className="font-semibold">Reference No: </span>
-              {tender.refNo}
-            </p>
-            <p>
-              <span className="font-semibold">Department: </span>
-              {tender.department}
-            </p>
-            <p>
-              <span className="font-semibold">Location: </span>
-              {tender.location}
-            </p>
-            <p>
-              <span className="font-semibold">Address: </span>
-              {tender.address}
-            </p>
-          </div> */}
         </div>
       ))}
     </div>
