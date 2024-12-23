@@ -61,15 +61,11 @@ export default function Page() {
       <div className="w-full px-4">
         {userStatus?.isTendersVisible ? (
           <>
-            {!isMobile ? (
-              <DataTableTender
-                setSearch={setSearch}
-                search={search}
-                setTenderLength={setTenderLength}
-              />
-            ) : (
-              <MobileTenderList />
-            )}
+            <DataTableTender
+              setSearch={setSearch}
+              search={search}
+              setTenderLength={setTenderLength}
+            />
           </>
         ) : (
           <FreeTrialComplete />
