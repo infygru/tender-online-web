@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { EditIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 type MenuItem = {
   label: string;
@@ -164,7 +164,26 @@ const menuItems: MenuItem[] = [
 
 const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
   const pathName = usePathname();
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isOpen &&
+        sidebarRef.current &&
+        buttonRef.current &&
+        !sidebarRef.current.contains(event.target as Node) &&
+        !buttonRef.current.contains(event.target as Node)
+      )
+        setIsOpen(false);
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
 
   return (
     <div className="lg:border-r border-none">
@@ -181,6 +200,7 @@ const Sidebar: React.FC = () => {
       </div>
       <button
         type="button"
+        ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         aria-controls="default-sidebar"
         aria-expanded={isOpen}
@@ -201,6 +221,7 @@ const Sidebar: React.FC = () => {
         </svg>
       </button>
       <aside
+        ref={sidebarRef}
         id="default-sidebar"
         className={` top-14 lg:relative fixed lg:bg-transparent lg:border-none border-r bg-white left-0 z-40 w-64 h-screen transition-transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
