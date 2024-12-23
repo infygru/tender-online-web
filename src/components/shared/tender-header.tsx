@@ -68,8 +68,8 @@ const TenderHeader = ({ tenderLength }: { tenderLength: number | null }) => {
                     foryou === false ||
                     foryou === null ||
                     foryou === undefined
-                    ? "border-none bg-gradient-to-r from-[#3158d4] to-[#bb46c1] text-white px-4 py-2 rounded-xl capitalize w-[250px] h-[50px]"
-                    : " text-white lg:text-black px-4 py-2 rounded-xl capitalize bg-black lg:bg-white custom-tenders-border"
+                    ? "border-none text-black bg-gradient-to-r from-[#3158d4] to-[#bb46c1] lg:text-white px-4 py-2 rounded-xl capitalize w-[250px] h-[50px]"
+                    : "lg:text-black px-4 py-2 rounded-xl capitalize bg-black lg:bg-white custom-tenders-border lg:text-[16px] text-sm"
                 )}
               >
                 {foryou === "true" || foryou === true

@@ -30,8 +30,6 @@ export default function Page() {
     },
   });
 
-  console.log(userStatus, "userStatus");
-
   const [isMobile, setIsMobile] = useState<any>(false);
 
   useEffect(() => {
