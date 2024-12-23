@@ -18,7 +18,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { ChevronsUpDown, ChevronUp } from "lucide-react";
+import { ChevronsUpDown, ChevronUp, X } from "lucide-react";
 import React, { useEffect } from "react";
 import Image from "next/image";
 export interface TenderDocument {
@@ -96,9 +96,15 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
       open={!!selectedRowData}
       onOpenChange={() => setSelectedRowData(null)}
     >
-      <DialogContent className="max-w-3xl !rounded-3xl text-white bg-white">
-        <div className="lg:px-4 px-0 py-2 ">
-          <div className="bg-[#000000] rounded-3xl px-2 lg:px-4 py-4">
+      <DialogContent className="max-w-[90%] lg:h-full rounded-xl lg:max-w-3xl lg:rounded-3xl text-white bg-white">
+        <button
+          onClick={() => setSelectedRowData(null)}
+          className="outline-none"
+        >
+          <X color="black" />
+        </button>
+        <div className="lg:px-4 px-0">
+          <div className="bg-[#000000] rounded-xl lg:rounded-3xl px-2 lg:px-4 lg:py-2 py-6">
             <div className="flex lg:flex-row flex-wrap items-center justify-between w-full">
               <div className="flex  items-center gap-2">
                 <div className="">
@@ -189,7 +195,7 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
                   </CollapsibleTrigger>
                   <CollapsibleContent className="data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up overflow-hidden">
                     <div
-                      className={`pt-2 pb-3 transition-all duration-300 ease-in-out
+                      className={`pt-2 pb-2 transition-all duration-300 ease-in-out
           ${
             desOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
           }`}
@@ -414,7 +420,7 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
             </div>
           </div>
           <div className="flex justify-between">
-            <div className="flex text-black justify-center items-center gap-2 py-4 border-b">
+            <div className="flex text-black justify-center items-center gap-2 pt-2">
               <svg
                 width="20"
                 height="20"
@@ -431,7 +437,7 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
                 {selectedRowData?.address}
               </p>
             </div>
-            <div className="flex text-black justify-center items-center gap-2 py-4 border-b">
+            <div className="flex text-black justify-center items-center gap-2 py-2">
               <Image
                 src="/district.png"
                 width={28}
