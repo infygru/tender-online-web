@@ -4,23 +4,29 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useState } from "react";
 import { Modal, MultiSelect } from "@mantine/core";
+import { industriesData } from "../hook/use-tender-filters";
 
 export function CheckSuggestion() {
   const [classification, setClassification] = useState([]);
   const [industry, setIndustry] = useState([]);
+  const [filterClassification, setFilterClassification] = useState<any>([]);
   const [state, setState] = useState(["tamil-nadu"]);
-  const [filterIndustry, setFilterIndustry] = React.useState<any>([]);
-  const fetchIndustry = async () => {
-    const response = await axios.get(
-      process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/industries"
-    );
-    setFilterIndustry(response.data.industries);
-    return response.data.industries;
-  };
+  const [filterIndustry, setFilterIndustry] = useState(
+    industriesData.map((ind) => ({ value: ind.value, label: ind.label }))
+  );
 
-  React.useEffect(() => {
-    fetchIndustry();
-  }, []);
+  const { data: classifications, isLoading: isLoadingClassifications } =
+    useQuery({
+      queryKey: ["classifications"],
+      queryFn: async () => {
+        const response = await axios.get(
+          process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/classifications"
+        );
+        setFilterClassification(response.data.classifications);
+        return response.data.classifications;
+      },
+      staleTime: Infinity,
+    });
 
   // Fetch suggestions to check if the user has already added them
   const fetchSuggestions = async () => {
@@ -44,11 +50,7 @@ export function CheckSuggestion() {
   const dropdownData: any = {
     Industry: filterIndustry,
     State: [{ value: "tamil-nadu", label: "Tamil Nadu" }],
-    Classification: [
-      { value: "Good", label: "Goods" },
-      { value: "service", label: "Service" },
-      { value: "work", label: "Works" },
-    ],
+    Classification: filterClassification,
   };
 
   const handleMultiSelectChange = (label: string, value: any) => {
