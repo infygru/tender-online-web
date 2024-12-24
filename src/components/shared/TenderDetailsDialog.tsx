@@ -91,6 +91,14 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
   };
   const [desOpen, setDesOpen] = React.useState(false);
 
+  const setButtonStatus = (date: string): boolean => {
+    const currentTime = new Date().getTime();
+    const closingTime = new Date(date).getTime();
+
+    console.log(currentTime, closingTime);
+    if (currentTime > closingTime) return true;
+    else return false;
+  };
   return (
     <Dialog
       open={!!selectedRowData}
@@ -496,12 +504,12 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
             </div>
           </div>
           <div className="flex justify-center pt-6 items-center w-full">
-            <button
+            <Button
               onClick={() => handleToSendTender(selectedRowData)}
-              className="bg-[#1C1A1A] px-4 py-2.5 rounded-md text-white text-xs"
+              disabled={setButtonStatus(selectedRowData?.bidSubmissionDate)}
             >
               Request For Documents
-            </button>
+            </Button>
           </div>
         </div>
       </DialogContent>
