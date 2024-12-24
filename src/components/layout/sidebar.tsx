@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { EditIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState, useRef, useEffect } from "react";
@@ -46,10 +45,10 @@ const menuItems: MenuItem[] = [
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        className="lucide lucide-pencil"
+        className="lucide lucide-wallet"
       >
-        <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
-        <path d="m15 5 4 4" />
+        <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" />
+        <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" />
       </svg>
     ),
     link: "/profile/plan",
