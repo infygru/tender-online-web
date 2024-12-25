@@ -153,7 +153,7 @@ export default function SupportPage() {
                   </h2>
                   <p className="text-gray-300 flex items-center gap-4 text-sm">
                     <Mail className="h-5 w-5" /> Reach us at
-                    support@tenderonline.in <br /> for detailed assistance
+                    contact@tenderonline.co.in <br /> for detailed assistance
                   </p>
                 </div>
 
@@ -162,7 +162,7 @@ export default function SupportPage() {
                     Call Support
                   </h2>
                   <p className="text-gray-300 flex items-center gap-3 text-sm">
-                    <Phone className="h-5 w-5" /> Call us at +91 9876543210
+                    <Phone className="h-5 w-5" /> Call us at +91 90033 26686
                     <br />
                     during our business hours for quick help.
                   </p>

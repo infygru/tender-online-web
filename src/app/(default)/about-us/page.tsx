@@ -226,10 +226,10 @@ const Page = () => {
                 <span className="text-xl font-bold">Mail Us</span>
               </div>
               <Link
-                href={"mailto:sales@tenderonline.in"}
+                href={"mailto:contact@tenderonline.co.in"}
                 className="text-gray-500 ml-8 hover:text-black"
               >
-                sales@tenderonline.in
+                contact@tenderonline.co.in
               </Link>
             </div>{" "}
           </div>
