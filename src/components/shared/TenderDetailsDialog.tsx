@@ -95,7 +95,6 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
     const currentTime = new Date().getTime();
     const closingTime = new Date(date).getTime();
 
-    console.log(currentTime, closingTime);
     if (currentTime > closingTime) return true;
     else return false;
   };

@@ -199,35 +199,99 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
     }
   }, [foryou, suggestionIndustry, suggestionClassification]);
 
+  const fetchSingle = async (tenderId: string) => {
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/getSingle",
+      {
+        method: "POST",
+        body: JSON.stringify({ tenderId }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const { data } = await res.json();
+    return data;
+  };
+
   const handleToAddRequest = async () => {
     try {
-      const promises = selectedRow.map(async (tenderId: string) => {
-        const response = await fetch(
-          process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/tender-mapping",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-            },
-            body: JSON.stringify({ tenderId }),
+      console.log(`Starting to process ${selectedRow.length} tenders`);
+
+      const validResults = await Promise.all(
+        selectedRow.map(async (tenderId: string, index: number) => {
+          try {
+            console.log(
+              `Processing tender ${index + 1}/${
+                selectedRow.length
+              }: ${tenderId}`
+            );
+
+            const data = await fetchSingle(tenderId);
+
+            const currentTime = new Date().getTime();
+            const closingTime = new Date(data.bidSubmissionDate).getTime();
+
+            if (currentTime > closingTime) {
+              console.log(
+                `Tender ${index + 1} (ID: ${tenderId}) is expired - skipping`
+              );
+              toast.info(`Submission Time Expired for tender ID: ${tenderId}`);
+              return null; // Skip this tender but continue with others
+            }
+
+            const response = await fetch(
+              process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/tenderRequest",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${sessionStorage.getItem(
+                    "accessToken"
+                  )}`,
+                },
+                body: JSON.stringify({ data }),
+              }
+            );
+
+            if (!response.ok) {
+              throw new Error(
+                `Failed to create tender mapping for tenderId: ${tenderId}`
+              );
+            }
+
+            console.log(
+              `Successfully processed tender ${index + 1} (ID: ${tenderId})`
+            );
+            return response.json();
+          } catch (error) {
+            console.error(
+              `Error processing tender ${index + 1} (ID: ${tenderId}):`,
+              error
+            );
+            return null;
           }
-        );
-
-        if (!response.ok) {
-          throw new Error(
-            `Failed to create tender mapping for tenderId: ${tenderId}`
-          );
-        }
-
-        return response.json();
-      });
-
-      await Promise.all(promises);
-      toast.success(
-        "Tender documents request sent successfully. We will reach out to you soon."
+        })
       );
+
+      // Filter out null results (expired or failed tenders)
+      const successfulResults = validResults.filter(
+        (result) => result !== null
+      );
+
+      console.log(
+        `Completed processing: ${successfulResults.length} successful out of ${selectedRow.length} total`
+      );
+
+      if (successfulResults.length > 0) {
+        toast.success(
+          `Successfully processed ${successfulResults.length} tender requests. We will reach out to you soon.`
+        );
+      } else {
+        toast.warning("No valid tenders were processed.");
+      }
     } catch (error) {
+      console.error("Error in handleToAddRequest:", error);
       toast.error("Error sending tender mapping requests.");
     }
   };
