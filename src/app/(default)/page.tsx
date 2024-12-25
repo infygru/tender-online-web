@@ -122,7 +122,7 @@ export default function Home() {
     typeof window !== "undefined" && localStorage.getItem("isClosed");
 
   return (
-    <main className="relative h-screen">
+    <main className="relative lg:h-screen">
       {isVisible && (
         <div className="relative">
           <Link
@@ -424,28 +424,28 @@ export default function Home() {
           )}
         </div>
       ) : (
-        <div className="flex h-screen w-full items-center justify-center">
+        <div className="flex lg:h-screen w-[80%] mx-auto lg:w-full items-center justify-center">
           {/* Left Pane */}
-          <div className="hidden w-full lg:flex h-screen relative items-center justify-center flex-1 text-black">
-            <div className=" text-center  w-full relative">
+          <div className="w-full lg:flex h-screen relative items-center justify-center flex-1 text-black">
+            <div className=" text-center  w-full relative h-full">
               {/* <div className="fill-black bg-black opacity-50 absolute inset-0"></div> */}
-              <div className="object-cover  w-full h-screen" />
+              <div className="object-cover w-full lg:h-screen" />
               <div
                 className={cn(
                   "absolute h-[65%] w-full flex items-center justify-center flex-col top-[15%] px-32",
                   !isLoggedIn && "!w-full"
                 )}
               >
-                <div className="flex items-center justify-center flex-col-reverse gap-6">
+                <div className="flex items-center justify-center flex-col-reverse gap-2 lg:gap-6">
                   <div className="text-xl w-full flex items-center justify-center font-normal">
-                    <h4 className=" text-center w-[50%] text-pretty">
+                    <h4 className=" text-center text-[14px] leading-tight lg:text-[18px] lg:w-[50%] text-pretty">
                       A hassle-free, premium bidding experience specializing in
                       government tenders, ensuring equal opportunities for
                       businesses of all sizes.
                     </h4>
                   </div>
-                  <div className="flex pl-0 pt-4 gap-8 py-2 font-semibold text-sm">
-                    <div className="flex items-center gap-2">
+                  <div className="flex pl-0 pt-4 gap-2 lg:gap-8 py-2 font-semibold text-[12px] lg:text-sm flex-wrap lg:flex-nowrap justify-center">
+                    <div className="flex items-center gap-1 lg:gap-2">
                       <svg
                         width="20"
                         height="20"
@@ -480,7 +480,7 @@ export default function Home() {
                       </svg>
                       <span>Effortless Bidding</span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1 lg:gap-2">
                       <svg
                         width="20"
                         height="20"
@@ -515,7 +515,7 @@ export default function Home() {
                       </svg>
                       <span>Government Expertise</span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1 lg:gap-2">
                       <svg
                         width="20"
                         height="20"
@@ -558,10 +558,10 @@ export default function Home() {
                           key={index}
                           className={section.hasBorder ? " w-full " : " w-full"}
                         >
-                          <h2 className="px-6 py-2 text-white font-bold xl:text-lg text-sm">
+                          <h2 className="lg:px-6 py-2 text-white font-bold xl:text-lg text-[12px] lg:text-sm">
                             {section.title}
                           </h2>
-                          <p className="text-white px-10 font-istok-web xl:text-sm text-[10px] font-normal">
+                          <p className="text-white px-8 lg:px-10 font-istok-web xl:text-sm text-[10px] font-normal">
                             {section.description}
                           </p>
                         </div>
