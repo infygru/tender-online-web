@@ -89,7 +89,7 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = ({
       case "email":
         return /\S+@\S+\.\S+/.test(value) ? "" : "Invalid email format";
       case "phone":
-        return /^\d+$/.test(value) ? "" : "Only numbers allowed";
+        return /^\d{10}$/.test(value) ? "" : "Phone number must be 10 digits";
       case "name":
       case "city":
       case "state":
@@ -102,13 +102,21 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = ({
   };
 
   const handleChange = (field: keyof ProfileData, value: string) => {
-    // Exclude clientId from being changed
     if (field !== "clientId") {
-      setFormData((prev) => ({ ...prev, [field]: value }));
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [field]: validateField(field, value),
-      }));
+      if (field === "phone") {
+        const filteredValue = value.replace(/\D/g, "").slice(0, 10);
+        setFormData((prev) => ({ ...prev, [field]: filteredValue }));
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [field]: validateField(field, filteredValue),
+        }));
+      } else {
+        setFormData((prev) => ({ ...prev, [field]: value }));
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [field]: validateField(field, value),
+        }));
+      }
     }
   };
 
