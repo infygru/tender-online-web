@@ -436,8 +436,15 @@ export default function Home() {
                   !isLoggedIn && "!w-full"
                 )}
               >
-                <div className="flex items-center justify-center flex-col">
-                  <div className="flex pl-0 pt-8 gap-8 py-2 font-semibold text-sm">
+                <div className="flex items-center justify-center flex-col-reverse gap-6">
+                  <div className="text-xl w-full flex items-center justify-center font-normal">
+                    <h4 className=" text-center w-[50%] text-pretty">
+                      A hassle-free, premium bidding experience specializing in
+                      government tenders, ensuring equal opportunities for
+                      businesses of all sizes.
+                    </h4>
+                  </div>
+                  <div className="flex pl-0 pt-4 gap-8 py-2 font-semibold text-sm">
                     <div className="flex items-center gap-2">
                       <svg
                         width="20"
@@ -544,22 +551,14 @@ export default function Home() {
                       <span>Fair Competition</span>
                     </div>
                   </div>
-                  <div className="text-xl w-full flex items-center justify-center font-normal">
-                    <h4 className=" text-center w-[50%] ">
-                      A hassle-free, premium bidding experience specializing in
-                      government tenders, ensuring equal opportunities for
-                      businesses of all sizes.
-                    </h4>
-                  </div>
-
-                  <div className=" bg-black py-3 px-4 flex items-center justify-between rounded-xl mt-8">
+                  <div className=" bg-black py-4 flex items-start justify-between rounded-xl my-auto">
                     {sections.map((section, index) => (
                       <>
                         <div
                           key={index}
                           className={section.hasBorder ? " w-full " : " w-full"}
                         >
-                          <h2 className="px-6 py-4 text-white font-bold xl:text-lg text-sm">
+                          <h2 className="px-6 py-2 text-white font-bold xl:text-lg text-sm">
                             {section.title}
                           </h2>
                           <p className="text-white px-10 font-istok-web xl:text-sm text-[10px] font-normal">
