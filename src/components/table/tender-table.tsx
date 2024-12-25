@@ -216,28 +216,17 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
 
   const handleToAddRequest = async () => {
     try {
-      console.log(`Starting to process ${selectedRow.length} tenders`);
-
       const validResults = await Promise.all(
         selectedRow.map(async (tenderId: string, index: number) => {
           try {
-            console.log(
-              `Processing tender ${index + 1}/${
-                selectedRow.length
-              }: ${tenderId}`
-            );
-
             const data = await fetchSingle(tenderId);
 
             const currentTime = new Date().getTime();
             const closingTime = new Date(data.bidSubmissionDate).getTime();
 
             if (currentTime > closingTime) {
-              console.log(
-                `Tender ${index + 1} (ID: ${tenderId}) is expired - skipping`
-              );
               toast.info(`Submission Time Expired for tender ID: ${tenderId}`);
-              return null; // Skip this tender but continue with others
+              return null;
             }
 
             const response = await fetch(
@@ -274,13 +263,8 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
         })
       );
 
-      // Filter out null results (expired or failed tenders)
       const successfulResults = validResults.filter(
         (result) => result !== null
-      );
-
-      console.log(
-        `Completed processing: ${successfulResults.length} successful out of ${selectedRow.length} total`
       );
 
       if (successfulResults.length > 0) {
@@ -291,7 +275,6 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
         toast.warning("No valid tenders were processed.");
       }
     } catch (error) {
-      console.error("Error in handleToAddRequest:", error);
       toast.error("Error sending tender mapping requests.");
     }
   };
