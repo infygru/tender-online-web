@@ -235,7 +235,7 @@ export default function Home() {
               >
                 <div className="flex flex-col-reverse justify-center items-center lg:gap-2">
                   <div className="text-xl font-normal">
-                    <h4 className="lg:w-[70%] mx-auto lg:pt-[3vh] text-[14px] leading-tight lg:text-[18px] text-balance pt-2">
+                    <h4 className="lg:w-[70%] mx-auto lg:pt-[3vh] text-[14px] leading-tight lg:text-[18px] text-balance lg:text-pretty pt-2">
                       A hassle-free, premium bidding experience specializing in
                       government tenders, ensuring equal opportunities for
                       businesses of all sizes.
