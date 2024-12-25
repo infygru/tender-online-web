@@ -233,7 +233,14 @@ export default function Home() {
                   !isLoggedIn && "!w-full"
                 )}
               >
-                <div className="">
+                <div className="flex flex-col-reverse justify-center items-center gap-2">
+                  <div className="text-xl font-normal">
+                    <h4 className="w-[70%] mx-auto pt-[3vh]">
+                      A hassle-free, premium bidding experience specializing in
+                      government tenders, ensuring equal opportunities for
+                      businesses of all sizes.
+                    </h4>
+                  </div>
                   <div className="flex pl-0 pt-8 gap-8 py-2 font-semibold text-sm">
                     <div className="flex items-center gap-2">
                       <svg
@@ -340,13 +347,6 @@ export default function Home() {
                       </svg>
                       <span>Fair Competition</span>
                     </div>
-                  </div>
-                  <div className="text-xl font-normal">
-                    <h4 className="text-start w-[70%] pt-[3vh]">
-                      A hassle-free, premium bidding experience specializing in
-                      government tenders, ensuring equal opportunities for
-                      businesses of all sizes.
-                    </h4>
                   </div>
 
                   <div className=" bg-black flex items-start py-[33px] justify-between rounded-xl mt-12 w-[589px] h-[145px]">
