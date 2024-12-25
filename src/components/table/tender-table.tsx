@@ -144,17 +144,14 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
     refetch();
   }, [selectedTenderValues, refetch]);
   const clearFilters = useCallback(() => {
-    // Reset all state variables to their initial values
     setSelectedDistricts([]);
     setSelectedTenderValues([]);
     setIndustry([]);
     setClassification([]);
     setDateRange(null);
     setSearchList([]);
-
-    // Trigger a refetch to reset the data
     refetch();
-  }, [refetch]); // Add refetch to dependency array
+  }, [refetch]);
 
   const handleRowClick = useCallback((rowData: any) => {
     setSelectedRowData(rowData);
