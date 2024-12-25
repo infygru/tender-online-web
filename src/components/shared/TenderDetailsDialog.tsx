@@ -503,13 +503,18 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center pt-6 items-center w-full">
+          <div className="flex flex-col justify-center pt-3 items-center w-full">
             <Button
               onClick={() => handleToSendTender(selectedRowData)}
               disabled={setButtonStatus(selectedRowData?.bidSubmissionDate)}
             >
               Request For Documents
             </Button>
+            {setButtonStatus(selectedRowData?.bidSubmissionDate) && (
+              <p className="text-orange-600 text-xs font-bold">
+                *Submission Date Expired
+              </p>
+            )}
           </div>
         </div>
       </DialogContent>
