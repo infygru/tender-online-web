@@ -205,7 +205,7 @@ const Header = ({ isLogin1, setIsLogin1 }: any) => {
                       <iframe
                         width="100%"
                         height="480"
-                        src="https://youtu.be/1a1LnqGmZVc"
+                        src="https://www.youtube.com/embed/1a1LnqGmZVc?si=bv8Ymgm4t4IBLqJC"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                         title="Embedded youtube"
@@ -282,7 +282,7 @@ const Header = ({ isLogin1, setIsLogin1 }: any) => {
                       <iframe
                         width="853"
                         height="480"
-                        src="https://youtu.be/1a1LnqGmZVc"
+                        src="https://www.youtube.com/embed/1a1LnqGmZVc?si=bv8Ymgm4t4IBLqJC"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                         title="Embedded youtube"
