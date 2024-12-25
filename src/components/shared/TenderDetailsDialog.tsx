@@ -512,7 +512,7 @@ const TenderDetailsDialog = ({ selectedRowData, setSelectedRowData }: any) => {
             </Button>
             {setButtonStatus(selectedRowData?.bidSubmissionDate) && (
               <p className="text-orange-600 text-xs font-bold">
-                *Submission Date Expired
+                *Submission Time Expired
               </p>
             )}
           </div>
