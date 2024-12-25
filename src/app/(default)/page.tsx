@@ -221,9 +221,9 @@ export default function Home() {
 
       <Header isLogin1={isLogin} setIsLogin1={setIsLogin} />
       {!isLoggedIn ? (
-        <div className="flex h-fit">
+        <div className="flex lg:flex-row flex-col lg:gap-0 gap-16 h-fit">
           {/* Left Pane */}
-          <div className="hidden lg:flex relative w-full h-fit items-start mt-[20vh] justify-center flex-1 text-black">
+          <div className="lg:flex relative w-full h-fit items-start mt-[7vh] lg:mt-[20vh] justify-center flex-1 text-black">
             <div className=" text-center  w-full relative">
               {/* <div className="fill-black bg-black opacity-50 absolute inset-0"></div> */}
               <div className="object-cover w-full h-fit" />
@@ -233,16 +233,16 @@ export default function Home() {
                   !isLoggedIn && "!w-full"
                 )}
               >
-                <div className="flex flex-col-reverse justify-center items-center gap-2">
+                <div className="flex flex-col-reverse justify-center items-center lg:gap-2">
                   <div className="text-xl font-normal">
-                    <h4 className="w-[70%] mx-auto pt-[3vh]">
+                    <h4 className="lg:w-[70%] mx-auto lg:pt-[3vh] text-[14px] leading-tight lg:text-[18px] text-balance pt-2">
                       A hassle-free, premium bidding experience specializing in
                       government tenders, ensuring equal opportunities for
                       businesses of all sizes.
                     </h4>
                   </div>
-                  <div className="flex pl-0 pt-8 gap-8 py-2 font-semibold text-sm">
-                    <div className="flex items-center gap-2">
+                  <div className="flex pl-0 pt-8 lg:gap-8 py-2 font-semibold text-sm lg:flex-nowrap flex-wrap gap-2 justify-center">
+                    <div className="flex items-center lg:gap-2  gap-1">
                       <svg
                         width="20"
                         height="20"
@@ -277,7 +277,7 @@ export default function Home() {
                       </svg>
                       <span>Effortless Bidding</span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center lg:gap-2 gap-1">
                       <svg
                         width="20"
                         height="20"
@@ -312,7 +312,7 @@ export default function Home() {
                       </svg>
                       <span>Government Expertise</span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center lg:gap-2 gap-1">
                       <svg
                         width="20"
                         height="20"
@@ -349,17 +349,17 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className=" bg-black flex items-start py-[33px] justify-between rounded-xl mt-12 w-[589px] h-[145px]">
+                  <div className=" bg-black flex lg:items-start items-center py-[2vh] lg:py-[33px] justify-between rounded-xl mt-12 lg:w-[589px] lg:h-[145px]">
                     {sections.map((section, index) => (
                       <>
                         <div
                           key={index}
                           className={section.hasBorder ? "w-full" : "w-full"}
                         >
-                          <h2 className="px-2 text-white font-bold xl:text-lg text-[20px]">
+                          <h2 className="px-2 text-white font-bold xl:text-lg lg:text-[18px] text-[14px]">
                             {section.title}
                           </h2>
-                          <p className="text-white px-4 font-istok-web xl:text-sm text-[14px] italic pt-2 font-thin">
+                          <p className="text-white px-4 font-istok-web xl:text-sm lg:text-[14px] text-[12px] italic pt-2 font-thin">
                             {section.description}
                           </p>
                         </div>
@@ -410,7 +410,7 @@ export default function Home() {
             </div>
           </div>
           {!isLoggedIn && (
-            <div className="w-full lg:w-[35%] flex items-start lg:items-center justify-center lg:justify-center ">
+            <div className="w-full lg:w-[35%] flex items-start lg:items-center justify-center lg:justify-center lg:mt-0 pt-[30vh] lg:pt-0">
               {isLogin ? (
                 <LoginForm
                   setLoading={setLoading}
