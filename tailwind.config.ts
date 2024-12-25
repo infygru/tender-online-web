@@ -27,6 +27,7 @@ const config = {
     extend: {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
+        courier: ["courier prime"],
       },
       colors: {
         purpleGradientStart: "#8D1DB8",

@@ -126,7 +126,7 @@ const Page = () => {
             Birth Of The Vision
           </h2>
 
-          <p className="text-lg lg:pt-4 text-gray-800 text-justify mx-auto max-w-[1000px] dark:text-neutral-200 px-2 lg:px-0">
+          <p className="text-lg lg:pt-4 text-gray-800 text-justify mx-auto max-w-[1000px] dark:text-neutral-200 px-2 lg:px-0 font-courier">
             The foundation of our company and its vision emerged from the
             collaboration of two minds: Dr. J. Sai Shajan, a successful serial
             entrepreneur, and K. Sanjay, an alumnus of IIM Kashipur.
