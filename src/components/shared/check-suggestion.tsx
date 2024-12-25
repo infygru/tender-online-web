@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, MultiSelect } from "@mantine/core";
 import { industriesData } from "../hook/use-tender-filters";
 
@@ -15,19 +15,16 @@ export function CheckSuggestion() {
     industriesData.map((ind) => ({ value: ind.value, label: ind.label }))
   );
 
-  const { data: classifications, isLoading: isLoadingClassifications } =
-    useQuery({
-      queryKey: ["classifications"],
-      queryFn: async () => {
-        const response = await axios.get(
-          process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/classifications"
-        );
-        setFilterClassification(response.data.classifications);
-        return response.data.classifications;
-      },
-      staleTime: Infinity,
-    });
-
+  useEffect(() => {
+    const fetchClass = async () => {
+      const response = await axios.get(
+        process.env.NEXT_PUBLIC_API_ENPOINT + "/api/tender/classifications"
+      );
+      setFilterClassification(response.data.classifications);
+      return response.data.classifications;
+    };
+    fetchClass();
+  }, []);
   // Fetch suggestions to check if the user has already added them
   const fetchSuggestions = async () => {
     const { data } = await axios.get(

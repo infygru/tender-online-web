@@ -4110,7 +4110,6 @@ export function useTenderFilters() {
         setFilterClassification(response.data.classifications);
         return response.data.classifications;
       },
-      staleTime: Infinity,
     });
 
   // Fetch sub-industries
@@ -4148,9 +4147,9 @@ export function useTenderFilters() {
       queryParams.append("search", searchList.join(","));
     }
 
-    if (dateRange?.startDate && dateRange?.endDate) {
-      queryParams.append("startDate", dateRange.startDate.toISOString());
-      queryParams.append("endDate", dateRange.endDate.toISOString());
+    if (dateRange?.from && dateRange?.to) {
+      queryParams.append("startDate", dateRange.from.toISOString());
+      queryParams.append("endDate", dateRange.to.toISOString());
     }
 
     return queryParams;
