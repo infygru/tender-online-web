@@ -83,10 +83,11 @@ export default function TenderFilters({
   };
 
   const renderMultiSelect = (label: string) => {
-    const options =
+    let options =
       dropdownData[label]?.map((option: any) => ({
         value: option.value,
         label: option.label,
+        disabled: option.label.toLowerCase() !== "construction",
       })) || [];
 
     const uniqueOptions = removeDuplicates(options);
