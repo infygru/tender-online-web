@@ -53,7 +53,7 @@ const TenderHeader = ({ tenderLength }: { tenderLength: number | null }) => {
           </div>
           <div className="flex items-center gap-3">
             <div className="">
-              <a
+              {/* <a
                 onClick={() => setRefetch(!refetch)}
                 href={(function () {
                   const foryouIs =
@@ -75,7 +75,7 @@ const TenderHeader = ({ tenderLength }: { tenderLength: number | null }) => {
                 {foryou === "true" || foryou === true
                   ? "All Tenders"
                   : "For you"}
-              </a>
+              </a> */}
             </div>
             <div className="flex items-center space-x-4">
               {/* <Link
