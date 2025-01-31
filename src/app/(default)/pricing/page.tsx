@@ -1615,7 +1615,7 @@ const page = () => {
                 >
                   Buy Now
                 </button>
-                <button
+                {/* <button
                   onClick={() =>
                     handletoAddcart(
                       "Per Tender Executive",
@@ -1627,7 +1627,7 @@ const page = () => {
                   className="text-black px-6 py-3 text-xl border-[#8d1db8] rounded-xl border"
                 >
                   Add to Cart
-                </button>
+                </button> */}
               </div>
             </div>
             <div className="flex items-center justify-center text-[#0c1073] flex-col py-8 pt-12">
@@ -1642,7 +1642,7 @@ const page = () => {
                 >
                   Buy Now
                 </button>
-                <button
+                {/* <button
                   onClick={() =>
                     handletoAddcart(
                       "10 Tender Executive",
@@ -1654,7 +1654,7 @@ const page = () => {
                   className="text-black px-6 py-3 text-xl border-[#8d1db8] rounded-xl border"
                 >
                   Add to Cart
-                </button>
+                </button> */}
               </div>
             </div>
           </div>

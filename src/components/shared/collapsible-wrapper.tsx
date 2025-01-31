@@ -251,7 +251,7 @@ export const SubscriptionPricingTabs = ({ handletoAddcart }: any) => {
                   >
                     Subscribe Now
                   </button>
-                  <button
+                  {/* <button
                     onClick={() =>
                       handletoAddcart(
                         "Per Tender Executive",
@@ -263,7 +263,7 @@ export const SubscriptionPricingTabs = ({ handletoAddcart }: any) => {
                     className="text-black px-6 py-3 text-xl border-[#8d1db8] rounded-xl border"
                   >
                     Add to Cart
-                  </button>
+                  </button> */}
                 </div>
               </div>
             )
