@@ -87,7 +87,10 @@ export default function TenderFilters({
       dropdownData[label]?.map((option: any) => ({
         value: option.value,
         label: option.label,
-        disabled: option.label.toLowerCase() !== "construction",
+        disabled:
+          label === "Industry"
+            ? option.label.toLowerCase() !== "construction"
+            : false,
       })) || [];
 
     const uniqueOptions = removeDuplicates(options);
