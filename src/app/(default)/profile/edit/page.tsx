@@ -52,6 +52,7 @@ const Page = () => {
       <h2 className="text-3xl text-black font-bold">Profile Information</h2>
 
       <ProfileEditForm initialData={initialData} onSubmit={handleFormSubmit} />
+      <ChangePassword />
     </div>
   );
 };
@@ -253,6 +254,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import ChangePassword from "../security/page";
 function SelectState({ value, onChange }: any) {
   return (
     <Select disabled defaultValue="tamil-nadu">
