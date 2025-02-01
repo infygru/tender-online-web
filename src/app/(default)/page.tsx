@@ -22,6 +22,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import StickyNotice from "@/components/shared/stickyNotice";
 
 interface SectionData {
   title: string;
@@ -234,13 +235,17 @@ export default function Home() {
                 )}
               >
                 <div className="flex flex-col-reverse justify-center items-center lg:gap-2">
+                  <div className="mt-4">
+                    <StickyNotice />
+                  </div>
                   <div className="text-xl font-normal">
-                    <h4 className="lg:w-[70%] mx-auto lg:pt-[3vh] text-[14px] leading-tight lg:text-[18px] text-balance lg:text-pretty pt-2">
+                    <h4 className="lg:w-[70%] mx-auto lg:pt-[2vh] text-[14px] leading-tight lg:text-[18px] text-balance lg:text-pretty pt-2">
                       A hassle-free, premium bidding experience specializing in
                       government tenders, ensuring equal opportunities for
                       businesses of all sizes.
                     </h4>
                   </div>
+
                   <div className="flex pl-0 pt-8 lg:gap-8 py-2 font-semibold text-sm lg:flex-nowrap flex-wrap gap-2 justify-center">
                     <div className="flex items-center lg:gap-2  gap-1">
                       <svg
@@ -349,7 +354,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className=" bg-black flex lg:items-start items-center py-[2vh] lg:py-[33px] justify-between rounded-xl mt-12 lg:w-[589px] lg:h-[145px]">
+                  <div className=" bg-black flex lg:items-start items-center py-[2vh] lg:py-[33px] justify-between rounded-xl mt-6 lg:w-[589px] lg:h-[145px]">
                     {sections.map((section, index) => (
                       <>
                         <div
