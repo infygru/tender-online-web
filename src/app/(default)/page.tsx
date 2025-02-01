@@ -235,7 +235,7 @@ export default function Home() {
                 )}
               >
                 <div className="flex flex-col-reverse justify-center items-center lg:gap-2">
-                  <div className="mt-4">
+                  <div className="pt-12">
                     <StickyNotice />
                   </div>
                   <div className="text-xl font-normal">

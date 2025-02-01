@@ -80,6 +80,24 @@ const departments = [
 
 export const industriesData = [
   {
+    value: "construction",
+    label: "Construction",
+    subIndustries: [
+      {
+        value: "building-maintenance-repair-services",
+        label: "Building Maintenance & Repair Services",
+      },
+      {
+        value: "building-repair-maintenance",
+        label: "Building Repair & Maintenance",
+      },
+      {
+        value: "educational-facilities-construction",
+        label: "Educational Facilities Construction",
+      },
+    ],
+  },
+  {
     value: "education",
     label: "Education",
     subIndustries: [
@@ -4009,24 +4027,7 @@ export const industriesData = [
       },
     ],
   },
-  {
-    value: "construction",
-    label: "Construction",
-    subIndustries: [
-      {
-        value: "building-maintenance-repair-services",
-        label: "Building Maintenance & Repair Services",
-      },
-      {
-        value: "building-repair-maintenance",
-        label: "Building Repair & Maintenance",
-      },
-      {
-        value: "educational-facilities-construction",
-        label: "Educational Facilities Construction",
-      },
-    ],
-  },
+
   {
     value: "healthcare",
     label: "Healthcare",
