@@ -415,7 +415,7 @@ export default function Home() {
             </div>
           </div>
           {!isLoggedIn && (
-            <div className="w-full lg:w-[35%] flex items-start lg:items-center justify-center lg:justify-center lg:mt-0 pt-[30vh] lg:pt-0">
+            <div className="w-full lg:w-[35%] flex items-start lg:items-center justify-center lg:justify-center lg:mt-0 pt-[45vh] lg:pt-0">
               {isLogin ? (
                 <LoginForm
                   setLoading={setLoading}
