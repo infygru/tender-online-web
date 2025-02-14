@@ -308,6 +308,34 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
     Classification: filterClassification,
   };
 
+  const formatIndianRupeePrice = (amount: any): string => {
+    if (
+      amount === undefined ||
+      amount === null ||
+      amount === 0 ||
+      Number.isNaN(amount)
+    ) {
+      return "Refer the document";
+    }
+
+    const numAmount = Number(String(amount).replace(/,/g, ""));
+    if (Number.isNaN(numAmount)) {
+      return "Refer the document";
+    }
+
+    const formatWithUnits = (value: number): string => {
+      if (value >= 1e7) {
+        const crore = value / 1e7;
+        return `${crore.toFixed(2).replace(/\.00$/, "")} Crore`;
+      } else if (value >= 1e5) {
+        const lakh = value / 1e5;
+        return `${lakh.toFixed(2).replace(/\.00$/, "")} Lakh`;
+      }
+      return value.toLocaleString("en-IN");
+    };
+
+    return `₹${formatWithUnits(numAmount)}`;
+  };
   return (
     <div className="w-full border rounded-xl">
       <div className="flex flex-col-reverse gap-6 lg:gap-0 lg:flex-row lg:items-start lg:justify-between px-2 py-2">
@@ -449,9 +477,11 @@ export function DataTableTender({ setSearch, search, setTenderLength }: any) {
                 <div className="flex items-center gap-2 font-bold text-[#667085] text-[12px]">
                   Tender Value:
                   <div className="text-[14px] text-[#500187] font-bold">
-                    {tender.tenderValue
-                      ? tender.tenderValue
-                      : "Refer the Document"}
+                    {formatIndianRupeePrice(
+                      tender.tenderValue
+                        ? tender.tenderValue
+                        : "Refer the Document"
+                    )}
                   </div>
                 </div>
 
